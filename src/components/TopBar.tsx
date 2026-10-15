@@ -1,92 +1,77 @@
-import React, { useState } from 'react';
-import { Phone, MapPin, ChevronDown, Check } from 'lucide-react';
+import React from 'react';
+import { Phone, MessageCircle, ShieldCheck, Scale, Video } from 'lucide-react';
+import { SELLER_INFO } from '../data/bats';
 
 interface TopBarProps {
   onOpenAbout: () => void;
   onOpenContact: () => void;
-  onOpenDealership: () => void;
 }
 
 export const TopBar: React.FC<TopBarProps> = ({
   onOpenAbout,
   onOpenContact,
-  onOpenDealership,
 }) => {
-  const [currency, setCurrency] = useState('INR');
-  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
-
-  const currencies = ['INR (₹)', 'USD ($)', 'GBP (£)', 'AED (د.إ)', 'AUD (A$)'];
-
   return (
     <div className="bg-[#f15b28] text-white text-xs font-medium tracking-wide">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-9 flex items-center justify-between">
-        {/* Left: Direct WhatsApp Helpline */}
-        <div className="flex items-center gap-2">
+        {/* Left: Direct WhatsApp & Phone Helpline */}
+        <div className="flex items-center gap-3">
           <a
-            href="https://wa.me/919217679479?text=Hi%20Cricket%20Adda,%20I'm%20looking%20for%20a%20cricket%20bat%20recommendation"
+            href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi%20Cricket%20Adda,%20I%20want%20to%20order%20a%207T7T%20tennis%20cricket%20bat`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 hover:text-amber-200 transition-colors"
           >
-            <Phone className="w-3.5 h-3.5 text-white" />
-            <span className="hidden sm:inline">WhatsApp Expert Helpline:</span>
-            <span className="font-bold underline decoration-white/40 underline-offset-2">+91 92176 79479</span>
+            <MessageCircle className="w-3.5 h-3.5 text-white" />
+            <span className="hidden sm:inline">WhatsApp Order:</span>
+            <span className="font-bold underline decoration-white/40 underline-offset-2">
+              {SELLER_INFO.primaryPhone}
+            </span>
+          </a>
+
+          <span className="text-white/40 hidden md:inline">|</span>
+
+          <a
+            href={`tel:${SELLER_INFO.secondaryPhone}`}
+            className="hidden md:flex items-center gap-1 hover:text-amber-200 transition-colors"
+          >
+            <Phone className="w-3 h-3" />
+            <span>Call: {SELLER_INFO.secondaryPhone}</span>
           </a>
         </div>
 
-        {/* Right: Quick Links & Currency */}
+        {/* Center: Live Guarantee */}
+        <div className="hidden lg:flex items-center gap-4 text-[11px] text-white/95">
+          <span className="flex items-center gap-1 font-semibold">
+            <Scale className="w-3.5 h-3.5 text-amber-200" />
+            <span>Exact Digital Scale Weight Match</span>
+          </span>
+          <span>•</span>
+          <span className="flex items-center gap-1 font-semibold">
+            <Video className="w-3.5 h-3.5 text-emerald-200" />
+            <span>Video Call Verification</span>
+          </span>
+          <span>•</span>
+          <span className="flex items-center gap-1 font-semibold">
+            <ShieldCheck className="w-3.5 h-3.5 text-amber-200" />
+            <span>Free 7T7T Padded Bat Cover</span>
+          </span>
+        </div>
+
+        {/* Right: Quick Links */}
         <div className="flex items-center gap-4 sm:gap-6">
           <button
             onClick={onOpenAbout}
-            className="hover:underline underline-offset-2 transition-colors cursor-pointer"
+            className="hover:underline underline-offset-2 transition-colors cursor-pointer text-xs"
           >
-            About Us
+            About Workshop
           </button>
           <button
             onClick={onOpenContact}
-            className="hover:underline underline-offset-2 transition-colors cursor-pointer"
+            className="hover:underline underline-offset-2 transition-colors cursor-pointer text-xs"
           >
-            Contact Us
+            Contact & Video Call
           </button>
-          <button
-            onClick={onOpenDealership}
-            className="hidden sm:flex items-center gap-1 hover:underline underline-offset-2 transition-colors cursor-pointer"
-          >
-            <MapPin className="w-3 h-3 text-white/80" />
-            <span>Locate Dealership</span>
-          </button>
-
-          {/* Currency Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
-              className="flex items-center gap-1 hover:text-amber-200 transition-colors cursor-pointer font-bold"
-            >
-              <span>{currency}</span>
-              <ChevronDown className="w-3 h-3" />
-            </button>
-
-            {showCurrencyDropdown && (
-              <div
-                className="absolute right-0 mt-1 w-32 bg-white text-[#24201e] rounded shadow-lg border border-neutral-200 py-1 z-50 text-xs font-semibold"
-                onMouseLeave={() => setShowCurrencyDropdown(false)}
-              >
-                {currencies.map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => {
-                      setCurrency(c.split(' ')[0]);
-                      setShowCurrencyDropdown(false);
-                    }}
-                    className="w-full text-left px-3 py-1.5 hover:bg-neutral-100 flex items-center justify-between"
-                  >
-                    <span>{c}</span>
-                    {currency === c.split(' ')[0] && <Check className="w-3 h-3 text-[#f15b28]" />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

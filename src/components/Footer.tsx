@@ -1,8 +1,10 @@
 import React from 'react';
-import { Instagram, Youtube, Facebook, Linkedin, Twitter, ArrowUp } from 'lucide-react';
+import { Phone, MessageCircle, ArrowUp, ShieldCheck, Scale, Award } from 'lucide-react';
+import { BatCategory } from '../types/bat';
+import { SELLER_INFO } from '../data/bats';
 
 interface FooterProps {
-  onSelectCategory: (willow: string) => void;
+  onSelectCategory: (model: BatCategory) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
@@ -13,12 +15,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
   return (
     <footer className="bg-[#121214] text-white pt-14 pb-8 border-t border-neutral-800 text-xs">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 pb-12 border-b border-neutral-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-12 border-b border-neutral-800">
           {/* Brand & Mission Statement */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-9 h-9 bg-[#f15b28] rounded flex items-center justify-center text-white font-black text-sm">
-                CA
+                7T
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-xl font-black uppercase text-white tracking-tight">CRICKET</span>
@@ -26,140 +28,107 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
               </div>
             </div>
 
-            <p className="text-neutral-400 text-xs leading-relaxed max-w-sm">
-              Cricket Adda is a master-craft cricket brand built on decades of craftsmanship, fearless innovation, and a passion for empowering players worldwide. Trusted by international professionals, loved by cricketers of every level.
+            <p className="text-neutral-400 text-xs leading-relaxed">
+              Specialized local workshop for 7T7T handcrafted scooped tennis cricket bats. Each bat is calibrated for weight, balanced by hand, and verified on digital scales before dispatch.
             </p>
 
-            {/* Helpline badge */}
-            <div className="pt-1">
-              <div className="text-[11px] text-neutral-400">WhatsApp & Phone Support:</div>
+            <div className="pt-1 space-y-1">
+              <div className="text-[11px] text-neutral-400">Direct WhatsApp Orders & Inquiries:</div>
               <a
-                href="https://wa.me/919217679479"
+                href={`https://wa.me/${SELLER_INFO.whatsappNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm font-bold text-[#f15b28] hover:underline"
+                className="text-sm font-bold text-emerald-400 hover:underline flex items-center gap-1.5"
               >
-                +91 92176 79479
+                <MessageCircle className="w-4 h-4" />
+                <span>+91 {SELLER_INFO.primaryPhone}</span>
               </a>
-            </div>
-
-            {/* Social Icons */}
-            <div className="flex items-center gap-3 pt-2 text-neutral-400">
-              <a href="#" className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:text-white hover:bg-[#f15b28] transition-colors" title="Instagram">
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:text-white hover:bg-[#f15b28] transition-colors" title="X (Twitter)">
-                <Twitter className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:text-white hover:bg-[#f15b28] transition-colors" title="YouTube">
-                <Youtube className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:text-white hover:bg-[#f15b28] transition-colors" title="Facebook">
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center hover:text-white hover:bg-[#f15b28] transition-colors" title="LinkedIn">
-                <Linkedin className="w-4 h-4" />
-              </a>
+              <div className="text-xs text-neutral-400">
+                Secondary Helpline: <a href={`tel:${SELLER_INFO.secondaryPhone}`} className="text-white hover:underline">+91 {SELLER_INFO.secondaryPhone}</a>
+              </div>
             </div>
           </div>
 
-          {/* Column 1: Explore */}
+          {/* Column 1: Our Bat Models */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider">Explore</h4>
+            <h4 className="text-sm font-bold text-white tracking-wider uppercase">7T7T Models</h4>
             <ul className="space-y-2 text-neutral-400">
               <li>
-                <button onClick={() => onSelectCategory('English Willow')} className="hover:text-white transition-colors cursor-pointer text-left">
-                  English Willow
+                <button onClick={() => onSelectCategory('7T7T Gold Edition')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  7T7T Gold Edition (Dual Scoop)
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('Kashmir Willow')} className="hover:text-white transition-colors cursor-pointer text-left">
-                  Kashmir Willow
+                <button onClick={() => onSelectCategory('Black Monster')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Black Monster (Carbon Face)
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('Incredible Willow')} className="hover:text-white transition-colors cursor-pointer text-left">
-                  Tennis Bats
+                <button onClick={() => onSelectCategory('Grey Edition')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  Grey Edition (957g Featherlight)
                 </button>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('English Willow')} className="hover:text-white transition-colors cursor-pointer text-left">
-                  Player Edition
+                <button onClick={() => onSelectCategory('One Side Hero')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  One Side Hero (1-Side Scoop)
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onSelectCategory('Accessories')} className="hover:text-white transition-colors cursor-pointer text-left">
+                  7T7T Padded Bat Kit Bags
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Column 2: Company */}
+          {/* Column 2: Seller Guarantees */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider">Company</h4>
+            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Buyer Assurance</h4>
             <ul className="space-y-2 text-neutral-400">
-              <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Adda Rebels</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Store Locator</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
+              <li className="flex items-center gap-2">
+                <Scale className="w-3.5 h-3.5 text-[#f15b28]" />
+                <span>Exact Scale Weight Match</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Video Call Inspection</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                <span>Free 7T7T Padded Bat Cover</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Direct Workshop Support</span>
+              </li>
             </ul>
           </div>
 
-          {/* Column 3: Important */}
+          {/* Column 3: Workshop Hours & Delivery */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider">Important</h4>
-            <ul className="space-y-2 text-neutral-400">
-              <li><a href="#" className="hover:text-white transition-colors">Loyalty Program</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Verify Products</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">E-Catalogue</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Size Guides</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Sitemap</a></li>
-            </ul>
-          </div>
-
-          {/* Column 4: Policies */}
-          <div className="space-y-3">
-            <h4 className="text-sm font-bold text-white tracking-wider">Policies</h4>
-            <ul className="space-y-2 text-neutral-400">
-              <li><a href="#" className="hover:text-white transition-colors">Refund & Return</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Shipping & Delivery</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Disclaimer</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms & Conditions</a></li>
-            </ul>
+            <h4 className="text-sm font-bold text-white tracking-wider uppercase">Dispatch & Delivery</h4>
+            <div className="space-y-2 text-neutral-400">
+              <p>• Pan-India Courier with Tracking</p>
+              <p>• Cash on Delivery (COD) Available</p>
+              <p>• Dispatch within 24 hours of order</p>
+              <p className="text-[11px] text-neutral-500 pt-2">
+                Workshop hours: Mon–Sun, 9:00 AM – 9:00 PM IST
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Payment Badges */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-neutral-500">
+        {/* Bottom Bar */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-neutral-500 text-[11px]">
           <div>
-            © 2026 @Cricket Adda. All rights reserved.
+            © {new Date().getFullYear()} Cricket Adda & 7T7T Bats. All rights reserved. Handcrafted in India.
           </div>
 
-          {/* Payment Badges matching screenshot (Visa, Mastercard, Maestro, Google Pay) */}
-          <div className="flex items-center gap-2">
-            {/* Visa */}
-            <div className="px-2.5 py-1 bg-neutral-800 rounded border border-neutral-700 text-white font-extrabold text-[11px] tracking-wider italic">
-              VISA
-            </div>
-            {/* Mastercard */}
-            <div className="px-2.5 py-1 bg-neutral-800 rounded border border-neutral-700 flex items-center gap-1">
-              <span className="w-3 h-3 rounded-full bg-red-500 inline-block -mr-1" />
-              <span className="w-3 h-3 rounded-full bg-amber-400 inline-block opacity-90" />
-            </div>
-            {/* Maestro */}
-            <div className="px-2.5 py-1 bg-neutral-800 rounded border border-neutral-700 flex items-center gap-1">
-              <span className="w-3 h-3 rounded-full bg-blue-500 inline-block -mr-1" />
-              <span className="w-3 h-3 rounded-full bg-red-500 inline-block opacity-90" />
-            </div>
-            {/* GPay */}
-            <div className="px-2.5 py-1 bg-neutral-800 rounded border border-neutral-700 text-neutral-200 font-bold text-[11px]">
-              G Pay
-            </div>
-          </div>
-
-          {/* Back to top button */}
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 hover:text-white transition-colors cursor-pointer"
           >
-            <span>Top</span>
+            <span>Back to top</span>
             <ArrowUp className="w-3.5 h-3.5" />
           </button>
         </div>

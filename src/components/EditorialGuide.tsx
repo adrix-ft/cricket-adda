@@ -1,144 +1,123 @@
 import React from 'react';
+import { Scale, Zap, ShieldCheck, Flame, CheckCircle } from 'lucide-react';
+import { SELLER_INFO } from '../data/bats';
 
 export const EditorialGuide: React.FC = () => {
   return (
     <section className="bg-white border-t border-neutral-200 py-12 text-[#24201e]">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 text-neutral-700 text-xs sm:text-[13px] leading-relaxed">
-        {/* Intro Section */}
-        <div>
-          <h2 className="text-base sm:text-lg font-bold text-neutral-900 mb-2">
-            Cricket Bat
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        {/* Section Heading */}
+        <div className="text-center max-w-2xl mx-auto space-y-2">
+          <span className="text-xs font-black tracking-widest text-[#f15b28] uppercase">
+            Master Craftsmanship Guide
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-black text-neutral-900 uppercase tracking-tight">
+            The Science Behind 7T7T Scooped Tennis Bats
           </h2>
-          <p>
-            Cricket is the most popular sport in India. Doesn't matter the age, it is loved by everyone, right from youngsters to people who are in their late 60s. Minimum equipment is required to play cricket. You just need a good quality <span className="underline decoration-[#f15b28] font-medium text-neutral-900">cricket bat</span> and a ball. The quality of cricket bats will vary as per the level i.e., whether playing professionally or just for fun. Irrespective of the reason, one must have a premium quality cricket bat and this is where Cricket Adda comes in handy. The handcrafted premium quality cricket bats manufactured by Cricket Adda are perfect for both children starting their career or playing for fun and professional players playing at national or international levels.
+          <p className="text-xs sm:text-sm text-neutral-600">
+            Why professional tournament hitters choose our handcrafted scooped bats over ordinary flat bats.
           </p>
         </div>
 
-        {/* Two Types */}
-        <div>
-          <h3 className="text-sm sm:text-base font-bold text-neutral-900 mb-2">
-            Two Types of Cricket Bats
-          </h3>
-          <p className="mb-2">There are two types of cricket bats:</p>
-          <ul className="list-disc list-inside space-y-1 pl-2 text-neutral-800">
-            <li>English Willow Cricket Bats</li>
-            <li>Kashmir Willow Cricket Bats</li>
-          </ul>
+        {/* 4 Feature Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-[#fbfbfa] p-5 rounded-2xl border border-neutral-200 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 text-[#f15b28] flex items-center justify-center">
+              <Zap className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-neutral-900">
+              1. Aerodynamic Scooping
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Precision scooped channels remove dead weight from non-impact areas of the wood while maintaining colossal 48mm–50mm edges for extreme ball rebound.
+            </p>
+          </div>
+
+          <div className="bg-[#fbfbfa] p-5 rounded-2xl border border-neutral-200 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-neutral-900 text-white flex items-center justify-center">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-neutral-900">
+              2. Carbon Fiber Mesh Face
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Featured on the <strong>7T7T Black Monster</strong>. Protects the striking face against heavy tennis ball compression, preventing splintering and surface cracks.
+            </p>
+          </div>
+
+          <div className="bg-[#fbfbfa] p-5 rounded-2xl border border-neutral-200 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <Scale className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-neutral-900">
+              3. Digital Scale Verification
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Every bat is weighed on shop digital scales. Choose your exact weight: from featherlight <strong>957g</strong> for box cricket to <strong>1065g</strong> heavy power hitter.
+            </p>
+          </div>
+
+          <div className="bg-[#fbfbfa] p-5 rounded-2xl border border-neutral-200 space-y-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+              <Flame className="w-5 h-5" />
+            </div>
+            <h3 className="text-sm font-bold text-neutral-900">
+              4. "One Side Hero" Asymmetry
+            </h3>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Our single-side scoop places extra wood mass where you connect on leg-side pulls and lofted shots, giving lightning hand speed with missile punch.
+            </p>
+          </div>
         </div>
 
-        {/* English Willow */}
-        <div>
-          <h4 className="text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-            English Willow Cricket Bats
-          </h4>
-          <p>
-            <span className="underline decoration-neutral-400">English willow bats</span> are made up of wood found in England. These bats are usually lightweight and white in colour. The grain on the bats is vivid and clearly visible. If we talk about the price then English willow cricket bats are expensive as compared to Kashmir willow cricket bats.
-          </p>
-        </div>
-
-        {/* Kashmir Willow */}
-        <div>
-          <h4 className="text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-            Kashmir Willow Cricket Bats
-          </h4>
-          <p>
-            These cricket bats are manufactured of Kashmir wood. <span className="underline decoration-neutral-400">Kashmir willow bats</span> are heavier and brown in colour. The lifespan of Kashmir willow bats is more as compared to English willow bats.
-          </p>
-          <p className="mt-2">
-            One can purchase both English and Kashmir willow cricket bats from the official website of Cricket Adda.
-          </p>
-        </div>
-
-        {/* Detailed Guide */}
-        <div>
-          <h3 className="text-sm sm:text-base font-bold text-neutral-900 mb-2">
-            Detailed Guide to Buy Cricket Bat
-          </h3>
-          <p>
-            Cricket is a religion in India. During childhood, we all must have once dreamed of being a professional cricket player. The dream started with owning a cricket bat. Choosing the right cricket bat is important.
-          </p>
-        </div>
-
-        {/* Size and Weight */}
-        <div>
-          <h4 className="text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-            Bat's Size and Weight
-          </h4>
-          <p>
-            The first things to be kept in mind while buying a cricket bat are its size and weight. As per the laws of the game, the size of the bat should not be more than 38 inches or 965 mm and there is no limitation on the bat's weight. One should choose the size and weight of the bat as per their comfort level.
-          </p>
-        </div>
-
-        {/* Handle Type */}
-        <div>
-          <h4 className="text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-            Handle Type
-          </h4>
-          <p>
-            There are two types of bat handles i.e. round and oval handles. These handles ensure the best grip is provided to players. Before buying a cricket bat make sure to choose the bat with the right handle that offers maximum comfort to you.
-          </p>
-        </div>
-
-        {/* Purpose and Sweet Spot */}
-        <div>
-          <h4 className="text-xs sm:text-sm font-bold text-neutral-900 mb-1.5">
-            Purpose and Sweet Spot
-          </h4>
-          <p>
-            The purpose for which you are buying a cricket bat is also important. If you play just for fun then go for a tennis ball bat and if you want to go professional then you can opt for Kashmir/English willow cricket bats.
-          </p>
-          <p className="mt-2">
-            Another important thing to check while buying a cricket bat is the sweet spot. The sweet spot is the point where the ball receives maximum power and acceleration. Usually, the sweet spot is located in the middle of the bat.
-          </p>
-        </div>
-
-        {/* Perks of Buying */}
-        <div>
-          <h3 className="text-sm sm:text-base font-bold text-neutral-900 mb-2">
-            Perks of Buying Cricket Bats from Cricket Adda
-          </h3>
-          <p>
-            <span className="underline decoration-[#f15b28] font-medium text-neutral-900">Cricket Adda</span> is one of the trusted sports manufacturing brands in India. It holds a massive experience in manufacturing premium quality cricket bats in the country. The most attractive thing about Cricket Adda is that itself manufactures all its cricket bats. Handcrafted cricket bats of Cricket Adda are a choice of many international cricketers such as David Warner, David Miller, Usman Khawaja, Rory Burns etc.
-          </p>
-          <p className="mt-2">
-            To ensure players are offered premium products Cricket Adda harvests Singapore's finest cane and crafted handles from it. This gives optimum control and power to players and also increases the lifeline of bats. Cricket Adda offers premium quality English willow for professional players and Kashmir willow for budding cricketers. Further, for people who like to play cricket on weekends, tennis cricket bats are also available at Cricket Adda.
-          </p>
-        </div>
-
-        {/* FAQs */}
-        <div className="space-y-4 pt-2">
-          <h3 className="text-sm sm:text-base font-bold text-neutral-900">
-            Frequently Asked Questions (FAQs)
+        {/* Comparison Table: Finding Your Perfect 7T7T Bat */}
+        <div className="bg-neutral-50 rounded-2xl p-6 border border-neutral-200">
+          <h3 className="text-base font-bold text-neutral-900 mb-4 text-center sm:text-left">
+            Quick Comparison: Which 7T7T Bat Fits Your Playing Style?
           </h3>
 
-          <div className="space-y-3">
-            <div>
-              <p className="font-bold text-neutral-900">1 Qs. Which cricket bat is best for beginners?</p>
-              <p className="text-neutral-600 mt-0.5">
-                Ans. For players who have just started playing cricket, Kashmir willow cricket bats are best. They are durable and are not heavy on the pocket as well.
-              </p>
-            </div>
-
-            <div>
-              <p className="font-bold text-neutral-900">2 Qs. What cricket bat is used by David Warner and what is its price?</p>
-              <p className="text-neutral-600 mt-0.5">
-                Ans. Australian opening batsman, David Warner plays with KRUNCH Cricket Adda cricket bat. The price of the bat is Rs. 74,049.
-              </p>
-            </div>
-
-            <div>
-              <p className="font-bold text-neutral-900">3 Qs. Should I use a heavy or lightweight cricket bat for playing?</p>
-              <p className="text-neutral-600 mt-0.5">
-                Ans. Every player has their own choice. While some players play with heavy bats, some prefer lightweight. If you are in the initial stage of your career or play just for fun you can go for a lightweight cricket bat.
-              </p>
-            </div>
-
-            <div>
-              <p className="font-bold text-neutral-900">4 Qs. What are the qualities of a good cricket bat?</p>
-              <p className="text-neutral-600 mt-0.5">
-                Ans. A good cricket bat should be lightweight, have a good grip and should be able to generate power. The best cricket bats are made from English willow. They are light and strong enough to not break easily. They also have a good grip and are able to generate power.
-              </p>
-            </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs border-collapse">
+              <thead>
+                <tr className="border-b border-neutral-300 text-neutral-500 font-bold uppercase text-[10px]">
+                  <th className="py-2.5 px-3">Model</th>
+                  <th className="py-2.5 px-3">Weight</th>
+                  <th className="py-2.5 px-3">Scoop Profile</th>
+                  <th className="py-2.5 px-3">Best Suited For</th>
+                  <th className="py-2.5 px-3">Key Advantage</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-neutral-200 text-neutral-800">
+                <tr>
+                  <td className="py-3 px-3 font-bold text-[#f15b28]">7T7T Gold Edition</td>
+                  <td className="py-3 px-3 font-mono">1020g - 1050g</td>
+                  <td className="py-3 px-3">Dual Aerodynamic Scoops</td>
+                  <td className="py-3 px-3">Hard Tennis Tournament Matches</td>
+                  <td className="py-3 px-3">Classic natural wood balance with high rebound</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-3 font-bold text-neutral-900">Black Monster</td>
+                  <td className="py-3 px-3 font-mono">1040g - 1065g</td>
+                  <td className="py-3 px-3">Power Channels + Carbon Face</td>
+                  <td className="py-3 px-3">Heavy Hard Tennis Balls</td>
+                  <td className="py-3 px-3">Carbon mesh prevents cracks; extreme 50mm edges</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-3 font-bold text-neutral-700">Grey Edition</td>
+                  <td className="py-3 px-3 font-mono">950g - 980g (957g Scale)</td>
+                  <td className="py-3 px-3">Multi-Vent Speed Scooping</td>
+                  <td className="py-3 px-3">Box Cricket, Fast Pace Tennis</td>
+                  <td className="py-3 px-3">Featherlight pickup for fastest hand reactions</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-3 font-bold text-amber-700">One Side Hero</td>
+                  <td className="py-3 px-3 font-mono">1000g - 1040g</td>
+                  <td className="py-3 px-3">Single-Side Asymmetric Scoop</td>
+                  <td className="py-3 px-3">Power Hitting & Wrist Flick Shots</td>
+                  <td className="py-3 px-3">Maximum wood retention behind sweet spot</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

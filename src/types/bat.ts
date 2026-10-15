@@ -1,59 +1,68 @@
-export type WillowType = 'English Willow' | 'Kashmir Willow' | 'Incredible Willow';
+export type BatCategory =
+  | 'All'
+  | '7T7T Gold Edition'
+  | 'Black Monster'
+  | 'Grey Edition'
+  | 'One Side Hero'
+  | 'Accessories';
 
-export type BatSize = '1' | '2' | '3' | '4' | '5' | '6' | 'Harrow' | 'Mens' | 'Compact';
-
-export type BatRange =
-  | 'INTENSE'
-  | 'CONDOR'
-  | 'SPLIIT'
-  | 'XLITE'
-  | 'BLAK'
-  | 'BLU'
-  | 'WILDFIRE'
-  | 'ROAR'
-  | 'CYNOS'
-  | 'SUPERNATURAL'
-  | 'THUMPA';
+export type BatWeightClass =
+  | 'All'
+  | 'Under 980g'
+  | '1000g - 1035g'
+  | '1040g+';
 
 export type SortOption =
   | 'position'
-  | 'name-asc'
+  | 'price-low-high'
   | 'price-high-low'
-  | 'price-low-high';
+  | 'weight-low-high';
+
+export interface RealBatImage {
+  url: string;
+  caption: string;
+  badge?: string;
+}
 
 export interface CricketBat {
   id: string;
   name: string;
-  series: string;
-  willowType: WillowType;
-  range: BatRange;
+  model: BatCategory;
   mrp: number;
   discountPercent: number;
   finalPrice: number;
-  sizes: BatSize[];
-  grainCount: string;
-  edgeThickness: string;
   weightRange: string;
-  sweetSpot: string;
+  verifiedWeight?: string;
+  availableWeights: string[];
+  scoopType: string;
+  woodType: string;
+  bladeLength: string;
+  edgeThickness: string;
   handleType: string;
-  isNew?: boolean;
-  hasCompare?: boolean;
-  imageUrl?: string;
-  stickerStyle: 'rs-purple' | 'rs-green' | 'rs-blue' | 'thumpa-rust' | 'supernatural-black' | 'supernatural-rust' | 'player-cyan' | 'blak-minimal' | 'wildfire-neon' | 'drake-blue' | 'lava-red';
+  sweetSpot: string;
+  ballSuitability: string[];
+  imageUrl: string; // Generated Studio photo
+  realImages: RealBatImage[]; // Real client workshop & scale photos
+  stickerStyle: 'gold' | 'black-monster' | 'grey-edition' | 'oneside-hero' | 'cover';
   shortDesc: string;
+  highlights: string[];
+  isNew?: boolean;
+  isBestseller?: boolean;
+  inStock?: boolean;
+  freeCover?: boolean;
 }
 
 export interface CartItem {
   bat: CricketBat;
-  size: BatSize;
+  selectedWeight: string;
   quantity: number;
-  withKnocking: boolean;
+  withKnocking?: boolean;
 }
 
 export interface FilterState {
-  sizes: BatSize[];
-  willowTypes: WillowType[];
-  ranges: BatRange[];
+  category: BatCategory;
+  weightClass: BatWeightClass;
+  ballType: string;
   minPrice: number;
   maxPrice: number;
   sortBy: SortOption;

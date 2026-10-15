@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { X, Trash2, Plus, Minus, ArrowRight, ShieldCheck, CheckCircle2, MessageCircle } from 'lucide-react';
+import { X, Trash2, Plus, Minus, ArrowRight, ShieldCheck, CheckCircle2, MessageCircle, Scale, Phone } from 'lucide-react';
 import { CartItem } from '../types/bat';
+import { SELLER_INFO } from '../data/bats';
 import { CricketBatIllustration } from './CricketBatIllustration';
 
 interface CartDrawerProps {
@@ -30,21 +31,16 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   if (!isOpen) return null;
 
   const formatINR = (val: number) => {
-    return val.toLocaleString('en-IN', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    return val.toLocaleString('en-IN');
   };
 
   const subtotal = items.reduce((acc, item) => {
-    const batPrice = item.bat.finalPrice;
-    const knockingCost = item.withKnocking ? 799 : 0;
-    return acc + (batPrice + knockingCost) * item.quantity;
+    return acc + item.bat.finalPrice * item.quantity;
   }, 0);
 
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedId = `CA-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedId = `7T7T-${Math.floor(100000 + Math.random() * 900000)}`;
     setOrderId(generatedId);
     setOrderConfirmed(true);
   };
@@ -56,12 +52,29 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     onClose();
   };
 
+  const generateWhatsAppOrderSummary = () => {
+    const batList = items
+      .map(
+        (it) =>
+          `• ${it.bat.name} (Weight: ${it.selectedWeight}) x${it.quantity} = ₹${formatINR(
+            it.bat.finalPrice * it.quantity
+          )}`
+      )
+      .join('\n');
+
+    return encodeURIComponent(
+      `Hello Cricket Adda! I want to confirm my order:\nOrder ID: ${orderId}\nName: ${customerName}\nPhone: ${customerPhone}\nAddress: ${customerAddress}\n\nItems:\n${batList}\n\nTotal: ₹${formatINR(
+        subtotal
+      )}/-\nPlease share video call timing before dispatch.`
+    );
+  };
+
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
         onClick={onClose}
-        className="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity"
+        className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
@@ -73,7 +86,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 Shopping Bag ({items.reduce((sum, item) => sum + item.quantity, 0)})
               </h2>
               <p className="text-[11px] text-neutral-500">
-                Direct dispatch from Cricket Adda Master Workshop
+                Direct dispatch from 7T7T Bat Workshop
               </p>
             </div>
             <button
@@ -93,47 +106,51 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-neutral-900">Order Confirmed!</h3>
+                  <h3 className="text-xl font-bold text-neutral-900">Order Placed!</h3>
                   <p className="text-xs text-neutral-500 mt-1">
                     Order Reference: <span className="font-mono font-bold text-neutral-800">{orderId}</span>
                   </p>
                 </div>
 
-                <div className="bg-neutral-50 p-4 rounded-lg text-left text-xs space-y-2 border border-neutral-200">
+                <div className="bg-neutral-50 p-4 rounded-xl text-left text-xs space-y-2 border border-neutral-200">
                   <div className="flex justify-between">
                     <span className="text-neutral-500">Customer:</span>
                     <span className="font-semibold text-neutral-800">{customerName || 'Cricket Adda Player'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-neutral-500">Phone:</span>
-                    <span className="font-semibold text-neutral-800">{customerPhone || '+91 92176 79479'}</span>
+                    <span className="font-semibold text-neutral-800">{customerPhone || SELLER_INFO.displayPhone}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-neutral-500">Total Paid:</span>
+                    <span className="text-neutral-500">Total Payable:</span>
                     <span className="font-bold text-[#f15b28]">₹{formatINR(subtotal)}/-</span>
+                  </div>
+                  <div className="flex justify-between text-emerald-700 font-semibold pt-1 border-t border-neutral-200">
+                    <span>Free Gift:</span>
+                    <span>7T7T Padded Bat Cover (Included)</span>
                   </div>
                 </div>
 
                 <p className="text-xs text-neutral-600 leading-relaxed">
-                  Our bat technicians have begun preparing your order. You will receive an SMS and WhatsApp dispatch alert with tracking.
+                  Our bat craftsman will contact you for a quick WhatsApp video call to inspect your piece before packing.
                 </p>
 
                 <div className="space-y-2 pt-2">
                   <a
-                    href={`https://wa.me/919217679479?text=Hi%20Cricket%20Adda,%20I%20just%20placed%20order%20${orderId}%20for%20₹${formatINR(subtotal)}.`}
+                    href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=${generateWhatsAppOrderSummary()}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2.5 bg-[#25D366] hover:bg-[#1fb855] text-white text-xs font-bold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                    className="w-full py-3 bg-[#25D366] hover:bg-[#1fb855] text-white text-xs font-bold rounded-xl flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-md"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    <span>Track on WhatsApp (+91 92176 79479)</span>
+                    <span>Send Order to WhatsApp ({SELLER_INFO.primaryPhone})</span>
                   </a>
 
                   <button
                     onClick={handleFinish}
-                    className="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold rounded-lg transition-colors cursor-pointer"
+                    className="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer"
                   >
-                    Continue Shopping
+                    Continue Browsing Bats
                   </button>
                 </div>
               </div>
@@ -160,8 +177,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     required
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    placeholder="e.g. Adarsh Yadav"
-                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded text-xs focus:outline-none focus:border-[#f15b28]"
+                    placeholder="e.g. Rohit Sharma"
+                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:border-[#f15b28]"
                   />
                 </div>
 
@@ -174,8 +191,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     required
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    placeholder="e.g. 92176 79479"
-                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded text-xs focus:outline-none focus:border-[#f15b28]"
+                    placeholder="e.g. 9876543210"
+                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:border-[#f15b28]"
                   />
                 </div>
 
@@ -188,25 +205,25 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     rows={2}
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
-                    placeholder="House/Apartment, Street, City, State, PIN"
-                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded text-xs focus:outline-none focus:border-[#f15b28]"
+                    placeholder="Full street address, city, state and PIN code"
+                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:border-[#f15b28]"
                   />
                 </div>
 
-                <div className="p-3 bg-neutral-50 rounded border border-neutral-200 text-xs space-y-1">
+                <div className="p-3 bg-neutral-50 rounded-xl border border-neutral-200 text-xs space-y-1">
                   <div className="flex justify-between font-bold text-neutral-900">
                     <span>Order Amount:</span>
                     <span>₹{formatINR(subtotal)}/-</span>
                   </div>
-                  <div className="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                  <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Free Express Transit Insurance & Cash on Delivery Available</span>
+                    <span>Free Padded 7T7T Bat Cover + Video Inspection Included</span>
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3 bg-[#f15b28] hover:bg-[#c93c0d] text-white text-xs font-bold rounded-lg uppercase tracking-wider transition-colors cursor-pointer mt-4"
+                  className="w-full py-3 bg-[#f15b28] hover:bg-[#c93c0d] text-white text-xs font-bold rounded-xl uppercase tracking-wider transition-colors cursor-pointer mt-4 shadow-md"
                 >
                   Confirm Order · ₹{formatINR(subtotal)}
                 </button>
@@ -219,33 +236,31 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
                 <h3 className="text-base font-bold text-neutral-800">Your Bag is Empty</h3>
                 <p className="text-xs text-neutral-500 max-w-xs mx-auto">
-                  Looks like you haven't selected your weapon yet. Explore our handcrafted English and Kashmir willow bats!
+                  Explore our handcrafted 7T7T tennis cricket bats - Gold Edition, Black Monster, Grey Edition, and One Side Hero!
                 </p>
                 <button
                   onClick={onClose}
                   className="mt-4 px-6 py-2 bg-[#f15b28] text-white text-xs font-bold rounded-full hover:bg-[#c93c0d] transition-colors cursor-pointer"
                 >
-                  Explore Bats
+                  Browse 7T7T Bats
                 </button>
               </div>
             ) : (
               /* Itemized Cart List */
               <div className="space-y-3">
                 {items.map((item, idx) => {
-                  const itemUnitPrice = item.bat.finalPrice + (item.withKnocking ? 799 : 0);
                   return (
                     <div
-                      key={`${item.bat.id}-${item.size}-${idx}`}
-                      className="flex gap-3 p-3 bg-neutral-50 rounded-lg border border-neutral-200 relative"
+                      key={`${item.bat.id}-${item.selectedWeight}-${idx}`}
+                      className="flex gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-200 relative"
                     >
                       {/* Thumbnail */}
-                      <div className="w-16 h-20 bg-white rounded border border-neutral-200 p-1 flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="w-16 h-20 bg-white rounded-lg border border-neutral-200 p-1 flex items-center justify-center shrink-0 overflow-hidden">
                         {item.bat.imageUrl ? (
                           <img
                             src={item.bat.imageUrl}
                             alt={item.bat.name}
-                            referrerPolicy="no-referrer"
-                            className="w-full h-full object-contain mix-blend-multiply"
+                            className="w-full h-full object-contain"
                           />
                         ) : (
                           <CricketBatIllustration bat={item.bat} className="w-12 h-16" />
@@ -259,13 +274,14 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                             {item.bat.name}
                           </h4>
                           <div className="flex items-center gap-2 mt-0.5 text-[11px] text-neutral-500">
-                            <span>Size: <strong>{item.size}</strong></span>
-                            <span>·</span>
-                            <span>{item.bat.willowType}</span>
+                            <span className="flex items-center gap-1 font-semibold text-neutral-700">
+                              <Scale className="w-3 h-3 text-[#f15b28]" />
+                              <span>Weight: {item.selectedWeight}</span>
+                            </span>
                           </div>
-                          {item.withKnocking && (
-                            <span className="inline-block mt-1 text-[10px] font-semibold text-amber-700 bg-amber-100/70 px-1.5 py-0.5 rounded">
-                              + Pro Knocking (₹799)
+                          {item.bat.freeCover && (
+                            <span className="inline-block mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.2 rounded">
+                              + Free 7T7T Cover
                             </span>
                           )}
                         </div>
@@ -273,10 +289,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                         {/* Price & Steppers */}
                         <div className="flex items-center justify-between mt-2">
                           <span className="text-xs font-bold text-neutral-900 font-mono">
-                            ₹{formatINR(itemUnitPrice * item.quantity)}
+                            ₹{formatINR(item.bat.finalPrice * item.quantity)}
                           </span>
 
-                          <div className="flex items-center gap-1.5 border border-neutral-300 rounded bg-white px-1">
+                          <div className="flex items-center gap-1.5 border border-neutral-300 rounded-lg bg-white px-1">
                             <button
                               onClick={() => onUpdateQuantity(idx, item.quantity - 1)}
                               className="p-1 text-neutral-500 hover:text-neutral-900 cursor-pointer"
@@ -322,12 +338,12 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Shipping & Handling</span>
-                  <span className="text-emerald-600 font-bold">FREE</span>
+                  <span>Free 7T7T Bat Cover</span>
+                  <span className="text-emerald-600 font-bold">INCLUDED</span>
                 </div>
-                <div className="flex justify-between text-neutral-400 text-[11px]">
-                  <span>Taxes (GST)</span>
-                  <span>Included in prices</span>
+                <div className="flex justify-between">
+                  <span>Pan-India Courier</span>
+                  <span className="text-emerald-600 font-bold">FREE</span>
                 </div>
                 <div className="border-t border-neutral-200 pt-2 flex justify-between text-sm font-bold text-neutral-900">
                   <span>Total Amount</span>
@@ -337,7 +353,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
               <button
                 onClick={() => setIsCheckingOut(true)}
-                className="w-full py-3 bg-[#f15b28] hover:bg-[#c93c0d] text-white text-xs font-bold rounded-lg uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
+                className="w-full py-3 bg-[#f15b28] hover:bg-[#c93c0d] text-white text-xs font-bold rounded-xl uppercase tracking-wider flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
               >
                 <span>Proceed to Checkout</span>
                 <ArrowRight className="w-4 h-4" />
@@ -345,7 +361,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
               <div className="text-[10px] text-center text-neutral-500 flex items-center justify-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>100% Secure Checkout · Verified Cricket Adda Guarantee</span>
+                <span>Verified 7T7T Direct Guarantee · Cash on Delivery</span>
               </div>
             </div>
           )}

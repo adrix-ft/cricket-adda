@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Heart, Trash2, ShoppingBag } from 'lucide-react';
+import { X, Heart, Trash2, ShoppingBag, Scale } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { CricketBatIllustration } from './CricketBatIllustration';
 
@@ -21,15 +21,12 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
   if (!isOpen) return null;
 
   const formatINR = (val: number) => {
-    return val.toLocaleString('en-IN', {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    });
+    return val.toLocaleString('en-IN');
   };
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
-      <div onClick={onClose} className="absolute inset-0 bg-black/50 backdrop-blur-xs transition-opacity" />
+      <div onClick={onClose} className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity" />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
@@ -58,22 +55,21 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                 </div>
                 <h3 className="text-sm font-bold text-neutral-800">No Bats Saved Yet</h3>
                 <p className="text-xs text-neutral-500 max-w-xs mx-auto">
-                  Click the heart icon on any bat in the catalog to save it to your wishlist.
+                  Click the heart icon on any 7T7T bat in the catalog to save it to your wishlist.
                 </p>
               </div>
             ) : (
               wishlist.map((bat) => (
                 <div
                   key={bat.id}
-                  className="flex gap-3 p-3 bg-neutral-50 rounded-lg border border-neutral-200 relative items-center"
+                  className="flex gap-3 p-3 bg-neutral-50 rounded-xl border border-neutral-200 relative items-center"
                 >
-                  <div className="w-16 h-20 bg-white rounded border border-neutral-200 p-1 flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="w-16 h-20 bg-white rounded-lg border border-neutral-200 p-1 flex items-center justify-center shrink-0 overflow-hidden">
                     {bat.imageUrl ? (
                       <img
                         src={bat.imageUrl}
                         alt={bat.name}
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-contain mix-blend-multiply"
+                        className="w-full h-full object-contain"
                       />
                     ) : (
                       <CricketBatIllustration bat={bat} className="w-12 h-16" />
@@ -81,11 +77,15 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                   </div>
 
                   <div className="flex-1 min-w-0">
+                    <span className="text-[10px] font-bold text-[#f15b28] uppercase">{bat.model}</span>
                     <h4 className="text-xs font-bold text-neutral-900 truncate">
                       {bat.name}
                     </h4>
-                    <span className="text-[11px] text-neutral-500 block">{bat.willowType}</span>
-                    <span className="text-xs font-bold text-[#f15b28] font-mono mt-1 block">
+                    <span className="text-[11px] text-neutral-500 flex items-center gap-1 mt-0.5">
+                      <Scale className="w-3 h-3 text-[#f15b28]" />
+                      <span>{bat.weightRange}</span>
+                    </span>
+                    <span className="text-xs font-black text-neutral-900 font-mono mt-1 block">
                       ₹{formatINR(bat.finalPrice)}/-
                     </span>
                   </div>
@@ -96,7 +96,7 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                         onMoveToCart(bat);
                         onRemoveFromWishlist(bat);
                       }}
-                      className="p-2 bg-[#f15b28] hover:bg-[#c93c0d] text-white rounded shadow-xs transition-colors cursor-pointer"
+                      className="p-2 bg-[#f15b28] hover:bg-[#c93c0d] text-white rounded-lg shadow-xs transition-colors cursor-pointer"
                       title="Move to Bag"
                     >
                       <ShoppingBag className="w-3.5 h-3.5" />

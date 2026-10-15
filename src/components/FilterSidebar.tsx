@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, RotateCcw } from 'lucide-react';
-import { BatRange, BatSize, SortOption, WillowType } from '../types/bat';
+import { RotateCcw, Scale, Shield, Phone, MessageCircle } from 'lucide-react';
+import { BatCategory, BatWeightClass, SortOption } from '../types/bat';
+import { SELLER_INFO } from '../data/bats';
 
 interface FilterSidebarProps {
-  selectedSizes: BatSize[];
-  onToggleSize: (size: BatSize) => void;
-  selectedWillowTypes: WillowType[];
-  onToggleWillow: (willow: WillowType) => void;
-  selectedRanges: BatRange[];
-  onToggleRange: (range: BatRange) => void;
+  selectedModel: BatCategory;
+  onSelectModel: (model: BatCategory) => void;
+  selectedWeightClass: BatWeightClass;
+  onSelectWeightClass: (weight: BatWeightClass) => void;
+  selectedBallType: string;
+  onSelectBallType: (ball: string) => void;
   priceRange: [number, number];
   onPriceChange: (min: number, max: number) => void;
   sortBy: SortOption;
@@ -18,12 +19,12 @@ interface FilterSidebarProps {
 }
 
 export const FilterSidebar: React.FC<FilterSidebarProps> = ({
-  selectedSizes,
-  onToggleSize,
-  selectedWillowTypes,
-  onToggleWillow,
-  selectedRanges,
-  onToggleRange,
+  selectedModel,
+  onSelectModel,
+  selectedWeightClass,
+  onSelectWeightClass,
+  selectedBallType,
+  onSelectBallType,
   priceRange,
   onPriceChange,
   sortBy,
@@ -31,293 +32,212 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onResetFilters,
   activeFilterCount,
 }) => {
-  // Accordion state
-  const [openSections, setOpenSections] = useState({
-    size: true,
-    willow: true,
-    range: true,
-    price: true,
-    sort: true,
-  });
-
-  // Local draft price inputs
   const [minInput, setMinInput] = useState<number>(priceRange[0]);
   const [maxInput, setMaxInput] = useState<number>(priceRange[1]);
 
-  const toggleSection = (section: keyof typeof openSections) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
-  };
+  const models: { label: string; value: BatCategory; count: string }[] = [
+    { label: 'All Bats', value: 'All', count: '6' },
+    { label: '7T7T Gold Edition', value: '7T7T Gold Edition', count: '1' },
+    { label: 'Black Monster', value: 'Black Monster', count: '2' },
+    { label: 'Grey Edition', value: 'Grey Edition', count: '2' },
+    { label: 'One Side Hero', value: 'One Side Hero', count: '1' },
+  ];
+
+  const weightClasses: { label: string; value: BatWeightClass; desc: string }[] = [
+    { label: 'All Weights', value: 'All', desc: '950g to 1065g' },
+    { label: 'Under 980g', value: 'Under 980g', desc: 'Featherlight (957g / 974g on scale)' },
+    { label: '1000g - 1035g', value: '1000g - 1035g', desc: 'Balanced Power & Pickup' },
+    { label: '1040g+', value: '1040g+', desc: 'Heavy Monster Power (1065g tag)' },
+  ];
+
+  const ballTypes = ['All', 'Hard Tennis', 'Light Tennis', 'Box Cricket'];
 
   const handleApplyPrice = () => {
-    const min = Math.max(2555, Math.min(minInput, maxInput - 500));
-    const max = Math.min(129999, Math.max(maxInput, minInput + 500));
+    const min = Math.max(400, Math.min(minInput, maxInput - 200));
+    const max = Math.min(4500, Math.max(maxInput, minInput + 200));
     setMinInput(min);
     setMaxInput(max);
     onPriceChange(min, max);
   };
 
-  const allSizes: BatSize[] = ['1', '2', '3', '4', '5', '6', 'Harrow', 'Mens', 'Compact'];
-
-  const willowOptions: { type: WillowType; count: number }[] = [
-    { type: 'English Willow', count: 104 },
-    { type: 'Kashmir Willow', count: 65 },
-    { type: 'Incredible Willow', count: 3 },
-  ];
-
-  const rangeOptions: BatRange[] = [
-    'INTENSE',
-    'CONDOR',
-    'SPLIIT',
-    'XLITE',
-    'BLAK',
-    'BLU',
-    'WILDFIRE',
-    'ROAR',
-    'CYNOS',
-    'THUMPA',
-    'SUPERNATURAL',
-  ];
-
-  const sortOptions: { id: SortOption; label: string }[] = [
-    { id: 'position', label: 'Position' },
-    { id: 'name-asc', label: 'Product Name A-Z' },
-    { id: 'price-high-low', label: 'Price - High to Low' },
-    { id: 'price-low-high', label: 'Price - Low to High' },
-  ];
-
   return (
-    <aside className="w-full lg:w-64 shrink-0 font-sans text-[#24201e] space-y-5">
-      {/* Sidebar Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
-        <h2 className="text-base font-bold tracking-tight text-[#18181b]">
-          Sort and Filter
-        </h2>
+    <aside className="w-full lg:w-72 shrink-0 space-y-5">
+      {/* Filter Header */}
+      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs flex items-center justify-between">
+        <div>
+          <h2 className="text-sm font-extrabold text-neutral-900 uppercase tracking-wide">
+            Filter Bats
+          </h2>
+          <span className="text-[11px] text-neutral-500">
+            {activeFilterCount > 0 ? `${activeFilterCount} active filters` : 'Handcrafted 7T7T range'}
+          </span>
+        </div>
         {activeFilterCount > 0 && (
           <button
             onClick={onResetFilters}
-            className="text-xs text-[#f15b28] hover:text-[#c93c0d] font-semibold flex items-center gap-1 cursor-pointer"
+            className="flex items-center gap-1 text-[11px] font-bold text-[#f15b28] hover:underline cursor-pointer"
           >
-            <RotateCcw className="w-3 h-3" />
+            <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset</span>
           </button>
         )}
       </div>
 
-      {/* 1. Size Accordion */}
-      <div className="border-b border-neutral-200 pb-5">
-        <button
-          onClick={() => toggleSection('size')}
-          className="w-full flex items-center justify-between py-2 text-sm font-bold text-neutral-900 cursor-pointer"
-        >
-          <span>Size</span>
-          {openSections.size ? (
-            <ChevronUp className="w-4 h-4 text-neutral-500" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-neutral-500" />
-          )}
-        </button>
-
-        {openSections.size && (
-          <div className="mt-3 grid grid-cols-3 gap-2">
-            {allSizes.map((size) => {
-              const isSelected = selectedSizes.includes(size);
-              return (
-                <button
-                  key={size}
-                  onClick={() => onToggleSize(size)}
-                  className={`py-2 px-2 text-xs font-semibold rounded border text-center transition-colors cursor-pointer ${
-                    isSelected
-                      ? 'bg-[#f15b28] text-white border-[#f15b28] shadow-xs'
-                      : 'bg-white text-neutral-700 border-neutral-200 hover:border-neutral-400'
-                  }`}
-                >
-                  {size}
-                </button>
-              );
-            })}
-          </div>
-        )}
+      {/* 1. Bat Model Selection */}
+      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
+        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+          Bat Model
+        </h3>
+        <div className="space-y-1.5">
+          {models.map((m) => {
+            const isSelected = selectedModel === m.value;
+            return (
+              <button
+                key={m.value}
+                onClick={() => onSelectModel(m.value)}
+                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#f15b28] text-white shadow-xs'
+                    : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700'
+                }`}
+              >
+                <span>{m.label}</span>
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                  isSelected ? 'bg-white/20 text-white' : 'bg-neutral-200 text-neutral-600'
+                }`}>
+                  {m.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* 2. Willow Type Accordion */}
-      <div className="border-b border-neutral-200 pb-5">
-        <button
-          onClick={() => toggleSection('willow')}
-          className="w-full flex items-center justify-between py-2 text-sm font-bold text-neutral-900 cursor-pointer"
-        >
-          <span>Willow Type</span>
-          {openSections.willow ? (
-            <ChevronUp className="w-4 h-4 text-neutral-500" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-neutral-500" />
-          )}
-        </button>
-
-        {openSections.willow && (
-          <div className="mt-2 space-y-2.5">
-            {willowOptions.map((opt) => {
-              const isChecked = selectedWillowTypes.includes(opt.type);
-              return (
-                <label
-                  key={opt.type}
-                  className="flex items-center gap-2.5 text-xs text-neutral-700 hover:text-neutral-900 cursor-pointer select-none"
-                >
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => onToggleWillow(opt.type)}
-                    className="w-4 h-4 rounded text-[#f15b28] border-neutral-300 focus:ring-[#f15b28] cursor-pointer accent-[#f15b28]"
-                  />
-                  <span>{opt.type}</span>
-                  <span className="text-neutral-400 font-normal">({opt.count})</span>
-                </label>
-              );
-            })}
-          </div>
-        )}
+      {/* 2. Weight Class */}
+      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider flex items-center gap-1.5">
+            <Scale className="w-3.5 h-3.5 text-[#f15b28]" />
+            <span>Weight Range</span>
+          </h3>
+        </div>
+        <div className="space-y-1.5">
+          {weightClasses.map((w) => {
+            const isSelected = selectedWeightClass === w.value;
+            return (
+              <button
+                key={w.value}
+                onClick={() => onSelectWeightClass(w.value)}
+                className={`w-full text-left p-2.5 rounded-lg border text-xs transition-colors cursor-pointer ${
+                  isSelected
+                    ? 'border-[#f15b28] bg-orange-50 text-neutral-900 font-bold'
+                    : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-700'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span>{w.label}</span>
+                  {isSelected && <span className="w-2 h-2 rounded-full bg-[#f15b28]" />}
+                </div>
+                <div className="text-[10px] text-neutral-500 font-normal mt-0.5">
+                  {w.desc}
+                </div>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* 3. Range Accordion */}
-      <div className="border-b border-neutral-200 pb-5">
-        <button
-          onClick={() => toggleSection('range')}
-          className="w-full flex items-center justify-between py-2 text-sm font-bold text-neutral-900 cursor-pointer"
-        >
-          <span>Range</span>
-          {openSections.range ? (
-            <ChevronUp className="w-4 h-4 text-neutral-500" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-neutral-500" />
-          )}
-        </button>
-
-        {openSections.range && (
-          <div className="mt-2 max-h-52 overflow-y-auto pr-1 space-y-2">
-            {rangeOptions.map((rng) => {
-              const isChecked = selectedRanges.includes(rng);
-              return (
-                <label
-                  key={rng}
-                  className="flex items-center gap-2.5 text-xs font-medium text-neutral-700 hover:text-neutral-900 cursor-pointer select-none"
-                >
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => onToggleRange(rng)}
-                    className="w-4 h-4 rounded text-[#f15b28] border-neutral-300 focus:ring-[#f15b28] cursor-pointer accent-[#f15b28]"
-                  />
-                  <span>{rng}</span>
-                </label>
-              );
-            })}
-          </div>
-        )}
+      {/* 3. Ball Compatibility */}
+      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
+        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+          Ball Type
+        </h3>
+        <div className="flex flex-wrap gap-1.5">
+          {ballTypes.map((b) => {
+            const isSelected = selectedBallType === b;
+            return (
+              <button
+                key={b}
+                onClick={() => onSelectBallType(b)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                  isSelected
+                    ? 'bg-neutral-900 text-white shadow-xs'
+                    : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                }`}
+              >
+                {b}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* 4. Price Range Accordion with dual inputs and Apply */}
-      <div className="border-b border-neutral-200 pb-5">
+      {/* 4. Price Filter */}
+      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
+        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+          Price Range (₹)
+        </h3>
+        <div className="flex items-center gap-2 text-xs">
+          <input
+            type="number"
+            value={minInput}
+            onChange={(e) => setMinInput(Number(e.target.value))}
+            className="w-full px-2 py-1.5 bg-neutral-50 border border-neutral-300 rounded text-neutral-800 text-center font-mono font-bold"
+            step="100"
+          />
+          <span className="text-neutral-400">to</span>
+          <input
+            type="number"
+            value={maxInput}
+            onChange={(e) => setMaxInput(Number(e.target.value))}
+            className="w-full px-2 py-1.5 bg-neutral-50 border border-neutral-300 rounded text-neutral-800 text-center font-mono font-bold"
+            step="100"
+          />
+        </div>
         <button
-          onClick={() => toggleSection('price')}
-          className="w-full flex items-center justify-between py-2 text-sm font-bold text-neutral-900 cursor-pointer"
+          onClick={handleApplyPrice}
+          className="w-full py-1.5 bg-neutral-800 hover:bg-neutral-900 text-white rounded text-xs font-bold transition-colors cursor-pointer"
         >
-          <span>Price Range</span>
-          {openSections.price ? (
-            <ChevronUp className="w-4 h-4 text-neutral-500" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-neutral-500" />
-          )}
+          Apply Price Filter
         </button>
-
-        {openSections.price && (
-          <div className="mt-3 space-y-3">
-            {/* Slider track visual */}
-            <div className="px-1">
-              <input
-                type="range"
-                min="2555"
-                max="129999"
-                step="500"
-                value={maxInput}
-                onChange={(e) => setMaxInput(Number(e.target.value))}
-                className="w-full accent-[#f15b28] cursor-pointer"
-              />
-            </div>
-
-            {/* Min and Max input fields matching screenshot format */}
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1">
-                <input
-                  type="number"
-                  value={minInput}
-                  onChange={(e) => setMinInput(Number(e.target.value))}
-                  className="w-full px-2.5 py-1.5 text-xs border border-neutral-300 rounded text-neutral-800 focus:outline-none focus:border-[#f15b28] font-mono"
-                />
-              </div>
-              <span className="text-neutral-400 font-bold">-</span>
-              <div className="relative flex-1">
-                <input
-                  type="number"
-                  value={maxInput}
-                  onChange={(e) => setMaxInput(Number(e.target.value))}
-                  className="w-full px-2.5 py-1.5 text-xs border border-neutral-300 rounded text-neutral-800 focus:outline-none focus:border-[#f15b28] font-mono"
-                />
-              </div>
-            </div>
-
-            {/* Orange Apply Button */}
-            <button
-              onClick={handleApplyPrice}
-              className="w-full py-2 bg-[#f15b28] hover:bg-[#c93c0d] text-white text-xs font-bold rounded transition-colors cursor-pointer uppercase tracking-wider"
-            >
-              Apply
-            </button>
-          </div>
-        )}
       </div>
 
-      {/* 5. Sort By Radio Accordion */}
-      <div className="pb-4">
-        <button
-          onClick={() => toggleSection('sort')}
-          className="w-full flex items-center justify-between py-2 text-sm font-bold text-neutral-900 cursor-pointer"
-        >
-          <span>Sort By</span>
-          {openSections.sort ? (
-            <ChevronUp className="w-4 h-4 text-neutral-500" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-neutral-500" />
-          )}
-        </button>
-
-        {openSections.sort && (
-          <div className="mt-2 space-y-2.5">
-            {sortOptions.map((opt) => {
-              const isSelected = sortBy === opt.id;
-              return (
-                <label
-                  key={opt.id}
-                  onClick={() => onSortChange(opt.id)}
-                  className="flex items-center gap-2.5 text-xs text-neutral-700 hover:text-neutral-900 cursor-pointer select-none"
-                >
-                  <span
-                    className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${
-                      isSelected
-                        ? 'border-[#f15b28]'
-                        : 'border-neutral-300 bg-white'
-                    }`}
-                  >
-                    {isSelected && (
-                      <span className="w-2 h-2 rounded-full bg-[#f15b28]" />
-                    )}
-                  </span>
-                  <span className={isSelected ? 'font-bold text-neutral-900' : ''}>
-                    {opt.label}
-                  </span>
-                </label>
-              );
-            })}
+      {/* 5. Direct Local Seller Contact Box */}
+      <div className="bg-gradient-to-br from-[#1c1917] to-[#292524] text-white p-4 rounded-xl shadow-md space-y-3">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[#f15b28] flex items-center justify-center text-white">
+            <Phone className="w-4 h-4" />
           </div>
-        )}
+          <div>
+            <h4 className="text-xs font-bold text-white uppercase tracking-wide">
+              Direct Seller Contact
+            </h4>
+            <span className="text-[10px] text-neutral-300">Talk directly to bat crafter</span>
+          </div>
+        </div>
+
+        <p className="text-[11px] text-neutral-300 leading-relaxed">
+          Need a specific bat weight (e.g. exactly 957g or 1065g)? Message directly for live video call inspection.
+        </p>
+
+        <div className="space-y-1.5 pt-1">
+          <a
+            href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi%20Cricket%20Adda,%20I%20want%20to%20select%20a%207T7T%20bat%20with%20custom%20weight.`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <MessageCircle className="w-4 h-4" />
+            <span>WhatsApp: 8669937070</span>
+          </a>
+          <a
+            href={`tel:${SELLER_INFO.secondaryPhone}`}
+            className="w-full py-1.5 px-3 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+          >
+            <Phone className="w-3.5 h-3.5" />
+            <span>Call: 9619955576</span>
+          </a>
+        </div>
       </div>
     </aside>
   );
