@@ -1,0 +1,6 @@
+{
+  "name": "Cricket Adda - Buy Handcrafted Cricket Bats Online",
+  "description": "Buy top quality handcrafted cricket bats online in India at Cricket Adda. Explore English willow, Kashmir willow, and tennis cricket bats with custom knocking and expert WhatsApp support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
