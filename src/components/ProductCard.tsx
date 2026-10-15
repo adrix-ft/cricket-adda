@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Eye, ShoppingBag, MessageCircle, Scale, ShieldCheck } from 'lucide-react';
+import { Heart, Eye, ShoppingBag, MessageCircle, Scale, Camera, Sparkles } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 import { CricketBatIllustration } from './CricketBatIllustration';
@@ -33,50 +33,46 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
     e.stopPropagation();
     const msg = encodeURIComponent(
-      `Hi Cricket Adda, I want to order the ${bat.name} (₹${formatINR(bat.finalPrice)}). Please send available weights and video inspection.`
+      `Hi, I want to order the ${bat.name} (₹${formatINR(bat.finalPrice)}). Please share video inspection.`
     );
     window.open(`https://wa.me/${SELLER_INFO.whatsappNumber}?text=${msg}`, '_blank');
   };
 
   return (
-    <div className="group relative bg-white border border-neutral-200 hover:border-[#f15b28]/60 rounded-xl transition-all duration-200 flex flex-col justify-between hover:shadow-lg overflow-hidden">
-      {/* Top Floating Badges */}
-      <div className="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-start justify-between pointer-events-none">
-        <div className="flex flex-col gap-1 pointer-events-auto">
-          {bat.isBestseller && (
-            <span className="text-[10px] font-extrabold uppercase tracking-wider bg-[#f15b28] text-white px-2 py-0.5 rounded shadow-xs">
-              Bestseller
-            </span>
-          )}
+    <div className="group relative bg-white border border-neutral-200/80 hover:border-neutral-400 rounded-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden hover:shadow-lg">
+      {/* Top Floating Controls */}
+      <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
+        {/* Left: Weight / Model Micro-badge */}
+        <div className="flex items-center gap-1.5 pointer-events-auto">
           {bat.verifiedWeight && (
-            <span className="text-[10px] font-bold tracking-tight bg-neutral-900 text-amber-300 px-2 py-0.5 rounded shadow-xs flex items-center gap-1">
-              <Scale className="w-2.5 h-2.5" />
-              <span>{bat.verifiedWeight.split('(')[0].trim()}</span>
+            <span className="text-[10px] font-bold tracking-tight bg-neutral-900/90 text-white px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
+              <Scale className="w-2.5 h-2.5 text-[#f15b28]" />
+              <span>{bat.verifiedWeight.split('(')[0].replace('Balanced Weight', '').trim()}</span>
             </span>
           )}
         </div>
 
-        {/* Wishlist Button */}
+        {/* Right: Wishlist Icon Button */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             onToggleWishlist(bat);
           }}
-          className={`w-8 h-8 rounded-full border flex items-center justify-center transition-colors pointer-events-auto cursor-pointer shadow-xs ${
+          className={`w-7 h-7 rounded-full border flex items-center justify-center transition-colors pointer-events-auto cursor-pointer shadow-xs ${
             isWishlisted
               ? 'bg-rose-50 border-rose-200 text-rose-600'
-              : 'bg-white border-neutral-200 text-neutral-400 hover:text-rose-500 hover:border-neutral-300'
+              : 'bg-white/90 backdrop-blur-xs border-neutral-200 text-neutral-400 hover:text-rose-500'
           }`}
-          title={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          title={isWishlisted ? 'Saved' : 'Save'}
         >
-          <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}`} />
+          <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}`} />
         </button>
       </div>
 
       {/* Product Image Area */}
       <div
         onClick={() => onQuickView(bat)}
-        className="relative w-full aspect-[4/5] bg-gradient-to-b from-[#fbfbfa] to-[#f4f2ee] p-3 flex items-center justify-center cursor-pointer overflow-hidden"
+        className="relative w-full aspect-[4/5] bg-gradient-to-b from-neutral-50 to-neutral-100/60 p-4 flex items-center justify-center cursor-pointer overflow-hidden"
       >
         {!imageError ? (
           <img
@@ -90,99 +86,117 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <CricketBatIllustration bat={bat} />
         )}
 
-        {/* Image Mode Switcher (Studio vs Workshop) */}
+        {/* Minimal Studio vs Real Toggle Symbol */}
         {bat.realImages.length > 0 && (
-          <div className="absolute top-12 left-2.5 z-20">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowRealPhoto(!showRealPhoto);
-              }}
-              className="text-[9px] font-bold px-2 py-1 rounded bg-black/75 hover:bg-black text-white backdrop-blur-xs flex items-center gap-1 shadow-xs cursor-pointer"
-            >
-              <span>{showRealPhoto ? '✨ Studio View' : '📸 Real Photo'}</span>
-            </button>
-          </div>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowRealPhoto(!showRealPhoto);
+            }}
+            className="absolute bottom-3 left-3 z-20 text-[10px] font-bold px-2 py-1 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-xs flex items-center gap-1 shadow-xs cursor-pointer transition-transform hover:scale-105"
+            title={showRealPhoto ? 'Switch to Studio View' : 'Switch to Real Photo'}
+          >
+            {showRealPhoto ? (
+              <>
+                <Sparkles className="w-3 h-3 text-amber-300" />
+                <span>Studio</span>
+              </>
+            ) : (
+              <>
+                <Camera className="w-3 h-3 text-white" />
+                <span>Real</span>
+              </>
+            )}
+          </button>
         )}
 
-        {/* Free Cover Tag */}
-        {bat.freeCover && (
-          <span className="absolute bottom-2.5 left-2.5 bg-emerald-700 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-xs z-10 flex items-center gap-1">
-            <ShieldCheck className="w-3 h-3" />
-            <span>Free 7T7T Cover</span>
-          </span>
-        )}
-
-        {/* Hover Action Overlay */}
-        <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2 z-20">
+        {/* Minimal Action Overlay - Symbol Only */}
+        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onQuickView(bat);
             }}
-            className="flex-1 py-2 px-3 bg-white hover:bg-neutral-100 text-[#18181b] text-xs font-bold rounded-lg shadow-md flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white text-neutral-800 hover:bg-neutral-100 shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
+            title="Quick Preview"
           >
             <Eye className="w-3.5 h-3.5" />
-            <span>Quick View</span>
           </button>
+
           <button
             onClick={(e) => {
               e.stopPropagation();
               onAddToCart(bat);
             }}
-            className="p-2 bg-[#f15b28] hover:bg-[#d64716] text-white rounded-lg shadow-md transition-colors cursor-pointer"
-            title="Instant Add to Cart"
+            className="w-8 h-8 rounded-full bg-neutral-900 text-white hover:bg-black shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
+            title="Add to Bag"
           >
-            <ShoppingBag className="w-4 h-4" />
+            <ShoppingBag className="w-3.5 h-3.5" />
+          </button>
+
+          <button
+            onClick={handleWhatsAppOrder}
+            className="w-8 h-8 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
+            title="Order via WhatsApp"
+          >
+            <MessageCircle className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
-      {/* Card Info & Pricing */}
-      <div className="p-4 flex flex-col justify-between flex-grow bg-white">
+      {/* Card Information - Clean & Less Text */}
+      <div className="p-4 flex flex-col justify-between flex-grow bg-white space-y-2">
         <div>
-          {/* Model Tag */}
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#f15b28]">
+          {/* Micro Model Tag */}
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
             {bat.model}
           </span>
 
-          {/* Product Name */}
+          {/* Bat Name */}
           <h3
             onClick={() => onQuickView(bat)}
-            className="text-xs sm:text-[13px] font-bold text-neutral-900 hover:text-[#f15b28] transition-colors line-clamp-2 min-h-[36px] cursor-pointer mt-0.5 mb-1.5"
+            className="text-xs sm:text-[13px] font-bold text-neutral-900 hover:text-[#f15b28] transition-colors line-clamp-1 cursor-pointer mt-0.5"
           >
             {bat.name}
           </h3>
 
-          {/* Scoop & Weight Tag */}
-          <div className="text-[11px] text-neutral-500 flex items-center gap-2 mb-2">
-            <span>Weight: <strong>{bat.weightRange}</strong></span>
+          {/* Micro Specs */}
+          <div className="text-[11px] text-neutral-500 flex items-center gap-2 mt-1">
+            <span>{bat.weightRange}</span>
+            <span>•</span>
+            <span>{bat.edgeThickness.split(' ')[0]} edge</span>
           </div>
         </div>
 
-        {/* Pricing & WhatsApp Quick Order */}
-        <div className="pt-2 border-t border-neutral-100 space-y-2">
-          <div className="flex items-baseline justify-between">
-            <div>
-              <div className="text-[11px] text-neutral-500 font-mono">
-                <span className="line-through">₹{formatINR(bat.mrp)}</span>
-                <span className="text-[#f15b28] font-bold ml-1">
-                  ({bat.discountPercent}% OFF)
-                </span>
-              </div>
-              <div className="text-base sm:text-lg font-black text-neutral-900 font-mono tracking-tight">
-                ₹{formatINR(bat.finalPrice)}/-
-              </div>
-            </div>
+        {/* Price & Quick Action */}
+        <div className="pt-2 border-t border-neutral-100 flex items-center justify-between">
+          <div className="flex items-baseline gap-1.5 font-mono">
+            <span className="text-base font-black text-neutral-900">
+              ₹{formatINR(bat.finalPrice)}
+            </span>
+            <span className="text-xs text-neutral-400 line-through">
+              ₹{formatINR(bat.mrp)}
+            </span>
+          </div>
 
-            {/* Direct WhatsApp Action Button */}
+          {/* Quick Add Symbol Button */}
+          <div className="flex items-center gap-1">
             <button
               onClick={handleWhatsAppOrder}
-              className="py-1.5 px-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold flex items-center gap-1 shadow-xs transition-colors cursor-pointer"
-              title="Order directly on WhatsApp"
+              className="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 flex items-center justify-center transition-colors cursor-pointer"
+              title="WhatsApp"
             >
-              <MessageCircle className="w-3 h-3" />
-              <span>WhatsApp</span>
+              <MessageCircle className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToCart(bat);
+              }}
+              className="w-7 h-7 rounded-lg bg-neutral-900 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
+              title="Add"
+            >
+              <ShoppingBag className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RotateCcw, Scale, Shield, Phone, MessageCircle } from 'lucide-react';
+import { RotateCcw, Scale, Phone, MessageCircle, Check } from 'lucide-react';
 import { BatCategory, BatWeightClass, SortOption } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 
@@ -27,30 +27,33 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onSelectBallType,
   priceRange,
   onPriceChange,
-  sortBy,
-  onSortChange,
   onResetFilters,
   activeFilterCount,
 }) => {
   const [minInput, setMinInput] = useState<number>(priceRange[0]);
   const [maxInput, setMaxInput] = useState<number>(priceRange[1]);
 
-  const models: { label: string; value: BatCategory; count: string }[] = [
-    { label: 'All Bats', value: 'All', count: '6' },
-    { label: '7T7T Gold Edition', value: '7T7T Gold Edition', count: '1' },
-    { label: 'Black Monster', value: 'Black Monster', count: '2' },
-    { label: 'Grey Edition', value: 'Grey Edition', count: '2' },
-    { label: 'One Side Hero', value: 'One Side Hero', count: '1' },
+  const models: { label: string; value: BatCategory; count: string; symbol: string }[] = [
+    { label: 'All', value: 'All', count: '6', symbol: '✦' },
+    { label: 'Gold', value: '7T7T Gold Edition', count: '1', symbol: '👑' },
+    { label: 'Monster', value: 'Black Monster', count: '2', symbol: '🖤' },
+    { label: 'Grey (957g)', value: 'Grey Edition', count: '2', symbol: '⚡' },
+    { label: '1-Side', value: 'One Side Hero', count: '1', symbol: '🎯' },
   ];
 
-  const weightClasses: { label: string; value: BatWeightClass; desc: string }[] = [
-    { label: 'All Weights', value: 'All', desc: '950g to 1065g' },
-    { label: 'Under 980g', value: 'Under 980g', desc: 'Featherlight (957g / 974g on scale)' },
-    { label: '1000g - 1035g', value: '1000g - 1035g', desc: 'Balanced Power & Pickup' },
-    { label: '1040g+', value: '1040g+', desc: 'Heavy Monster Power (1065g tag)' },
+  const weightClasses: { label: string; value: BatWeightClass; icon: string }[] = [
+    { label: 'All Weights', value: 'All', icon: '✦' },
+    { label: '< 980g (Light)', value: 'Under 980g', icon: '⚡' },
+    { label: '1000g – 1035g', value: '1000g - 1035g', icon: '⚖️' },
+    { label: '1040g+ (Power)', value: '1040g+', icon: '💥' },
   ];
 
-  const ballTypes = ['All', 'Hard Tennis', 'Light Tennis', 'Box Cricket'];
+  const ballTypes = [
+    { label: 'All', icon: '✦' },
+    { label: 'Hard Tennis', icon: '🎾' },
+    { label: 'Light Tennis', icon: '🏏' },
+    { label: 'Box Cricket', icon: '📦' },
+  ];
 
   const handleApplyPrice = () => {
     const min = Math.max(400, Math.min(minInput, maxInput - 200));
@@ -61,50 +64,46 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   };
 
   return (
-    <aside className="w-full lg:w-72 shrink-0 space-y-5">
-      {/* Filter Header */}
-      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs flex items-center justify-between">
-        <div>
-          <h2 className="text-sm font-extrabold text-neutral-900 uppercase tracking-wide">
-            Filter Bats
-          </h2>
-          <span className="text-[11px] text-neutral-500">
-            {activeFilterCount > 0 ? `${activeFilterCount} active filters` : 'Handcrafted 7T7T range'}
-          </span>
-        </div>
+    <aside className="w-full lg:w-64 shrink-0 space-y-4">
+      {/* Header */}
+      <div className="bg-white p-3.5 rounded-2xl border border-neutral-200/80 flex items-center justify-between">
+        <span className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
+          Filter
+        </span>
         {activeFilterCount > 0 && (
           <button
             onClick={onResetFilters}
-            className="flex items-center gap-1 text-[11px] font-bold text-[#f15b28] hover:underline cursor-pointer"
+            className="w-6 h-6 rounded-md hover:bg-neutral-100 text-neutral-500 hover:text-neutral-900 flex items-center justify-center transition-colors cursor-pointer"
+            title="Reset Filters"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset</span>
           </button>
         )}
       </div>
 
-      {/* 1. Bat Model Selection */}
-      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
-        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-          Bat Model
-        </h3>
-        <div className="space-y-1.5">
+      {/* 1. Model Selection */}
+      <div className="bg-white p-3.5 rounded-2xl border border-neutral-200/80 space-y-2">
+        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">
+          Model
+        </span>
+        <div className="space-y-1">
           {models.map((m) => {
             const isSelected = selectedModel === m.value;
             return (
               <button
                 key={m.value}
                 onClick={() => onSelectModel(m.value)}
-                className={`w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
+                className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
                   isSelected
-                    ? 'bg-[#f15b28] text-white shadow-xs'
-                    : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-700'
+                    ? 'bg-neutral-900 text-white'
+                    : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900'
                 }`}
               >
-                <span>{m.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
-                  isSelected ? 'bg-white/20 text-white' : 'bg-neutral-200 text-neutral-600'
-                }`}>
+                <span className="flex items-center gap-1.5">
+                  <span className="text-[11px] opacity-75">{m.symbol}</span>
+                  <span>{m.label}</span>
+                </span>
+                <span className={`text-[10px] font-mono ${isSelected ? 'text-white/60' : 'text-neutral-400'}`}>
                   {m.count}
                 </span>
               </button>
@@ -113,129 +112,123 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         </div>
       </div>
 
-      {/* 2. Weight Class */}
-      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Scale className="w-3.5 h-3.5 text-[#f15b28]" />
-            <span>Weight Range</span>
-          </h3>
-        </div>
-        <div className="space-y-1.5">
+      {/* 2. Weight */}
+      <div className="bg-white p-3.5 rounded-2xl border border-neutral-200/80 space-y-2">
+        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">
+          Weight
+        </span>
+        <div className="space-y-1">
           {weightClasses.map((w) => {
             const isSelected = selectedWeightClass === w.value;
             return (
               <button
                 key={w.value}
                 onClick={() => onSelectWeightClass(w.value)}
-                className={`w-full text-left p-2.5 rounded-lg border text-xs transition-colors cursor-pointer ${
+                className={`w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-between transition-colors cursor-pointer ${
                   isSelected
-                    ? 'border-[#f15b28] bg-orange-50 text-neutral-900 font-bold'
-                    : 'border-neutral-200 hover:border-neutral-300 bg-white text-neutral-700'
+                    ? 'bg-neutral-900 text-white'
+                    : 'text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900'
                 }`}
               >
-                <div className="flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <span className="text-[11px]">{w.icon}</span>
                   <span>{w.label}</span>
-                  {isSelected && <span className="w-2 h-2 rounded-full bg-[#f15b28]" />}
-                </div>
-                <div className="text-[10px] text-neutral-500 font-normal mt-0.5">
-                  {w.desc}
-                </div>
+                </span>
+                {isSelected && <Check className="w-3 h-3 text-white" />}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* 3. Ball Compatibility */}
-      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
-        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-          Ball Type
-        </h3>
-        <div className="flex flex-wrap gap-1.5">
+      {/* 3. Ball */}
+      <div className="bg-white p-3.5 rounded-2xl border border-neutral-200/80 space-y-2">
+        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">
+          Ball
+        </span>
+        <div className="grid grid-cols-2 gap-1">
           {ballTypes.map((b) => {
-            const isSelected = selectedBallType === b;
+            const isSelected = selectedBallType === b.label;
             return (
               <button
-                key={b}
-                onClick={() => onSelectBallType(b)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                key={b.label}
+                onClick={() => onSelectBallType(b.label)}
+                className={`px-2 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition-colors cursor-pointer ${
                   isSelected
-                    ? 'bg-neutral-900 text-white shadow-xs'
-                    : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700'
+                    ? 'bg-neutral-900 text-white'
+                    : 'bg-neutral-50 hover:bg-neutral-100 text-neutral-600'
                 }`}
               >
-                {b}
+                <span className="text-[10px]">{b.icon}</span>
+                <span className="truncate">{b.label}</span>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* 4. Price Filter */}
-      <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs space-y-3">
-        <h3 className="text-xs font-bold text-neutral-900 uppercase tracking-wider">
-          Price Range (₹)
-        </h3>
-        <div className="flex items-center gap-2 text-xs">
+      {/* 4. Price Slider */}
+      <div className="bg-white p-3.5 rounded-2xl border border-neutral-200/80 space-y-2">
+        <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">
+          Price (₹)
+        </span>
+        <div className="flex items-center gap-1.5 text-xs font-mono">
           <input
             type="number"
             value={minInput}
             onChange={(e) => setMinInput(Number(e.target.value))}
-            className="w-full px-2 py-1.5 bg-neutral-50 border border-neutral-300 rounded text-neutral-800 text-center font-mono font-bold"
+            className="w-full px-2 py-1 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 text-center text-xs font-bold focus:outline-none"
             step="100"
           />
-          <span className="text-neutral-400">to</span>
+          <span className="text-neutral-400">-</span>
           <input
             type="number"
             value={maxInput}
             onChange={(e) => setMaxInput(Number(e.target.value))}
-            className="w-full px-2 py-1.5 bg-neutral-50 border border-neutral-300 rounded text-neutral-800 text-center font-mono font-bold"
+            className="w-full px-2 py-1 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 text-center text-xs font-bold focus:outline-none"
             step="100"
           />
+          <button
+            onClick={handleApplyPrice}
+            className="w-7 h-7 shrink-0 bg-neutral-900 hover:bg-black text-white rounded-lg flex items-center justify-center cursor-pointer transition-colors"
+            title="Apply"
+          >
+            <Check className="w-3.5 h-3.5" />
+          </button>
         </div>
-        <button
-          onClick={handleApplyPrice}
-          className="w-full py-1.5 bg-neutral-800 hover:bg-neutral-900 text-white rounded text-xs font-bold transition-colors cursor-pointer"
-        >
-          Apply Price Filter
-        </button>
       </div>
 
-      {/* 5. Direct Local Seller Contact Box */}
-      <div className="bg-gradient-to-br from-[#1c1917] to-[#292524] text-white p-4 rounded-xl shadow-md space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#f15b28] flex items-center justify-center text-white">
-            <Phone className="w-4 h-4" />
-          </div>
-          <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wide">
-              Direct Seller Contact
-            </h4>
-            <span className="text-[10px] text-neutral-300">Talk directly to bat crafter</span>
-          </div>
+      {/* 5. Minimalist Workshop Contact Card */}
+      <div className="p-3.5 rounded-2xl bg-neutral-900 text-white space-y-2.5">
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+            Workshop
+          </span>
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
         </div>
 
-        <p className="text-[11px] text-neutral-300 leading-relaxed">
-          Need a specific bat weight (e.g. exactly 957g or 1065g)? Message directly for live video call inspection.
+        <p className="text-[11px] text-neutral-300">
+          Want a specific weight or video call verification?
         </p>
 
-        <div className="space-y-1.5 pt-1">
+        <div className="grid grid-cols-2 gap-1.5 pt-1">
           <a
-            href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi%20Cricket%20Adda,%20I%20want%20to%20select%20a%207T7T%20bat%20with%20custom%20weight.`}
+            href={`https://wa.me/${SELLER_INFO.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+            className="py-1.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 transition-colors"
+            title="WhatsApp"
           >
-            <MessageCircle className="w-4 h-4" />
-            <span>WhatsApp: 8669937070</span>
+            <MessageCircle className="w-3.5 h-3.5" />
+            <span>Chat</span>
           </a>
           <a
-            href={`tel:${SELLER_INFO.secondaryPhone}`}
-            className="w-full py-1.5 px-3 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+            href={`tel:${SELLER_INFO.primaryPhone}`}
+            className="py-1.5 px-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-1 transition-colors"
+            title="Call"
           >
             <Phone className="w-3.5 h-3.5" />
-            <span>Call: 9619955576</span>
+            <span>Call</span>
           </a>
         </div>
       </div>

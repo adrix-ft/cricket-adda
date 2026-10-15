@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, ShieldCheck, Scale, MessageCircle, Phone, Check, ShoppingBag, Eye, Video } from 'lucide-react';
+import { X, Heart, Scale, MessageCircle, Phone, ShoppingBag, Video, ShieldCheck, Camera, Sparkles, Check } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 
@@ -30,14 +30,19 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
     return val.toLocaleString('en-IN');
   };
 
-  // Compile all images: generated studio image + real workshop/scale images
-  const allImages = [
+  const allImages: { url: string; caption: string; badge?: string; isStudio: boolean }[] = [
     {
       url: bat.imageUrl,
-      caption: 'Studio Showcase View (7T7T Crafted Specification)',
-      badge: '✨ Studio View'
+      caption: 'Studio View',
+      badge: 'Studio',
+      isStudio: true
     },
-    ...bat.realImages
+    ...bat.realImages.map((img) => ({
+      url: img.url,
+      caption: img.caption,
+      badge: img.badge,
+      isStudio: false
+    }))
   ];
 
   const currentImg = allImages[activeImageIndex] || allImages[0];
@@ -52,12 +57,12 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
   };
 
   const whatsappMessage = encodeURIComponent(
-    `Hello Cricket Adda! I would like to order the ${bat.name}.\nModel: ${bat.model}\nChosen Weight: ${selectedWeight}\nPrice: ₹${formatINR(bat.finalPrice)}\nCan you arrange a video call to inspect this piece before courier dispatch?`
+    `Hi, I want to order ${bat.name} (${selectedWeight}) for ₹${formatINR(bat.finalPrice)}. Please arrange a video call.`
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto border border-neutral-200">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto border border-neutral-200">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -67,52 +72,57 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6 sm:p-8">
-          {/* Left: Gallery with Real Photos & Studio Renders */}
+          {/* Left: Visual Gallery */}
           <div className="md:col-span-6 flex flex-col space-y-3">
-            {/* Main Active Image Container */}
-            <div className="relative w-full aspect-square bg-gradient-to-b from-[#fbfbfa] to-[#f4f2ee] rounded-xl p-4 border border-neutral-200 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full aspect-square bg-gradient-to-b from-neutral-50 to-neutral-100 rounded-2xl p-4 border border-neutral-200/80 flex items-center justify-center overflow-hidden">
               <img
                 src={currentImg.url}
                 alt={currentImg.caption}
                 className="w-full h-full object-contain"
               />
 
-              {/* Image Type Badge */}
-              {currentImg.badge && (
-                <span className="absolute top-3 left-3 bg-neutral-900/85 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm backdrop-blur-xs">
-                  {currentImg.badge}
-                </span>
-              )}
-
-              {/* Wishlist Button */}
+              {/* Top Right Save */}
               <button
                 onClick={() => onToggleWishlist(bat)}
-                className={`absolute top-3 right-3 w-8 h-8 rounded-full border flex items-center justify-center transition-colors cursor-pointer ${
+                className={`absolute top-3 right-3 w-8 h-8 rounded-full border flex items-center justify-center transition-colors cursor-pointer shadow-xs ${
                   isWishlisted
                     ? 'bg-rose-50 border-rose-200 text-rose-600'
                     : 'bg-white border-neutral-200 text-neutral-400 hover:text-rose-500'
                 }`}
+                title="Save"
               >
                 <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}`} />
               </button>
+
+              {/* Bottom Image Type Badge */}
+              <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-900/80 text-white backdrop-blur-xs flex items-center gap-1">
+                  {currentImg.isStudio ? (
+                    <>
+                      <Sparkles className="w-2.5 h-2.5 text-amber-300" />
+                      <span>Studio</span>
+                    </>
+                  ) : (
+                    <>
+                      <Camera className="w-2.5 h-2.5 text-white" />
+                      <span>{currentImg.badge || 'Real'}</span>
+                    </>
+                  )}
+                </span>
+              </div>
             </div>
 
-            {/* Caption */}
-            <p className="text-[11px] text-neutral-500 text-center italic">
-              {currentImg.caption}
-            </p>
-
-            {/* Thumbnail Carousel */}
+            {/* Thumbnail Strip */}
             {allImages.length > 1 && (
               <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
                 {allImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative w-16 h-16 shrink-0 rounded-lg border-2 p-1 bg-neutral-50 overflow-hidden cursor-pointer transition-all ${
+                    className={`relative w-14 h-14 shrink-0 rounded-xl border p-1 bg-neutral-50 overflow-hidden cursor-pointer transition-all ${
                       activeImageIndex === idx
-                        ? 'border-[#f15b28] ring-2 ring-orange-200'
-                        : 'border-neutral-200 hover:border-neutral-400'
+                        ? 'border-neutral-900 ring-2 ring-neutral-200'
+                        : 'border-neutral-200 opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img
@@ -120,82 +130,55 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                       alt={img.caption}
                       className="w-full h-full object-contain"
                     />
-                    {img.badge && (
-                      <span className="absolute bottom-0 inset-x-0 bg-black/75 text-[7px] text-white font-bold text-center truncate px-0.5">
-                        {img.badge}
-                      </span>
-                    )}
                   </button>
                 ))}
               </div>
             )}
-
-            {/* Live Video Call Guarantee Banner */}
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex items-start gap-2.5 text-xs text-emerald-900">
-              <Video className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-              <div>
-                <strong>Video Call Inspection Before Dispatch:</strong>
-                <p className="text-[11px] text-emerald-700 mt-0.5">
-                  We show your exact bat on digital scale & verify grain on WhatsApp video before courier shipping.
-                </p>
-              </div>
-            </div>
           </div>
 
-          {/* Right: Product Details & Order Controls */}
+          {/* Right: Minimal Details & Controls */}
           <div className="md:col-span-6 flex flex-col justify-between space-y-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#f15b28]">
+            <div className="space-y-3">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                   {bat.model}
                 </span>
-                {bat.freeCover && (
-                  <span className="text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">
-                    + Free 7T7T Bat Bag
-                  </span>
-                )}
+                <h2 className="text-lg sm:text-xl font-bold text-neutral-900 mt-0.5">
+                  {bat.name}
+                </h2>
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-black text-neutral-900 mt-1 leading-snug">
-                {bat.name}
-              </h2>
-
               {/* Price */}
-              <div className="mt-3 flex items-baseline gap-3 pb-3 border-b border-neutral-200">
-                <div className="text-2xl sm:text-3xl font-black text-neutral-900 font-mono">
-                  ₹{formatINR(bat.finalPrice)}/-
-                </div>
-                <div className="text-sm text-neutral-500 font-mono line-through">
+              <div className="flex items-baseline gap-2 pb-3 border-b border-neutral-100 font-mono">
+                <span className="text-2xl font-black text-neutral-900">
+                  ₹{formatINR(bat.finalPrice)}
+                </span>
+                <span className="text-xs text-neutral-400 line-through">
                   ₹{formatINR(bat.mrp)}
-                </div>
-                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
-                  Save {bat.discountPercent}%
+                </span>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded font-sans ml-1">
+                  -{bat.discountPercent}%
                 </span>
               </div>
 
-              {/* Description */}
-              <p className="text-xs text-neutral-600 leading-relaxed mt-3">
-                {bat.shortDesc}
-              </p>
-
               {/* Weight Selector */}
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center justify-between text-xs font-bold text-neutral-800">
-                  <span className="flex items-center gap-1.5">
-                    <Scale className="w-3.5 h-3.5 text-[#f15b28]" />
-                    <span>Select Exact Weight:</span>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs font-semibold text-neutral-700">
+                  <span className="flex items-center gap-1">
+                    <Scale className="w-3.5 h-3.5 text-neutral-400" />
+                    <span>Weight:</span>
                   </span>
-                  <span className="text-[#f15b28]">{selectedWeight}</span>
+                  <span className="font-bold text-neutral-900">{selectedWeight}</span>
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {bat.availableWeights.map((w) => (
                     <button
                       key={w}
                       onClick={() => setSelectedWeight(w)}
-                      className={`py-2 px-2.5 rounded-lg text-xs font-bold border transition-colors cursor-pointer ${
+                      className={`py-1 px-2.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                         selectedWeight === w
-                          ? 'bg-neutral-900 text-white border-neutral-900 shadow-xs'
-                          : 'bg-neutral-50 text-neutral-700 border-neutral-200 hover:border-neutral-400'
+                          ? 'bg-neutral-900 text-white'
+                          : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
                       }`}
                     >
                       {w}
@@ -204,68 +187,73 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                 </div>
               </div>
 
-              {/* Specifications Grid */}
-              <div className="mt-4 grid grid-cols-2 gap-2 text-[11px] bg-neutral-50 p-3 rounded-xl border border-neutral-200">
+              {/* Minimalist 4-Grid Specs */}
+              <div className="grid grid-cols-2 gap-2 text-xs bg-neutral-50 p-3 rounded-xl border border-neutral-200/80 text-neutral-700">
                 <div>
-                  <span className="text-neutral-500 block">Scoop Type:</span>
-                  <span className="font-bold text-neutral-800">{bat.scoopType}</span>
+                  <span className="text-neutral-400 text-[10px] block uppercase">Scoop</span>
+                  <span className="font-semibold text-neutral-900">{bat.scoopType.split('(')[0]}</span>
                 </div>
                 <div>
-                  <span className="text-neutral-500 block">Edge Thickness:</span>
-                  <span className="font-bold text-neutral-800">{bat.edgeThickness}</span>
+                  <span className="text-neutral-400 text-[10px] block uppercase">Edge</span>
+                  <span className="font-semibold text-neutral-900">{bat.edgeThickness}</span>
                 </div>
                 <div>
-                  <span className="text-neutral-500 block">Blade Length:</span>
-                  <span className="font-bold text-neutral-800">{bat.bladeLength}</span>
+                  <span className="text-neutral-400 text-[10px] block uppercase">Length</span>
+                  <span className="font-semibold text-neutral-900">{bat.bladeLength.split('(')[0]}</span>
                 </div>
                 <div>
-                  <span className="text-neutral-500 block">Handle:</span>
-                  <span className="font-bold text-neutral-800">{bat.handleType}</span>
+                  <span className="text-neutral-400 text-[10px] block uppercase">Handle</span>
+                  <span className="font-semibold text-neutral-900">Singapore Cane</span>
                 </div>
               </div>
 
-              {/* Highlights */}
-              <ul className="mt-3 space-y-1 text-xs text-neutral-700">
-                {bat.highlights.map((h, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
+              {/* Quick Trust Chips */}
+              <div className="flex items-center gap-3 text-[10px] text-neutral-500 uppercase tracking-wider font-semibold pt-1">
+                <span className="flex items-center gap-1">
+                  <Video className="w-3 h-3 text-emerald-600" />
+                  <span>Video Call</span>
+                </span>
+                <span>•</span>
+                <span className="flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-amber-500" />
+                  <span>Free Bag</span>
+                </span>
+                <span>•</span>
+                <span>COD</span>
+              </div>
             </div>
 
-            {/* Actions: Direct WhatsApp Order + Add to Cart */}
-            <div className="space-y-2 pt-3 border-t border-neutral-200">
+            {/* Actions: Symbol-Rich Minimal Buttons */}
+            <div className="space-y-2 pt-3 border-t border-neutral-100">
               <a
                 href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md transition-colors"
+                className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition-colors"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>Order via WhatsApp ({selectedWeight})</span>
+                <span>WhatsApp Order</span>
               </a>
 
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleAdd}
-                  className={`py-2.5 px-4 rounded-xl text-xs font-bold border flex items-center justify-center gap-2 transition-all cursor-pointer ${
+                  className={`py-2 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     addedAnimation
-                      ? 'bg-emerald-600 text-white border-emerald-600'
-                      : 'bg-[#f15b28] hover:bg-[#d64716] text-white border-transparent'
+                      ? 'bg-emerald-600 text-white'
+                      : 'bg-neutral-900 hover:bg-black text-white'
                   }`}
                 >
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>{addedAnimation ? 'Added!' : 'Add to Cart'}</span>
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>{addedAnimation ? 'Added' : 'Add to Bag'}</span>
                 </button>
 
                 <a
                   href={`tel:${SELLER_INFO.primaryPhone}`}
-                  className="py-2.5 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 border border-neutral-300 transition-colors"
+                  className="py-2 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5" />
-                  <span>Call Seller</span>
+                  <span>Call</span>
                 </a>
               </div>
             </div>

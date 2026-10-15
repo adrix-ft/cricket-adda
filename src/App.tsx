@@ -13,7 +13,7 @@ import { Footer } from './components/Footer';
 import { InfoModals } from './components/InfoModals';
 import { ALL_CRICKET_BATS, SELLER_INFO } from './data/bats';
 import { BatCategory, BatWeightClass, CartItem, CricketBat, SortOption } from './types/bat';
-import { SlidersHorizontal, X, ArrowUpDown, Scale, ShieldCheck, Sparkles } from 'lucide-react';
+import { SlidersHorizontal, X, ArrowUpDown, Scale, ShieldCheck, Sparkles, Video, MessageCircle } from 'lucide-react';
 
 export default function App() {
   // Model & Filter States
@@ -306,33 +306,28 @@ export default function App() {
           {/* Right Column: Catalog Grid & Controls */}
           <div className="flex-1 w-full space-y-5">
             {/* Catalog Control Header */}
-            <div className="bg-white p-4 rounded-xl border border-neutral-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h2 className="text-base sm:text-lg font-black text-neutral-900 tracking-tight flex items-center gap-2">
-                  <span>
-                    {selectedModel === 'All' ? 'All Handcrafted 7T7T Bats' : selectedModel}
-                  </span>
-                  <span className="text-xs font-bold text-neutral-400 font-mono">
-                    ({filteredBats.length} bats)
-                  </span>
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-200/80">
+              <div className="flex items-baseline gap-2">
+                <h2 className="text-sm font-black text-neutral-900 tracking-tight uppercase">
+                  {selectedModel === 'All' ? 'Bats' : selectedModel}
                 </h2>
-                <p className="text-[11px] text-neutral-500 mt-0.5">
-                  Direct from workshop · Free 7T7T padded cover with every bat order
-                </p>
+                <span className="text-xs font-mono text-neutral-400 font-bold">
+                  ({filteredBats.length})
+                </span>
               </div>
 
-              {/* Desktop Sort Dropdown */}
-              <div className="hidden sm:flex items-center gap-2 text-xs">
-                <span className="text-neutral-500 font-semibold">Sort By:</span>
+              {/* Minimal Sort */}
+              <div className="flex items-center gap-1.5 text-xs">
+                <ArrowUpDown className="w-3.5 h-3.5 text-neutral-400" />
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-neutral-50 border border-neutral-300 rounded-lg px-3 py-1.5 text-xs font-bold text-neutral-800 focus:outline-none focus:border-[#f15b28] cursor-pointer"
+                  className="bg-transparent text-xs font-bold text-neutral-700 focus:outline-none cursor-pointer"
                 >
-                  <option value="position">Featured Recommendation</option>
-                  <option value="weight-low-high">Lightest Weight First (957g)</option>
-                  <option value="price-low-high">Price: Low to High</option>
-                  <option value="price-high-low">Price: High to Low</option>
+                  <option value="position">Featured</option>
+                  <option value="weight-low-high">Lightest (957g)</option>
+                  <option value="price-low-high">₹ Low to High</option>
+                  <option value="price-high-low">₹ High to Low</option>
                 </select>
               </div>
             </div>
@@ -421,28 +416,25 @@ export default function App() {
               </div>
             )}
 
-            {/* Seller Workshop Guarantee Banner */}
-            <div className="bg-gradient-to-r from-neutral-900 to-neutral-800 text-white rounded-2xl p-6 shadow-md flex flex-col md:flex-row items-center justify-between gap-4 mt-8">
-              <div className="space-y-1 text-center md:text-left">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#f15b28] flex items-center gap-1.5 justify-center md:justify-start">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Workshop Video Call Guarantee</span>
-                </span>
-                <h4 className="text-base sm:text-lg font-bold">
-                  Want to see the actual bat on digital scale before ordering?
-                </h4>
-                <p className="text-xs text-neutral-300 max-w-xl">
-                  Message our bat craftsman directly. We will show you the exact grains, edge thickness, and digital scale weight live on WhatsApp video call.
-                </p>
+            {/* Minimal Guarantee Strip */}
+            <div className="p-4 rounded-2xl bg-neutral-900 text-white flex items-center justify-between gap-4 mt-8">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                  <Video className="w-4 h-4" />
+                </div>
+                <div>
+                  <span className="text-xs font-bold block">Live Video Inspection</span>
+                  <span className="text-[11px] text-neutral-400">See your exact bat on scale before dispatch</span>
+                </div>
               </div>
-
               <a
-                href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi%20Cricket%20Adda,%20I%20want%20to%20see%20a%20bat%20on%20live%20video%20call.`}
+                href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi,%20I%20want%20to%20see%20a%20bat%20on%20video%20call.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-2.5 px-5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold whitespace-nowrap shadow-md transition-colors shrink-0"
+                className="w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center transition-colors shrink-0"
+                title="WhatsApp Video Call"
               >
-                Schedule WhatsApp Video Call
+                <MessageCircle className="w-4 h-4" />
               </a>
             </div>
           </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BatCategory } from '../types/bat';
-import { ShieldCheck, Scale, Award, Truck } from 'lucide-react';
-import { SELLER_INFO } from '../data/bats';
+import { Scale, Video, ShieldCheck, ChevronRight } from 'lucide-react';
 
 interface HeroBannerProps {
   onSelectCategory: (model: BatCategory) => void;
@@ -9,111 +8,85 @@ interface HeroBannerProps {
 }
 
 export const HeroBanner: React.FC<HeroBannerProps> = ({ onSelectCategory, activeModel }) => {
+  const modelChips: { label: string; value: BatCategory; icon: string }[] = [
+    { label: 'All', value: 'All', icon: '✦' },
+    { label: 'Gold', value: '7T7T Gold Edition', icon: '👑' },
+    { label: 'Black Monster', value: 'Black Monster', icon: '🖤' },
+    { label: 'Grey (957g)', value: 'Grey Edition', icon: '⚡' },
+    { label: '1-Side Hero', value: 'One Side Hero', icon: '🎯' },
+  ];
+
   return (
-    <div className="relative w-full bg-[#0a1017] overflow-hidden border-b border-neutral-800">
-      {/* Generated Cinematic Hero Banner */}
-      <div className="relative w-full min-h-[320px] sm:min-h-[380px] lg:min-h-[440px] flex items-center">
+    <div className="relative w-full bg-neutral-950 overflow-hidden border-b border-neutral-900">
+      {/* Background Image with Clean Minimalist Overlay */}
+      <div className="relative w-full min-h-[260px] sm:min-h-[320px] flex items-center">
         <img
           src="/images/hero_banner.jpg"
-          alt="7T7T Tennis Cricket Bats"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          alt="7T7T Cricket Bats"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-45"
         />
 
-        {/* Ambient Dark Gradient for contrast and legibility */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/75 to-black/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/70 to-neutral-950/40 pointer-events-none" />
 
-        {/* Content */}
-        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
-          <div className="max-w-2xl space-y-4">
-            {/* Seller Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#f15b28]/90 text-white rounded-full text-xs font-bold tracking-wide uppercase shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span>Direct Workshop Handcrafted Bats • No Middlemen</span>
+        {/* Minimalist Editorial Content */}
+        <div className="relative max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
+          <div className="max-w-xl space-y-3">
+            {/* Minimal Sub-tag */}
+            <div className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#f15b28]" />
+              <span>7T7T Handcrafted Workshop</span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white uppercase leading-tight">
-              7T7T SCOOP TENNIS BATS
-              <span className="block text-[#f15b28]">LAGA TOH SIX!</span>
+            {/* Bold Minimal Headline */}
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white uppercase leading-none">
+              SCOOP TENNIS BATS
+              <span className="block text-[#f15b28] text-xl sm:text-3xl lg:text-4xl font-extrabold mt-1">
+                LAGA TOH SIX.
+              </span>
             </h1>
 
-            {/* Sub-text tailored to tennis cricket */}
-            <p className="text-neutral-200 text-xs sm:text-sm leading-relaxed max-w-xl">
-              Precision scooped tennis cricket bats engineered for tournament power-hitting and lightning swing speed. Tested with hard tennis balls, verified on digital scales from <strong>957g</strong> to <strong>1065g</strong>.
+            {/* Ultra-concise line */}
+            <p className="text-xs text-neutral-400 font-medium max-w-md">
+              Aerodynamic hollows · Carbon face shield · Weighed from 957g to 1065g on digital scales.
             </p>
 
-            {/* Quick Model Selector Pills */}
-            <div className="flex flex-wrap items-center gap-2 pt-1">
-              <button
-                onClick={() => onSelectCategory('All')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  activeModel === 'All'
-                    ? 'bg-[#f15b28] text-white shadow-md'
-                    : 'bg-black/60 hover:bg-black/80 text-white/90 border border-white/20'
-                }`}
-              >
-                All 4 Models
-              </button>
-              <button
-                onClick={() => onSelectCategory('7T7T Gold Edition')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  activeModel === '7T7T Gold Edition'
-                    ? 'bg-[#f15b28] text-white shadow-md'
-                    : 'bg-black/60 hover:bg-black/80 text-white/90 border border-white/20'
-                }`}
-              >
-                Gold Edition
-              </button>
-              <button
-                onClick={() => onSelectCategory('Black Monster')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  activeModel === 'Black Monster'
-                    ? 'bg-[#f15b28] text-white shadow-md'
-                    : 'bg-black/60 hover:bg-black/80 text-white/90 border border-white/20'
-                }`}
-              >
-                Black Monster (Carbon Face)
-              </button>
-              <button
-                onClick={() => onSelectCategory('Grey Edition')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  activeModel === 'Grey Edition'
-                    ? 'bg-[#f15b28] text-white shadow-md'
-                    : 'bg-black/60 hover:bg-black/80 text-white/90 border border-white/20'
-                }`}
-              >
-                Grey Edition (957g Scale)
-              </button>
-              <button
-                onClick={() => onSelectCategory('One Side Hero')}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                  activeModel === 'One Side Hero'
-                    ? 'bg-[#f15b28] text-white shadow-md'
-                    : 'bg-black/60 hover:bg-black/80 text-white/90 border border-white/20'
-                }`}
-              >
-                One Side Hero (1-Side Scoop)
-              </button>
+            {/* Clean Segmented Chips */}
+            <div className="flex flex-wrap items-center gap-1.5 pt-2">
+              {modelChips.map((chip) => {
+                const isActive = activeModel === chip.value;
+                return (
+                  <button
+                    key={chip.value}
+                    onClick={() => onSelectCategory(chip.value)}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      isActive
+                        ? 'bg-[#f15b28] text-white shadow-sm'
+                        : 'bg-white/10 hover:bg-white/15 text-neutral-200 border border-white/10 backdrop-blur-xs'
+                    }`}
+                  >
+                    <span className="text-[10px]">{chip.icon}</span>
+                    <span>{chip.label}</span>
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Local seller trust highlights bar */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-white/10 text-[11px] text-neutral-300">
-              <div className="flex items-center gap-1.5">
-                <Scale className="w-4 h-4 text-[#f15b28] shrink-0" />
-                <span>Exact Scale Weight Match</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Live Video Call Inspection</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Award className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>Free 7T7T Padded Bat Bag</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <Truck className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>COD & Fast Courier Delivery</span>
-              </div>
+            {/* Micro Indicators */}
+            <div className="flex items-center gap-4 pt-3 text-[10px] text-neutral-400 uppercase tracking-wider font-semibold">
+              <span className="flex items-center gap-1 text-neutral-300">
+                <Scale className="w-3 h-3 text-[#f15b28]" />
+                <span>957g–1065g</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1 text-neutral-300">
+                <Video className="w-3 h-3 text-emerald-400" />
+                <span>Video Inspection</span>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1 text-neutral-300">
+                <ShieldCheck className="w-3 h-3 text-amber-400" />
+                <span>Free Padded Bag</span>
+              </span>
             </div>
           </div>
         </div>
