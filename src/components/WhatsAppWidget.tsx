@@ -24,10 +24,10 @@ export const WhatsAppWidget: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end">
+    <div className="fixed bottom-20 right-4 sm:bottom-5 sm:right-5 z-40 flex flex-col items-end">
       {/* Consultation Chat Popup Card */}
       {isOpen && (
-        <div className="mb-3 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-150">
+        <div className="mb-3 w-[calc(100vw-2rem)] sm:w-80 max-w-sm bg-white rounded-2xl shadow-2xl border border-neutral-200 overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-150">
           {/* Header */}
           <div className="bg-neutral-900 text-white p-3.5 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
@@ -42,13 +42,14 @@ export const WhatsAppWidget: React.FC = () => {
             <button
               onClick={() => setIsOpen(false)}
               className="text-neutral-400 hover:text-white p-1 cursor-pointer"
+              aria-label="Close chat"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Quick Prompts */}
-          <div className="p-3 bg-neutral-50 space-y-1.5 max-h-64 overflow-y-auto">
+          <div className="p-3 bg-neutral-50 space-y-1.5 max-h-56 sm:max-h-64 overflow-y-auto">
             <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">
               Quick Inquiry
             </span>
@@ -56,7 +57,7 @@ export const WhatsAppWidget: React.FC = () => {
               <button
                 key={i}
                 onClick={() => handleSend(prompt)}
-                className="w-full text-left p-2 bg-white hover:bg-neutral-100 text-neutral-700 text-xs rounded-xl border border-neutral-200 transition-colors cursor-pointer"
+                className="w-full text-left p-2.5 bg-white hover:bg-neutral-100 text-neutral-700 text-xs rounded-xl border border-neutral-200 transition-colors cursor-pointer touch-manipulation"
               >
                 {prompt}
               </button>
@@ -70,12 +71,13 @@ export const WhatsAppWidget: React.FC = () => {
               value={userMessage}
               onChange={(e) => setUserMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="Type message..."
-              className="flex-1 px-3 py-1.5 bg-neutral-100 rounded-full text-xs text-neutral-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-neutral-400"
+              placeholder="Type inquiry..."
+              className="flex-1 px-3 py-1.5 bg-neutral-100 rounded-full text-[16px] sm:text-xs text-neutral-800 focus:outline-none focus:bg-white focus:ring-1 focus:ring-[#f15b28]"
             />
             <button
               onClick={() => handleSend()}
-              className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center hover:bg-emerald-700 transition-colors cursor-pointer shrink-0"
+              className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center hover:bg-emerald-700 transition-colors cursor-pointer shrink-0 touch-manipulation"
+              aria-label="Send message"
             >
               <Send className="w-3.5 h-3.5 ml-0.5" />
             </button>
@@ -86,8 +88,9 @@ export const WhatsAppWidget: React.FC = () => {
       {/* Sleek Floating Circular Action Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-12 h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105 cursor-pointer relative"
+        className="w-12 h-12 bg-emerald-600 hover:bg-emerald-700 text-white rounded-full shadow-xl flex items-center justify-center transition-all duration-200 hover:scale-105 cursor-pointer relative touch-manipulation"
         title="WhatsApp Workshop"
+        aria-label="Open WhatsApp live inquiry"
       >
         <MessageCircle className="w-6 h-6 fill-white" />
         <span className="absolute -top-0.5 -right-0.5 w-3 h-3 bg-white rounded-full flex items-center justify-center">

@@ -10,6 +10,7 @@ interface ProductCardProps {
   onToggleWishlist: (bat: CricketBat) => void;
   onQuickView: (bat: CricketBat) => void;
   onAddToCart: (bat: CricketBat) => void;
+  compact?: boolean;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
@@ -18,6 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onToggleWishlist,
   onQuickView,
   onAddToCart,
+  compact = false,
 }) => {
   const [showRealPhoto, setShowRealPhoto] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -39,15 +41,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="group relative bg-white border border-neutral-200/80 hover:border-neutral-400 rounded-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden hover:shadow-lg">
+    <div className="group relative bg-white border border-neutral-200/80 hover:border-neutral-400 rounded-2xl transition-all duration-200 flex flex-col justify-between overflow-hidden hover:shadow-lg touch-manipulation">
       {/* Top Floating Controls */}
-      <div className="absolute top-3 left-3 right-3 z-20 flex items-center justify-between pointer-events-none">
+      <div className="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none">
         {/* Left: Weight / Model Micro-badge */}
-        <div className="flex items-center gap-1.5 pointer-events-auto">
+        <div className="flex items-center gap-1 pointer-events-auto">
           {bat.verifiedWeight && (
-            <span className="text-[10px] font-bold tracking-tight bg-neutral-900/90 text-white px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
+            <span className="text-[9px] sm:text-[10px] font-bold tracking-tight bg-neutral-900/90 text-white px-1.5 sm:px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
               <Scale className="w-2.5 h-2.5 text-[#f15b28]" />
-              <span>{bat.verifiedWeight.split('(')[0].replace('Balanced Weight', '').trim()}</span>
+              <span className="truncate max-w-[80px] sm:max-w-none">
+                {bat.verifiedWeight.split('(')[0].replace('Balanced Weight', '').trim()}
+              </span>
             </span>
           )}
         </div>
@@ -58,7 +62,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             e.stopPropagation();
             onToggleWishlist(bat);
           }}
-          className={`w-7 h-7 rounded-full border flex items-center justify-center transition-colors pointer-events-auto cursor-pointer shadow-xs ${
+          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-colors pointer-events-auto cursor-pointer shadow-xs ${
             isWishlisted
               ? 'bg-rose-50 border-rose-200 text-rose-600'
               : 'bg-white/90 backdrop-blur-xs border-neutral-200 text-neutral-400 hover:text-rose-500'
@@ -72,7 +76,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Product Image Area */}
       <div
         onClick={() => onQuickView(bat)}
-        className="relative w-full aspect-[4/5] bg-gradient-to-b from-neutral-50 to-neutral-100/60 p-4 flex items-center justify-center cursor-pointer overflow-hidden"
+        className="relative w-full aspect-[4/5] bg-gradient-to-b from-neutral-50 to-neutral-100/60 p-2 sm:p-4 flex items-center justify-center cursor-pointer overflow-hidden"
       >
         {!imageError ? (
           <img
@@ -93,25 +97,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               e.stopPropagation();
               setShowRealPhoto(!showRealPhoto);
             }}
-            className="absolute bottom-3 left-3 z-20 text-[10px] font-bold px-2 py-1 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-xs flex items-center gap-1 shadow-xs cursor-pointer transition-transform hover:scale-105"
-            title={showRealPhoto ? 'Switch to Studio View' : 'Switch to Real Photo'}
+            className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 z-20 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 sm:py-1 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-xs flex items-center gap-1 shadow-xs cursor-pointer transition-transform hover:scale-105"
+            title={showRealPhoto ? 'Studio View' : 'Real Photo'}
           >
             {showRealPhoto ? (
               <>
-                <Sparkles className="w-3 h-3 text-amber-300" />
-                <span>Studio</span>
+                <Sparkles className="w-2.5 h-2.5 text-amber-300" />
+                <span className="hidden sm:inline">Studio</span>
               </>
             ) : (
               <>
-                <Camera className="w-3 h-3 text-white" />
+                <Camera className="w-2.5 h-2.5 text-white" />
                 <span>Real</span>
               </>
             )}
           </button>
         )}
 
-        {/* Minimal Action Overlay - Symbol Only */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
+        {/* Desktop Quick View Overlay on Hover */}
+        <div className="hidden lg:flex absolute bottom-3 right-3 items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -122,33 +126,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           >
             <Eye className="w-3.5 h-3.5" />
           </button>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onAddToCart(bat);
-            }}
-            className="w-8 h-8 rounded-full bg-neutral-900 text-white hover:bg-black shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
-            title="Add to Bag"
-          >
-            <ShoppingBag className="w-3.5 h-3.5" />
-          </button>
-
-          <button
-            onClick={handleWhatsAppOrder}
-            className="w-8 h-8 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
-            title="Order via WhatsApp"
-          >
-            <MessageCircle className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
 
-      {/* Card Information - Clean & Less Text */}
-      <div className="p-4 flex flex-col justify-between flex-grow bg-white space-y-2">
+      {/* Card Information */}
+      <div className="p-2.5 sm:p-4 flex flex-col justify-between flex-grow bg-white space-y-1.5 sm:space-y-2">
         <div>
           {/* Micro Model Tag */}
-          <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
+          <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 truncate block">
             {bat.model}
           </span>
 
@@ -161,30 +146,30 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </h3>
 
           {/* Micro Specs */}
-          <div className="text-[11px] text-neutral-500 flex items-center gap-2 mt-1">
+          <div className="text-[10px] sm:text-[11px] text-neutral-500 flex items-center gap-1.5 mt-0.5 truncate">
             <span>{bat.weightRange}</span>
             <span>•</span>
-            <span>{bat.edgeThickness.split(' ')[0]} edge</span>
+            <span>{bat.edgeThickness.split(' ')[0]}</span>
           </div>
         </div>
 
-        {/* Price & Quick Action */}
-        <div className="pt-2 border-t border-neutral-100 flex items-center justify-between">
-          <div className="flex items-baseline gap-1.5 font-mono">
-            <span className="text-base font-black text-neutral-900">
+        {/* Price & Action Row */}
+        <div className="pt-2 border-t border-neutral-100 flex items-center justify-between gap-1">
+          <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 font-mono">
+            <span className="text-xs sm:text-base font-black text-neutral-900 leading-tight">
               ₹{formatINR(bat.finalPrice)}
             </span>
-            <span className="text-xs text-neutral-400 line-through">
+            <span className="text-[10px] sm:text-xs text-neutral-400 line-through leading-none">
               ₹{formatINR(bat.mrp)}
             </span>
           </div>
 
-          {/* Quick Add Symbol Button */}
-          <div className="flex items-center gap-1">
+          {/* Action Symbols */}
+          <div className="flex items-center gap-1 shrink-0">
             <button
               onClick={handleWhatsAppOrder}
-              className="w-7 h-7 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 flex items-center justify-center transition-colors cursor-pointer"
-              title="WhatsApp"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition-colors cursor-pointer"
+              title="Order on WhatsApp"
             >
               <MessageCircle className="w-3.5 h-3.5" />
             </button>
@@ -193,8 +178,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 e.stopPropagation();
                 onAddToCart(bat);
               }}
-              className="w-7 h-7 rounded-lg bg-neutral-900 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer"
-              title="Add"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-neutral-900 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs"
+              title="Add to Bag"
             >
               <ShoppingBag className="w-3.5 h-3.5" />
             </button>

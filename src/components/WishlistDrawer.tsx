@@ -28,7 +28,7 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
     <div className="fixed inset-0 z-50 overflow-hidden">
       <div onClick={onClose} className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity" />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
           {/* Header */}
           <div className="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
@@ -40,7 +40,8 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-neutral-200 text-neutral-500 transition-colors cursor-pointer"
+              className="p-2 rounded-full hover:bg-neutral-200 text-neutral-500 transition-colors cursor-pointer"
+              aria-label="Close saved bats"
             >
               <X className="w-5 h-5" />
             </button>

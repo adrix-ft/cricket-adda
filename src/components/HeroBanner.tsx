@@ -72,17 +72,17 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onSelectCategory, active
             </div>
 
             {/* Micro Indicators */}
-            <div className="flex items-center gap-4 pt-3 text-[10px] text-neutral-400 uppercase tracking-wider font-semibold">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 pt-3 text-[10px] text-neutral-400 uppercase tracking-wider font-semibold">
               <span className="flex items-center gap-1 text-neutral-300">
                 <Scale className="w-3 h-3 text-[#f15b28]" />
                 <span>957g–1065g</span>
               </span>
-              <span>•</span>
+              <span className="hidden xs:inline">•</span>
               <span className="flex items-center gap-1 text-neutral-300">
                 <Video className="w-3 h-3 text-emerald-400" />
                 <span>Video Inspection</span>
               </span>
-              <span>•</span>
+              <span className="hidden xs:inline">•</span>
               <span className="flex items-center gap-1 text-neutral-300">
                 <ShieldCheck className="w-3 h-3 text-amber-400" />
                 <span>Free Padded Bag</span>

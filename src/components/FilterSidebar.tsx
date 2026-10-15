@@ -177,7 +177,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             type="number"
             value={minInput}
             onChange={(e) => setMinInput(Number(e.target.value))}
-            className="w-full px-2 py-1 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 text-center text-xs font-bold focus:outline-none"
+            className="w-full px-2 py-1.5 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 text-center text-[16px] sm:text-xs font-bold focus:outline-none focus:border-[#f15b28]"
             step="100"
           />
           <span className="text-neutral-400">-</span>
@@ -185,13 +185,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             type="number"
             value={maxInput}
             onChange={(e) => setMaxInput(Number(e.target.value))}
-            className="w-full px-2 py-1 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 text-center text-xs font-bold focus:outline-none"
+            className="w-full px-2 py-1.5 bg-neutral-50 border border-neutral-200 rounded-lg text-neutral-800 text-center text-[16px] sm:text-xs font-bold focus:outline-none focus:border-[#f15b28]"
             step="100"
           />
           <button
             onClick={handleApplyPrice}
-            className="w-7 h-7 shrink-0 bg-neutral-900 hover:bg-black text-white rounded-lg flex items-center justify-center cursor-pointer transition-colors"
+            className="w-8 h-8 shrink-0 bg-neutral-900 hover:bg-black text-white rounded-lg flex items-center justify-center cursor-pointer transition-colors touch-manipulation"
             title="Apply"
+            aria-label="Apply price filter"
           >
             <Check className="w-3.5 h-3.5" />
           </button>

@@ -77,7 +77,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
         className="absolute inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
       />
 
-      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-0 sm:pl-10">
         <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
           {/* Drawer Header */}
           <div className="p-4 sm:p-5 border-b border-neutral-200 flex items-center justify-between bg-neutral-50">
@@ -91,7 +91,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-full hover:bg-neutral-200 text-neutral-500 transition-colors cursor-pointer"
+              className="p-2 rounded-full hover:bg-neutral-200 text-neutral-500 transition-colors cursor-pointer"
+              aria-label="Close cart"
             >
               <X className="w-5 h-5" />
             </button>
@@ -178,7 +179,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
                     placeholder="e.g. Rohit Sharma"
-                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:border-[#f15b28]"
+                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-[16px] sm:text-xs focus:outline-none focus:border-[#f15b28]"
                   />
                 </div>
 
@@ -192,7 +193,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     placeholder="e.g. 9876543210"
-                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:border-[#f15b28]"
+                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-[16px] sm:text-xs focus:outline-none focus:border-[#f15b28]"
                   />
                 </div>
 
@@ -206,7 +207,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                     value={customerAddress}
                     onChange={(e) => setCustomerAddress(e.target.value)}
                     placeholder="Full street address, city, state and PIN code"
-                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-xs focus:outline-none focus:border-[#f15b28]"
+                    className="w-full mt-1 px-3 py-2 border border-neutral-300 rounded-lg text-[16px] sm:text-xs focus:outline-none focus:border-[#f15b28]"
                   />
                 </div>
 
@@ -292,19 +293,21 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                             ₹{formatINR(item.bat.finalPrice * item.quantity)}
                           </span>
 
-                          <div className="flex items-center gap-1.5 border border-neutral-300 rounded-lg bg-white px-1">
+                          <div className="flex items-center gap-1 border border-neutral-300 rounded-lg bg-white px-1">
                             <button
                               onClick={() => onUpdateQuantity(idx, item.quantity - 1)}
-                              className="p-1 text-neutral-500 hover:text-neutral-900 cursor-pointer"
+                              className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:text-neutral-900 cursor-pointer touch-manipulation"
+                              aria-label="Decrease quantity"
                             >
                               <Minus className="w-3 h-3" />
                             </button>
-                            <span className="text-xs font-bold px-1 font-mono">
+                            <span className="text-xs font-bold px-1 font-mono min-w-[16px] text-center">
                               {item.quantity}
                             </span>
                             <button
                               onClick={() => onUpdateQuantity(idx, item.quantity + 1)}
-                              className="p-1 text-neutral-500 hover:text-neutral-900 cursor-pointer"
+                              className="w-7 h-7 flex items-center justify-center text-neutral-500 hover:text-neutral-900 cursor-pointer touch-manipulation"
+                              aria-label="Increase quantity"
                             >
                               <Plus className="w-3 h-3" />
                             </button>
@@ -315,8 +318,9 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                       {/* Remove */}
                       <button
                         onClick={() => onRemoveItem(idx)}
-                        className="text-neutral-400 hover:text-rose-600 transition-colors p-1"
+                        className="text-neutral-400 hover:text-rose-600 transition-colors p-2 cursor-pointer touch-manipulation"
                         title="Remove"
+                        aria-label="Remove item"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

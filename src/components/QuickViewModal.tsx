@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, Scale, MessageCircle, Phone, ShoppingBag, Video, ShieldCheck, Camera, Sparkles, Check } from 'lucide-react';
+import { X, Heart, Scale, MessageCircle, Phone, ShoppingBag, Video, ShieldCheck, Camera, Sparkles } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 
@@ -35,14 +35,14 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
       url: bat.imageUrl,
       caption: 'Studio View',
       badge: 'Studio',
-      isStudio: true
+      isStudio: true,
     },
     ...bat.realImages.map((img) => ({
       url: img.url,
       caption: img.caption,
       badge: img.badge,
-      isStudio: false
-    }))
+      isStudio: false,
+    })),
   ];
 
   const currentImg = allImages[activeImageIndex] || allImages[0];
@@ -61,20 +61,20 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto border border-neutral-200">
-        {/* Close Button */}
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-2 sm:p-6 overflow-y-auto">
+      <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto border border-neutral-200">
+        {/* Close Button - Easily tappable on touch screens */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 flex items-center justify-center transition-colors cursor-pointer"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 flex items-center justify-center transition-colors cursor-pointer shadow-xs"
         >
           <X className="w-4 h-4" />
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6 sm:p-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 p-4 sm:p-8">
           {/* Left: Visual Gallery */}
-          <div className="md:col-span-6 flex flex-col space-y-3">
-            <div className="relative w-full aspect-square bg-gradient-to-b from-neutral-50 to-neutral-100 rounded-2xl p-4 border border-neutral-200/80 flex items-center justify-center overflow-hidden">
+          <div className="md:col-span-6 flex flex-col space-y-2.5">
+            <div className="relative w-full aspect-square bg-gradient-to-b from-neutral-50 to-neutral-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-neutral-200/80 flex items-center justify-center overflow-hidden">
               <img
                 src={currentImg.url}
                 alt={currentImg.caption}
@@ -84,7 +84,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
               {/* Top Right Save */}
               <button
                 onClick={() => onToggleWishlist(bat)}
-                className={`absolute top-3 right-3 w-8 h-8 rounded-full border flex items-center justify-center transition-colors cursor-pointer shadow-xs ${
+                className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full border flex items-center justify-center transition-colors cursor-pointer shadow-xs ${
                   isWishlisted
                     ? 'bg-rose-50 border-rose-200 text-rose-600'
                     : 'bg-white border-neutral-200 text-neutral-400 hover:text-rose-500'
@@ -95,7 +95,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
               </button>
 
               {/* Bottom Image Type Badge */}
-              <div className="absolute bottom-3 left-3 flex items-center gap-1.5">
+              <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1.5">
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-900/80 text-white backdrop-blur-xs flex items-center gap-1">
                   {currentImg.isStudio ? (
                     <>
@@ -114,12 +114,12 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
             {/* Thumbnail Strip */}
             {allImages.length > 1 && (
-              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -webkit-overflow-scrolling-touch">
                 {allImages.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
-                    className={`relative w-14 h-14 shrink-0 rounded-xl border p-1 bg-neutral-50 overflow-hidden cursor-pointer transition-all ${
+                    className={`relative w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-lg sm:rounded-xl border p-1 bg-neutral-50 overflow-hidden cursor-pointer transition-all ${
                       activeImageIndex === idx
                         ? 'border-neutral-900 ring-2 ring-neutral-200'
                         : 'border-neutral-200 opacity-60 hover:opacity-100'
@@ -136,21 +136,21 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
             )}
           </div>
 
-          {/* Right: Minimal Details & Controls */}
-          <div className="md:col-span-6 flex flex-col justify-between space-y-4">
-            <div className="space-y-3">
+          {/* Right: Details & Order Controls */}
+          <div className="md:col-span-6 flex flex-col justify-between space-y-3 sm:space-y-4">
+            <div className="space-y-2.5 sm:space-y-3">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                   {bat.model}
                 </span>
-                <h2 className="text-lg sm:text-xl font-bold text-neutral-900 mt-0.5">
+                <h2 className="text-base sm:text-xl font-bold text-neutral-900 mt-0.5 leading-snug">
                   {bat.name}
                 </h2>
               </div>
 
               {/* Price */}
-              <div className="flex items-baseline gap-2 pb-3 border-b border-neutral-100 font-mono">
-                <span className="text-2xl font-black text-neutral-900">
+              <div className="flex items-baseline gap-2 pb-2.5 border-b border-neutral-100 font-mono">
+                <span className="text-xl sm:text-2xl font-black text-neutral-900">
                   ₹{formatINR(bat.finalPrice)}
                 </span>
                 <span className="text-xs text-neutral-400 line-through">
@@ -175,9 +175,9 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                     <button
                       key={w}
                       onClick={() => setSelectedWeight(w)}
-                      className={`py-1 px-2.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                      className={`py-1.5 px-3 rounded-lg text-xs font-semibold transition-colors cursor-pointer touch-manipulation ${
                         selectedWeight === w
-                          ? 'bg-neutral-900 text-white'
+                          ? 'bg-neutral-900 text-white shadow-xs'
                           : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
                       }`}
                     >
@@ -187,28 +187,34 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                 </div>
               </div>
 
-              {/* Minimalist 4-Grid Specs */}
-              <div className="grid grid-cols-2 gap-2 text-xs bg-neutral-50 p-3 rounded-xl border border-neutral-200/80 text-neutral-700">
+              {/* Minimal Specs Grid */}
+              <div className="grid grid-cols-2 gap-2 text-[11px] sm:text-xs bg-neutral-50 p-2.5 sm:p-3 rounded-xl border border-neutral-200/80 text-neutral-700">
                 <div>
-                  <span className="text-neutral-400 text-[10px] block uppercase">Scoop</span>
-                  <span className="font-semibold text-neutral-900">{bat.scoopType.split('(')[0]}</span>
+                  <span className="text-neutral-400 text-[9px] sm:text-[10px] block uppercase">Scoop</span>
+                  <span className="font-semibold text-neutral-900 truncate block">
+                    {bat.scoopType.split('(')[0]}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-neutral-400 text-[10px] block uppercase">Edge</span>
-                  <span className="font-semibold text-neutral-900">{bat.edgeThickness}</span>
+                  <span className="text-neutral-400 text-[9px] sm:text-[10px] block uppercase">Edge</span>
+                  <span className="font-semibold text-neutral-900 truncate block">
+                    {bat.edgeThickness}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-neutral-400 text-[10px] block uppercase">Length</span>
-                  <span className="font-semibold text-neutral-900">{bat.bladeLength.split('(')[0]}</span>
+                  <span className="text-neutral-400 text-[9px] sm:text-[10px] block uppercase">Length</span>
+                  <span className="font-semibold text-neutral-900 truncate block">
+                    {bat.bladeLength.split('(')[0]}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-neutral-400 text-[10px] block uppercase">Handle</span>
-                  <span className="font-semibold text-neutral-900">Singapore Cane</span>
+                  <span className="text-neutral-400 text-[9px] sm:text-[10px] block uppercase">Handle</span>
+                  <span className="font-semibold text-neutral-900 truncate block">Singapore Cane</span>
                 </div>
               </div>
 
-              {/* Quick Trust Chips */}
-              <div className="flex items-center gap-3 text-[10px] text-neutral-500 uppercase tracking-wider font-semibold pt-1">
+              {/* Quick Assurance Chips */}
+              <div className="flex items-center gap-3 text-[10px] text-neutral-500 uppercase tracking-wider font-semibold">
                 <span className="flex items-center gap-1">
                   <Video className="w-3 h-3 text-emerald-600" />
                   <span>Video Call</span>
@@ -223,22 +229,22 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
               </div>
             </div>
 
-            {/* Actions: Symbol-Rich Minimal Buttons */}
+            {/* Mobile & Desktop Action Buttons */}
             <div className="space-y-2 pt-3 border-t border-neutral-100">
               <a
                 href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs transition-colors"
+                className="w-full py-2.5 sm:py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition-colors"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp Order</span>
+                <span>WhatsApp Order ({selectedWeight})</span>
               </a>
 
               <div className="grid grid-cols-2 gap-2">
                 <button
                   onClick={handleAdd}
-                  className={`py-2 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  className={`py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
                     addedAnimation
                       ? 'bg-emerald-600 text-white'
                       : 'bg-neutral-900 hover:bg-black text-white'
@@ -250,7 +256,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
 
                 <a
                   href={`tel:${SELLER_INFO.primaryPhone}`}
-                  className="py-2 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  className="py-2.5 px-4 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5" />
                   <span>Call</span>

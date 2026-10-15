@@ -13,7 +13,21 @@ import { Footer } from './components/Footer';
 import { InfoModals } from './components/InfoModals';
 import { ALL_CRICKET_BATS, SELLER_INFO } from './data/bats';
 import { BatCategory, BatWeightClass, CartItem, CricketBat, SortOption } from './types/bat';
-import { SlidersHorizontal, X, ArrowUpDown, Scale, ShieldCheck, Sparkles, Video, MessageCircle } from 'lucide-react';
+import {
+  SlidersHorizontal,
+  X,
+  ArrowUpDown,
+  Scale,
+  ShieldCheck,
+  Sparkles,
+  Video,
+  MessageCircle,
+  Grid2X2,
+  Square,
+  Home,
+  Heart,
+  ShoppingBag,
+} from 'lucide-react';
 
 export default function App() {
   // Model & Filter States
@@ -23,6 +37,7 @@ export default function App() {
   const [priceRange, setPriceRange] = useState<[number, number]>([400, 4500]);
   const [sortBy, setSortBy] = useState<SortOption>('position');
   const [searchQuery, setSearchQuery] = useState('');
+  const [mobileGridCols, setMobileGridCols] = useState<1 | 2>(2);
 
   // Cart & Wishlist State
   const [cartItems, setCartItems] = useState<CartItem[]>([
@@ -33,6 +48,12 @@ export default function App() {
     },
   ]);
   const [wishlist, setWishlist] = useState<CricketBat[]>([ALL_CRICKET_BATS[1], ALL_CRICKET_BATS[2]]);
+
+  // Total cart items count
+  const totalCartItems = useMemo(
+    () => cartItems.reduce((acc, item) => acc + item.quantity, 0),
+    [cartItems]
+  );
 
   // Modals & Drawers
   const [quickViewBat, setQuickViewBat] = useState<CricketBat | null>(null);
@@ -202,30 +223,65 @@ export default function App() {
       />
 
       {/* 4. Main Store Container */}
-      <main className="flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        {/* Mobile Filter Toggle */}
-        <div className="lg:hidden flex items-center justify-between pb-4 mb-4 border-b border-neutral-200">
+      <main id="catalog" className="flex-1 max-w-[1440px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 md:pb-12">
+        {/* Mobile Filter & Grid Control Bar */}
+        <div className="lg:hidden flex items-center justify-between gap-2 pb-3.5 mb-4 border-b border-neutral-200">
           <button
             onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="flex items-center gap-2 py-2 px-4 bg-white border border-neutral-300 rounded-lg text-xs font-bold text-neutral-800 shadow-xs cursor-pointer"
+            className="flex items-center gap-1.5 py-1.5 px-3 bg-white border border-neutral-300 rounded-lg text-xs font-bold text-neutral-800 shadow-xs cursor-pointer touch-manipulation"
           >
-            <SlidersHorizontal className="w-4 h-4 text-[#f15b28]" />
-            <span>Filter Bats ({activeFilterCount})</span>
+            <SlidersHorizontal className="w-3.5 h-3.5 text-[#f15b28]" />
+            <span>Filter</span>
+            {activeFilterCount > 0 && (
+              <span className="w-4 h-4 rounded-full bg-[#f15b28] text-white text-[10px] font-bold flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
           </button>
 
-          {/* Mobile Sort Dropdown */}
-          <div className="flex items-center gap-1.5 text-xs">
-            <ArrowUpDown className="w-3.5 h-3.5 text-neutral-500" />
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="bg-white border border-neutral-300 rounded px-2 py-1 text-xs font-semibold focus:outline-none focus:border-[#f15b28]"
-            >
-              <option value="position">Featured</option>
-              <option value="price-low-high">Price: Low to High</option>
-              <option value="price-high-low">Price: High to Low</option>
-              <option value="weight-low-high">Lightest Weight First</option>
-            </select>
+          <div className="flex items-center gap-2">
+            {/* 1-Col vs 2-Col Mobile View Toggle */}
+            <div className="flex items-center border border-neutral-300 rounded-lg bg-neutral-50 p-0.5">
+              <button
+                onClick={() => setMobileGridCols(1)}
+                className={`p-1 rounded cursor-pointer transition-colors touch-manipulation ${
+                  mobileGridCols === 1
+                    ? 'bg-neutral-900 text-white shadow-xs'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+                title="Single Column (Detailed View)"
+                aria-label="Single column detailed view"
+              >
+                <Square className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setMobileGridCols(2)}
+                className={`p-1 rounded cursor-pointer transition-colors touch-manipulation ${
+                  mobileGridCols === 2
+                    ? 'bg-neutral-900 text-white shadow-xs'
+                    : 'text-neutral-500 hover:text-neutral-900'
+                }`}
+                title="Two Columns (Compact View)"
+                aria-label="Two column compact view"
+              >
+                <Grid2X2 className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Mobile Sort Dropdown */}
+            <div className="flex items-center gap-1 text-xs">
+              <ArrowUpDown className="w-3.5 h-3.5 text-neutral-400" />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as SortOption)}
+                className="bg-white border border-neutral-300 rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none focus:border-[#f15b28] cursor-pointer"
+              >
+                <option value="position">Featured</option>
+                <option value="weight-low-high">Lightest (957g)</option>
+                <option value="price-low-high">₹ Low to High</option>
+                <option value="price-high-low">₹ High to Low</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -402,7 +458,11 @@ export default function App() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              <div
+                className={`grid ${
+                  mobileGridCols === 1 ? 'grid-cols-1' : 'grid-cols-2'
+                } sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6`}
+              >
                 {filteredBats.map((bat) => (
                   <ProductCard
                     key={bat.id}
@@ -411,6 +471,7 @@ export default function App() {
                     onToggleWishlist={handleToggleWishlist}
                     onQuickView={setQuickViewBat}
                     onAddToCart={(b) => handleAddToCart(b)}
+                    compact={mobileGridCols === 2}
                   />
                 ))}
               </div>
@@ -452,7 +513,85 @@ export default function App() {
         }}
       />
 
-      {/* 7. WhatsApp Quick Help / Order Widget */}
+      {/* 7. Mobile Sticky Bottom Navigation Bar */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-neutral-200/90 px-3 py-1.5 flex items-center justify-around shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
+        <button
+          onClick={() => {
+            const el = document.getElementById('catalog');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          className="flex flex-col items-center gap-0.5 text-neutral-600 hover:text-neutral-900 cursor-pointer py-1 px-2 touch-manipulation"
+          aria-label="Go to Bats Catalog"
+        >
+          <Home className="w-5 h-5" />
+          <span className="text-[10px] font-bold">Bats</span>
+        </button>
+
+        <button
+          onClick={() => setMobileFilterOpen(true)}
+          className="flex flex-col items-center gap-0.5 text-neutral-600 hover:text-neutral-900 cursor-pointer py-1 px-2 relative touch-manipulation"
+          aria-label="Open Filters"
+        >
+          <div className="relative">
+            <SlidersHorizontal className="w-5 h-5 text-neutral-700" />
+            {activeFilterCount > 0 && (
+              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#f15b28] text-white text-[9px] font-bold flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] font-bold">Filter</span>
+        </button>
+
+        <button
+          onClick={() => setIsWishlistOpen(true)}
+          className="flex flex-col items-center gap-0.5 text-neutral-600 hover:text-neutral-900 cursor-pointer py-1 px-2 relative touch-manipulation"
+          aria-label="Saved Bats"
+        >
+          <div className="relative">
+            <Heart className="w-5 h-5 text-neutral-700" />
+            {wishlist.length > 0 && (
+              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center">
+                {wishlist.length}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] font-bold">Saved</span>
+        </button>
+
+        <button
+          onClick={() => setIsCartOpen(true)}
+          className="flex flex-col items-center gap-0.5 text-neutral-600 hover:text-neutral-900 cursor-pointer py-1 px-2 relative touch-manipulation"
+          aria-label="Shopping Bag"
+        >
+          <div className="relative">
+            <ShoppingBag className="w-5 h-5 text-neutral-700" />
+            {totalCartItems > 0 && (
+              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#f15b28] text-white text-[9px] font-bold flex items-center justify-center">
+                {totalCartItems}
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] font-bold">Bag</span>
+        </button>
+
+        <a
+          href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi,%20I%20want%20to%20inquire%20about%207T7T%20cricket%20bats`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex flex-col items-center gap-0.5 text-emerald-600 hover:text-emerald-700 cursor-pointer py-1 px-2 touch-manipulation"
+          aria-label="WhatsApp Workshop"
+        >
+          <MessageCircle className="w-5 h-5 fill-emerald-600 text-emerald-600" />
+          <span className="text-[10px] font-bold">WhatsApp</span>
+        </a>
+      </nav>
+
+      {/* 8. WhatsApp Quick Help / Order Widget */}
       <WhatsAppWidget />
 
       {/* 8. Quick View Modal */}
