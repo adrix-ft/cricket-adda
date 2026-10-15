@@ -237,7 +237,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
                 <h3 className="text-base font-bold text-neutral-800">Your Bag is Empty</h3>
                 <p className="text-xs text-neutral-500 max-w-xs mx-auto">
-                  Explore our handcrafted Cricket Adda tennis cricket bats - Gold Edition, Black Monster, Grey Edition, and One Side Hero!
+                  Explore our handcrafted Cricket Adda tennis cricket bats - 7T7T Gold Edition, Black Monster, Grey Edition, and One Side Hero!
                 </p>
                 <button
                   onClick={onClose}

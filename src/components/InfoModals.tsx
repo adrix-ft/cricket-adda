@@ -87,7 +87,7 @@ export const InfoModals: React.FC<InfoModalProps> = ({ type, onClose }) => {
             </div>
             <h3 className="text-xl font-bold text-neutral-900">Direct Workshop & Wholesale</h3>
             <p className="text-xs text-neutral-600 leading-relaxed">
-              We cater to both individual tournament cricketers and sports store retailers looking for bulk wholesale supply of Gold Edition, Black Monster, Grey Edition, and One Side Hero bats.
+              We cater to both individual tournament cricketers and sports store retailers looking for bulk wholesale supply of 7T7T Gold Edition, Black Monster, Grey Edition, and One Side Hero bats.
             </p>
             <div className="p-3 bg-neutral-50 rounded-xl border border-neutral-200 text-xs space-y-1">
               <p className="font-bold text-neutral-800">Wholesale / Team Inquiries:</p>

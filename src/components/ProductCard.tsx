@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Eye, ShoppingBag, MessageCircle, Scale, Camera, Sparkles } from 'lucide-react';
+import { Heart, Eye, ShoppingBag, MessageCircle, Scale, Images } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 import { CricketBatIllustration } from './CricketBatIllustration';
@@ -21,16 +21,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   onAddToCart,
   compact = false,
 }) => {
-  const [showRealPhoto, setShowRealPhoto] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   const formatINR = (val: number) => {
     return val.toLocaleString('en-IN');
   };
-
-  const currentDisplayImage = showRealPhoto && bat.realImages.length > 0
-    ? bat.realImages[0].url
-    : bat.imageUrl;
 
   const handleWhatsAppOrder = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -76,11 +71,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       {/* Product Image Area */}
       <div
         onClick={() => onQuickView(bat)}
-        className="relative w-full aspect-[4/5] bg-gradient-to-b from-neutral-50 to-neutral-100/60 p-2 sm:p-4 flex items-center justify-center cursor-pointer overflow-hidden"
+        className="relative w-full aspect-[4/5] bg-neutral-100/50 p-2 sm:p-4 flex items-center justify-center cursor-pointer overflow-hidden"
       >
         {!imageError ? (
           <img
-            src={currentDisplayImage}
+            src={bat.imageUrl}
             alt={bat.name}
             loading="lazy"
             onError={() => setImageError(true)}
@@ -90,28 +85,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <CricketBatIllustration bat={bat} />
         )}
 
-        {/* Minimal Studio vs Real Toggle Symbol */}
-        {bat.realImages.length > 0 && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowRealPhoto(!showRealPhoto);
-            }}
-            className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 z-20 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 sm:py-1 rounded-full bg-black/75 hover:bg-black text-white backdrop-blur-xs flex items-center gap-1 shadow-xs cursor-pointer transition-transform hover:scale-105"
-            title={showRealPhoto ? 'Studio View' : 'Real Photo'}
-          >
-            {showRealPhoto ? (
-              <>
-                <Sparkles className="w-2.5 h-2.5 text-amber-300" />
-                <span className="hidden sm:inline">Studio</span>
-              </>
-            ) : (
-              <>
-                <Camera className="w-2.5 h-2.5 text-white" />
-                <span>Real</span>
-              </>
-            )}
-          </button>
+        {/* Photo Gallery Indicator */}
+        {bat.realImages.length > 1 && (
+          <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 z-20 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-xs flex items-center gap-1">
+            <Images className="w-2.5 h-2.5" />
+            <span>{bat.realImages.length} Photos</span>
+          </div>
         )}
 
         {/* Desktop Quick View Overlay on Hover */}

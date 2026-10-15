@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Heart, Scale, MessageCircle, Phone, ShoppingBag, Video, ShieldCheck, Camera, Sparkles } from 'lucide-react';
+import { X, Heart, Scale, MessageCircle, Phone, ShoppingBag, Video, ShieldCheck, Camera } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 
@@ -30,20 +30,9 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
     return val.toLocaleString('en-IN');
   };
 
-  const allImages: { url: string; caption: string; badge?: string; isStudio: boolean }[] = [
-    {
-      url: bat.imageUrl,
-      caption: 'Studio View',
-      badge: 'Studio',
-      isStudio: true,
-    },
-    ...bat.realImages.map((img) => ({
-      url: img.url,
-      caption: img.caption,
-      badge: img.badge,
-      isStudio: false,
-    })),
-  ];
+  const allImages = bat.realImages.length > 0
+    ? bat.realImages
+    : [{ url: bat.imageUrl, caption: bat.name, badge: 'Photo' }];
 
   const currentImg = allImages[activeImageIndex] || allImages[0];
 
@@ -74,7 +63,7 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 p-4 sm:p-8">
           {/* Left: Visual Gallery */}
           <div className="md:col-span-6 flex flex-col space-y-2.5">
-            <div className="relative w-full aspect-square bg-gradient-to-b from-neutral-50 to-neutral-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-neutral-200/80 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full aspect-square bg-neutral-100/60 rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-neutral-200/80 flex items-center justify-center overflow-hidden">
               <img
                 src={currentImg.url}
                 alt={currentImg.caption}
@@ -94,22 +83,15 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({
                 <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}`} />
               </button>
 
-              {/* Bottom Image Type Badge */}
-              <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1.5">
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-900/80 text-white backdrop-blur-xs flex items-center gap-1">
-                  {currentImg.isStudio ? (
-                    <>
-                      <Sparkles className="w-2.5 h-2.5 text-amber-300" />
-                      <span>Studio</span>
-                    </>
-                  ) : (
-                    <>
-                      <Camera className="w-2.5 h-2.5 text-white" />
-                      <span>{currentImg.badge || 'Real'}</span>
-                    </>
-                  )}
-                </span>
-              </div>
+              {/* Bottom Image Badge */}
+              {currentImg.badge && (
+                <div className="absolute bottom-2.5 left-2.5 flex items-center gap-1.5">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-900/80 text-white backdrop-blur-xs flex items-center gap-1">
+                    <Camera className="w-2.5 h-2.5 text-white" />
+                    <span>{currentImg.badge}</span>
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Thumbnail Strip */}

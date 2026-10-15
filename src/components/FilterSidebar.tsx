@@ -34,11 +34,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   const [maxInput, setMaxInput] = useState<number>(priceRange[1]);
 
   const models: { label: string; value: BatCategory; count: string; symbol: string }[] = [
-    { label: 'All', value: 'All', count: '6', symbol: '✦' },
-    { label: 'Gold', value: 'Gold Edition', count: '1', symbol: '👑' },
-    { label: 'Monster', value: 'Black Monster', count: '2', symbol: '🖤' },
-    { label: 'Grey (957g)', value: 'Grey Edition', count: '2', symbol: '⚡' },
-    { label: '1-Side', value: 'One Side Hero', count: '1', symbol: '🎯' },
+    { label: 'All', value: 'All', count: '4', symbol: '✦' },
+    { label: '7T7T Gold', value: '7T7T Gold Edition', count: '1', symbol: '👑' },
+    { label: 'Black Monster', value: 'Black Monster', count: '1', symbol: '🖤' },
+    { label: 'Grey Edition', value: 'Grey Edition', count: '1', symbol: '⚡' },
+    { label: 'One Side Hero', value: 'One Side Hero', count: '1', symbol: '🎯' },
   ];
 
   const weightClasses: { label: string; value: BatWeightClass; icon: string }[] = [

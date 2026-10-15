@@ -1,10 +1,9 @@
 export type BatCategory =
   | 'All'
-  | 'Gold Edition'
+  | '7T7T Gold Edition'
   | 'Black Monster'
   | 'Grey Edition'
-  | 'One Side Hero'
-  | 'Accessories';
+  | 'One Side Hero';
 
 export type BatWeightClass =
   | 'All'

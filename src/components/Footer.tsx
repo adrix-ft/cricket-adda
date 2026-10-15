@@ -13,9 +13,9 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
   };
 
   const models: { label: string; value: BatCategory }[] = [
-    { label: 'Gold Edition', value: 'Gold Edition' },
+    { label: '7T7T Gold Edition', value: '7T7T Gold Edition' },
     { label: 'Black Monster', value: 'Black Monster' },
-    { label: 'Grey Edition (957g)', value: 'Grey Edition' },
+    { label: 'Grey Edition', value: 'Grey Edition' },
     { label: 'One Side Hero', value: 'One Side Hero' },
   ];
 

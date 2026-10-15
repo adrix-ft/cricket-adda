@@ -72,7 +72,7 @@ export const EditorialGuide: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-neutral-100 text-neutral-700">
               <tr>
-                <td className="py-2.5 px-4 font-bold text-neutral-900">Gold Edition</td>
+                <td className="py-2.5 px-4 font-bold text-neutral-900">7T7T Gold Edition</td>
                 <td className="py-2.5 px-4 font-mono text-neutral-500">1020g–1050g</td>
                 <td className="py-2.5 px-4">Dual Scoop</td>
                 <td className="py-2.5 px-4 hidden sm:table-cell text-neutral-500">Hard Tennis Tournaments</td>

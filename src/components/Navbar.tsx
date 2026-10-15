@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const models: { label: string; value: BatCategory; symbol?: string }[] = [
     { label: 'All', value: 'All', symbol: '✦' },
-    { label: 'Gold', value: 'Gold Edition', symbol: '👑' },
+    { label: 'Gold', value: '7T7T Gold Edition', symbol: '👑' },
     { label: 'Monster', value: 'Black Monster', symbol: '🖤' },
     { label: 'Grey (957g)', value: 'Grey Edition', symbol: '⚡' },
     { label: '1-Side', value: 'One Side Hero', symbol: '🎯' },
