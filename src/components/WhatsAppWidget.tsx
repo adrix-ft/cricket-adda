@@ -17,7 +17,7 @@ export const WhatsAppWidget: React.FC = () => {
     const text = textToSend || userMessage;
     if (!text.trim()) return;
 
-    const encoded = encodeURIComponent(`Hello 7T7T! ${text}`);
+    const encoded = encodeURIComponent(`Hello Cricket Adda! ${text}`);
     window.open(`https://wa.me/${SELLER_INFO.whatsappNumber}?text=${encoded}`, '_blank');
     setUserMessage('');
     setIsOpen(false);
@@ -31,11 +31,11 @@ export const WhatsAppWidget: React.FC = () => {
           {/* Header */}
           <div className="bg-neutral-900 text-white p-3.5 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-xs">
-                7T
+              <div className="w-8 h-8 rounded-full bg-[#f15b28] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                CA
               </div>
               <div>
-                <h4 className="text-xs font-bold">7T7T Workshop</h4>
+                <h4 className="text-xs font-bold">Cricket Adda Workshop</h4>
                 <span className="text-[10px] text-emerald-400">Online · +91 {SELLER_INFO.primaryPhone}</span>
               </div>
             </div>

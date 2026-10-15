@@ -1,6 +1,6 @@
 export type BatCategory =
   | 'All'
-  | '7T7T Gold Edition'
+  | 'Gold Edition'
   | 'Black Monster'
   | 'Grey Edition'
   | 'One Side Hero'

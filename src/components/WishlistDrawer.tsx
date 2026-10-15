@@ -56,7 +56,7 @@ export const WishlistDrawer: React.FC<WishlistDrawerProps> = ({
                 </div>
                 <h3 className="text-sm font-bold text-neutral-800">No Bats Saved Yet</h3>
                 <p className="text-xs text-neutral-500 max-w-xs mx-auto">
-                  Click the heart icon on any 7T7T bat in the catalog to save it to your wishlist.
+                  Click the heart icon on any Cricket Adda bat in the catalog to save it to your wishlist.
                 </p>
               </div>
             ) : (

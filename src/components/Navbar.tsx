@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const models: { label: string; value: BatCategory; symbol?: string }[] = [
     { label: 'All', value: 'All', symbol: '✦' },
-    { label: 'Gold', value: '7T7T Gold Edition', symbol: '👑' },
+    { label: 'Gold', value: 'Gold Edition', symbol: '👑' },
     { label: 'Monster', value: 'Black Monster', symbol: '🖤' },
     { label: 'Grey (957g)', value: 'Grey Edition', symbol: '⚡' },
     { label: '1-Side', value: 'One Side Hero', symbol: '🎯' },
@@ -43,14 +43,14 @@ export const Navbar: React.FC<NavbarProps> = ({
             onClick={() => onSelectModel('All')}
             className="flex items-center gap-1.5 sm:gap-2 group cursor-pointer text-left"
           >
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-neutral-900 text-white flex items-center justify-center font-black text-xs tracking-tighter transition-transform group-hover:scale-105">
-              7T
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#f15b28] text-white flex items-center justify-center font-black text-xs tracking-tighter transition-transform group-hover:scale-105 shadow-xs">
+              CA
             </div>
             <div className="flex items-baseline gap-1">
               <span className="text-base sm:text-lg font-black tracking-tight text-neutral-900 uppercase">
-                7T7T
+                CRICKET
               </span>
-              <span className="text-[10px] sm:text-xs font-semibold text-neutral-400 uppercase tracking-widest">
+              <span className="text-base sm:text-lg font-black tracking-tight text-[#f15b28] uppercase">
                 ADDA
               </span>
             </div>
@@ -111,7 +111,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* WhatsApp Direct Icon Button */}
           <a
-            href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi%207T7T,%20I%20want%20to%20inquire%20about%20a%20bat.`}
+            href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi%20Cricket%20Adda,%20I%20want%20to%20inquire%20about%20a%20bat.`}
             target="_blank"
             rel="noopener noreferrer"
             className="w-8 h-8 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border border-emerald-200/60 flex items-center justify-center transition-colors cursor-pointer shrink-0"

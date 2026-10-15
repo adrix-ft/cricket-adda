@@ -40,7 +40,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedId = `7T7T-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedId = `CA-${Math.floor(100000 + Math.random() * 900000)}`;
     setOrderId(generatedId);
     setOrderConfirmed(true);
   };
@@ -86,7 +86,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 Shopping Bag ({items.reduce((sum, item) => sum + item.quantity, 0)})
               </h2>
               <p className="text-[11px] text-neutral-500">
-                Direct dispatch from 7T7T Bat Workshop
+                Direct dispatch from Cricket Adda Bat Workshop
               </p>
             </div>
             <button
@@ -128,7 +128,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                   <div className="flex justify-between text-emerald-700 font-semibold pt-1 border-t border-neutral-200">
                     <span>Free Gift:</span>
-                    <span>7T7T Padded Bat Cover (Included)</span>
+                    <span>Cricket Adda Padded Bat Cover (Included)</span>
                   </div>
                 </div>
 
@@ -218,7 +218,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                   <div className="text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
                     <ShieldCheck className="w-3.5 h-3.5" />
-                    <span>Free Padded 7T7T Bat Cover + Video Inspection Included</span>
+                    <span>Free Padded Cricket Adda Bat Cover + Video Inspection Included</span>
                   </div>
                 </div>
 
@@ -237,13 +237,13 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                 </div>
                 <h3 className="text-base font-bold text-neutral-800">Your Bag is Empty</h3>
                 <p className="text-xs text-neutral-500 max-w-xs mx-auto">
-                  Explore our handcrafted 7T7T tennis cricket bats - Gold Edition, Black Monster, Grey Edition, and One Side Hero!
+                  Explore our handcrafted Cricket Adda tennis cricket bats - Gold Edition, Black Monster, Grey Edition, and One Side Hero!
                 </p>
                 <button
                   onClick={onClose}
                   className="mt-4 px-6 py-2 bg-[#f15b28] text-white text-xs font-bold rounded-full hover:bg-[#c93c0d] transition-colors cursor-pointer"
                 >
-                  Browse 7T7T Bats
+                  Browse Cricket Adda Bats
                 </button>
               </div>
             ) : (
@@ -282,7 +282,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                           </div>
                           {item.bat.freeCover && (
                             <span className="inline-block mt-1 text-[10px] font-semibold text-emerald-700 bg-emerald-100/70 px-1.5 py-0.2 rounded">
-                              + Free 7T7T Cover
+                              + Free Cricket Adda Cover
                             </span>
                           )}
                         </div>
@@ -342,7 +342,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Free 7T7T Bat Cover</span>
+                  <span>Free Cricket Adda Bat Cover</span>
                   <span className="text-emerald-600 font-bold">INCLUDED</span>
                 </div>
                 <div className="flex justify-between">
@@ -365,7 +365,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
 
               <div className="text-[10px] text-center text-neutral-500 flex items-center justify-center gap-1.5">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Verified 7T7T Direct Guarantee · Cash on Delivery</span>
+                <span>Verified Cricket Adda Direct Guarantee · Cash on Delivery</span>
               </div>
             </div>
           )}

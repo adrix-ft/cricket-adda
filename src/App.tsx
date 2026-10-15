@@ -204,7 +204,7 @@ export default function App() {
         onOpenContact={() => setActiveInfoModal('contact')}
       />
 
-      {/* 2. Direct 7T7T Brand Header without fancy corporate tabs */}
+      {/* 2. Cricket Adda Brand Header */}
       <Navbar
         cartCount={totalCartCount}
         wishlistCount={wishlist.length}
@@ -216,7 +216,7 @@ export default function App() {
         onSelectModel={handleSelectModel}
       />
 
-      {/* 3. High-Impact 7T7T Hero Showcase Banner */}
+      {/* 3. High-Impact Cricket Adda Hero Showcase Banner */}
       <HeroBanner
         activeModel={selectedModel}
         onSelectCategory={handleSelectModel}
@@ -448,7 +448,7 @@ export default function App() {
                   No Bats Found With Selected Filters
                 </h3>
                 <p className="text-xs text-neutral-500 max-w-sm mx-auto">
-                  Try clearing your filters or search query to browse our complete collection of 7T7T scooped bats.
+                  Try clearing your filters or search query to browse our complete collection of Cricket Adda scooped bats.
                 </p>
                 <button
                   onClick={handleResetFilters}
@@ -502,7 +502,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* 5. Editorial Technical Guide on 7T7T Scoop Bats */}
+      {/* 5. Editorial Technical Guide on Cricket Adda Scoop Bats */}
       <EditorialGuide />
 
       {/* 6. Footer */}
@@ -580,7 +580,7 @@ export default function App() {
         </button>
 
         <a
-          href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi,%20I%20want%20to%20inquire%20about%207T7T%20cricket%20bats`}
+          href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi,%20I%20want%20to%20inquire%20about%20Cricket%20Adda%20cricket%20bats`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex flex-col items-center gap-0.5 text-emerald-600 hover:text-emerald-700 cursor-pointer py-1 px-2 touch-manipulation"

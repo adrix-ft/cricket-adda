@@ -35,7 +35,7 @@ export const EditorialGuide: React.FC = () => {
               Engineering
             </span>
             <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight">
-              7T7T Bat Architecture
+              Cricket Adda Bat Architecture
             </h2>
           </div>
           <span className="text-xs text-neutral-500 font-medium">

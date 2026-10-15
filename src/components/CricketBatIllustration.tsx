@@ -16,7 +16,7 @@ export const CricketBatIllustration: React.FC<CricketBatIllustrationProps> = ({
 
   const bladeColor = isBlackMonster ? '#1c1917' : isGrey ? '#d6d3d1' : '#f5deb3';
   const scoopColor = isBlackMonster ? '#0c0a09' : isGrey ? '#78716c' : '#d4a373';
-  const labelText = isBlackMonster ? 'BLACK MONSTER' : isGrey ? 'GREY EDITION' : isOneSide ? '1 SIDE HERO' : '7T7T GOLD';
+  const labelText = isBlackMonster ? 'BLACK MONSTER' : isGrey ? 'GREY EDITION' : isOneSide ? '1 SIDE HERO' : 'GOLD EDITION';
 
   return (
     <div className={`flex flex-col items-center justify-center p-4 ${className}`}>
@@ -45,8 +45,8 @@ export const CricketBatIllustration: React.FC<CricketBatIllustrationProps> = ({
 
         {/* Sticker / Label */}
         <rect x="37" y="115" width="26" height="42" rx="2" fill="#18181b" />
-        <text x="50" y="132" fill="#f59e0b" fontSize="10" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">
-          7T7T
+        <text x="50" y="132" fill="#f59e0b" fontSize="8" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">
+          ADDA
         </text>
         <text x="50" y="146" fill="#ffffff" fontSize="4.5" textAnchor="middle" fontFamily="sans-serif">
           {labelText}

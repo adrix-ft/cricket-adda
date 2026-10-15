@@ -2,9 +2,9 @@ import { CricketBat } from '../types/bat';
 
 export const ALL_CRICKET_BATS: CricketBat[] = [
   {
-    id: '7t7t-gold-edition',
-    name: '7T7T Gold Edition Handcrafted Power Scoop Bat',
-    model: '7T7T Gold Edition',
+    id: 'cricket-adda-gold-edition',
+    name: 'Cricket Adda Gold Edition Handcrafted Power Scoop Bat',
+    model: 'Gold Edition',
     mrp: 3499,
     discountPercent: 29,
     finalPrice: 2499,
@@ -22,7 +22,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     realImages: [
       {
         url: '/bats/7T7T GOLD EDITION/IMG-20261015-WA0023.jpg',
-        caption: 'Actual front view on turf showing 7T7T Willow gold foil decals',
+        caption: 'Actual front view on turf showing Cricket Adda gold foil decals',
         badge: 'Real Workshop Photo'
       },
       {
@@ -44,10 +44,10 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     stickerStyle: 'gold',
     shortDesc: 'Crafted for supreme power hitters in hard tennis cricket. Double hollow scoops drastically reduce swing resistance while keeping a colossal 48mm edge.',
     highlights: [
-      'Genuine 7T7T Gold Edition Decals & Hologram',
+      'Genuine Cricket Adda Gold Edition Decals & Hologram',
       'Aerodynamic Dual Air Scoop for Fast Bat Flow',
       'Massive 48mm Edges with Rubber Toe Guard',
-      'Free Padded 7T7T Shoulder Bat Cover Included',
+      'Free Padded Cricket Adda Shoulder Bat Cover Included',
       'Pre-knocked & Ready to Play on arrival'
     ],
     isBestseller: true,
@@ -56,8 +56,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     freeCover: true
   },
   {
-    id: '7t7t-black-monster',
-    name: '7T7T Black Monster Carbon Finish Stealth Scoop Bat',
+    id: 'cricket-adda-black-monster',
+    name: 'Cricket Adda Black Monster Carbon Finish Stealth Scoop Bat',
     model: 'Black Monster',
     mrp: 3999,
     discountPercent: 30,
@@ -102,7 +102,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       'Factory Calibrated Weights: 1040g, 1050g, 1055g, 1065g',
       'Full Matte Black Stealth Body & Aerodynamic Spine',
       'Iconic "LAGA TOH SIX" & "SUPER POWER" Styling',
-      'Includes Free Padded 7T7T Bat Cover'
+      'Includes Free Padded Cricket Adda Bat Cover'
     ],
     isBestseller: true,
     isNew: true,
@@ -110,8 +110,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     freeCover: true
   },
   {
-    id: '7t7t-grey-edition',
-    name: '7T7T Grey Edition Featherlight Speed Scoop (957g / 974g)',
+    id: 'cricket-adda-grey-edition',
+    name: 'Cricket Adda Grey Edition Featherlight Speed Scoop (957g / 974g)',
     model: 'Grey Edition',
     mrp: 3699,
     discountPercent: 29,
@@ -145,8 +145,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       },
       {
         url: '/bats/grey edition/IMG-20261014-WA0018.jpg',
-        caption: 'Official 7T7T padded tournament kit bags with hotline numbers',
-        badge: 'With 7T7T Bag'
+        caption: 'Official Cricket Adda padded tournament kit bags with hotline numbers',
+        badge: 'With Bat Bag'
       },
       {
         url: '/bats/grey edition/IMG-20261015-WA0020.jpg',
@@ -161,7 +161,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       'Maximum Bat Swing Speed for Fast Bowling & Yorkers',
       '4-Vent Deep Scoops for Instant Weight Reduction',
       'Perfect for Box Cricket & Hard Tennis Tournaments',
-      'Free Padded 7T7T Bat Case Included'
+      'Free Padded Cricket Adda Bat Case Included'
     ],
     isBestseller: false,
     isNew: true,
@@ -169,8 +169,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     freeCover: true
   },
   {
-    id: '7t7t-oneside-hero',
-    name: '7T7T One Side Hero Asymmetric Single-Scoop Bat',
+    id: 'cricket-adda-oneside-hero',
+    name: 'Cricket Adda One Side Hero Asymmetric Single-Scoop Bat',
     model: 'One Side Hero',
     mrp: 3799,
     discountPercent: 28,
@@ -215,7 +215,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       'Retains Maximum Wood Behind Sweet Spot',
       'Lightning Pickup for Wristy Flick Shots & Pulls',
       'Choice of Grip Colors (Yellow, Green, Red, Blue)',
-      'Includes Free Padded 7T7T Bat Cover'
+      'Includes Free Padded Cricket Adda Bat Cover'
     ],
     isBestseller: true,
     isNew: false,
@@ -223,8 +223,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     freeCover: true
   },
   {
-    id: '7t7t-black-monster-heavy',
-    name: '7T7T Black Monster 1065g Heavy Hitter Tournament Edition',
+    id: 'cricket-adda-black-monster-heavy',
+    name: 'Cricket Adda Black Monster 1065g Heavy Hitter Tournament Edition',
     model: 'Black Monster',
     mrp: 4199,
     discountPercent: 31,
@@ -259,7 +259,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       'Maximum 50mm Blade Thickness for Pure Power',
       'Full Carbon Face Sheet Prevents Surface Cracking',
       'Zero Hand Vibration with Singapore Cane Handle',
-      'Free 7T7T Padded Cover + Free Fiber Tape Protection'
+      'Free Cricket Adda Padded Cover + Free Fiber Tape Protection'
     ],
     isBestseller: false,
     isNew: false,
@@ -267,8 +267,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     freeCover: true
   },
   {
-    id: '7t7t-grey-edition-957',
-    name: '7T7T Grey Edition 957g Box Cricket Specialist',
+    id: 'cricket-adda-grey-edition-957',
+    name: 'Cricket Adda Grey Edition 957g Box Cricket Specialist',
     model: 'Grey Edition',
     mrp: 3599,
     discountPercent: 30,
@@ -303,7 +303,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       'Instantaneous Hand Speed for 100+ kmph Tennis Bowling',
       '4-Channel Scoop Airflow System',
       'Smooth Ergonomic Grip for Maximum Control',
-      'Free 7T7T Heavy Padded Bag Included'
+      'Free Cricket Adda Heavy Padded Bag Included'
     ],
     isBestseller: true,
     isNew: true,
@@ -311,8 +311,8 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     freeCover: true
   },
   {
-    id: '7t7t-official-cover',
-    name: '7T7T Official Heavy-Duty Padded Bat Cover (Kit Bag)',
+    id: 'cricket-adda-official-cover',
+    name: 'Cricket Adda Official Heavy-Duty Padded Bat Cover (Kit Bag)',
     model: 'Accessories',
     mrp: 899,
     discountPercent: 44,
@@ -331,7 +331,7 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
     realImages: [
       {
         url: '/bats/grey edition/IMG-20261014-WA0018.jpg',
-        caption: 'Official 7T7T padded bat kit bags with printed seller hotlines',
+        caption: 'Official Cricket Adda padded bat kit bags with printed seller hotlines',
         badge: 'Official Cover'
       },
       {
@@ -341,12 +341,12 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
       }
     ],
     stickerStyle: 'cover',
-    shortDesc: 'Official 7T7T tournament bat cover with heavy-duty padding, full length zipper, adjustable shoulder strap, and waterproof inner lining. Note: Included FREE with any bat order!',
+    shortDesc: 'Official Cricket Adda tournament bat cover with heavy-duty padding, full length zipper, adjustable shoulder strap, and waterproof inner lining. Note: Included FREE with any bat order!',
     highlights: [
       'Thick Foam Padding Protects Scoops and Toe',
       'Heavy-Duty Dual Metal Zippers',
       'Adjustable Padded Shoulder Strap',
-      'Printed with Official 7T7T Branding',
+      'Printed with Official Cricket Adda Branding',
       'NOTE: FREE with every bat purchase!'
     ],
     isBestseller: false,
@@ -358,17 +358,17 @@ export const ALL_CRICKET_BATS: CricketBat[] = [
 
 export const SELLER_INFO = {
   shopName: 'Cricket Adda',
-  tagline: '7T7T Handcrafted Tennis Cricket Bats Specialist',
-  primaryPhone: '8669937070',
-  secondaryPhone: '9619955576',
-  whatsappNumber: '918669937070',
-  displayPhone: '+91 86699 37070 / +91 96199 55576',
+  tagline: 'Cricket Adda Handcrafted Tennis Cricket Bats Specialist',
+  primaryPhone: '9217679479',
+  secondaryPhone: '9217679479',
+  whatsappNumber: '919217679479',
+  displayPhone: '+91 92176 79479',
   city: 'India',
   features: [
     'Direct Factory Pricing - No Middlemen',
     'Actual Digital Scale Weight Verification',
     'Video Call Bat Inspection Before Courier Dispatch',
-    'Free Heavy Padded 7T7T Cover with Every Bat',
+    'Free Heavy Padded Cricket Adda Cover with Every Bat',
     'Cash On Delivery (COD) & Fast Pan-India Courier Delivery'
   ]
 };

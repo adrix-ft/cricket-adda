@@ -13,7 +13,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
   };
 
   const models: { label: string; value: BatCategory }[] = [
-    { label: 'Gold Edition', value: '7T7T Gold Edition' },
+    { label: 'Gold Edition', value: 'Gold Edition' },
     { label: 'Black Monster', value: 'Black Monster' },
     { label: 'Grey Edition (957g)', value: 'Grey Edition' },
     { label: 'One Side Hero', value: 'One Side Hero' },
@@ -25,12 +25,12 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-neutral-900">
           {/* Brand */}
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-white text-neutral-950 flex items-center justify-center font-black text-xs">
-              7T
+            <div className="w-8 h-8 rounded-lg bg-[#f15b28] text-white flex items-center justify-center font-black text-xs shadow-xs">
+              CA
             </div>
             <div>
               <span className="text-sm font-black tracking-tight uppercase">CRICKET ADDA</span>
-              <span className="text-[10px] text-neutral-500 block">7T7T Handcrafted Tennis Bats</span>
+              <span className="text-[10px] text-neutral-500 block">Handcrafted Tennis Cricket Bats</span>
             </div>
           </div>
 
@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory }) => {
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-neutral-500 text-[11px]">
           <div>
-            © {new Date().getFullYear()} Cricket Adda · Handcrafted 7T7T Bats · Pan-India Dispatch
+            © {new Date().getFullYear()} Cricket Adda · Handcrafted Bats · Pan-India Dispatch
           </div>
           <button
             onClick={scrollToTop}

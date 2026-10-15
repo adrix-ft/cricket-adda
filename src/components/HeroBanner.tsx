@@ -10,7 +10,7 @@ interface HeroBannerProps {
 export const HeroBanner: React.FC<HeroBannerProps> = ({ onSelectCategory, activeModel }) => {
   const modelChips: { label: string; value: BatCategory; icon: string }[] = [
     { label: 'All', value: 'All', icon: '✦' },
-    { label: 'Gold', value: '7T7T Gold Edition', icon: '👑' },
+    { label: 'Gold', value: 'Gold Edition', icon: '👑' },
     { label: 'Black Monster', value: 'Black Monster', icon: '🖤' },
     { label: 'Grey (957g)', value: 'Grey Edition', icon: '⚡' },
     { label: '1-Side Hero', value: 'One Side Hero', icon: '🎯' },
@@ -22,7 +22,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onSelectCategory, active
       <div className="relative w-full min-h-[260px] sm:min-h-[320px] flex items-center">
         <img
           src="/images/hero_banner.jpg"
-          alt="7T7T Cricket Bats"
+          alt="Cricket Adda Bats"
           className="absolute inset-0 w-full h-full object-cover object-center opacity-45"
         />
 
@@ -34,7 +34,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onSelectCategory, active
             {/* Minimal Sub-tag */}
             <div className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
               <span className="w-1.5 h-1.5 rounded-full bg-[#f15b28]" />
-              <span>7T7T Handcrafted Workshop</span>
+              <span>Cricket Adda Handcrafted Workshop</span>
             </div>
 
             {/* Bold Minimal Headline */}

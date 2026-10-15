@@ -53,7 +53,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           <span>•</span>
           <span className="flex items-center gap-1 text-neutral-300">
             <ShieldCheck className="w-3 h-3 text-amber-400" />
-            <span>Free 7T7T Bag</span>
+            <span>Free Cricket Adda Bag</span>
           </span>
         </div>
 
