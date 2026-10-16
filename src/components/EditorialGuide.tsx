@@ -1,27 +1,27 @@
 import React from 'react';
-import { Scale, Zap, ShieldCheck, Flame } from 'lucide-react';
+import { Scale, Zap, ShieldCheck, Flame, Compass } from 'lucide-react';
 
 export const EditorialGuide: React.FC = () => {
   const specs = [
     {
-      icon: <Zap className="w-4 h-4 text-[#f15b28]" />,
-      title: 'Aero Scoops',
-      desc: 'Removes dead weight from spine while keeping 48mm–50mm edges.',
+      icon: <Zap className="w-4 h-4 text-[#f15b28]" strokeWidth={1.75} />,
+      title: 'Aerodynamic Airflow Scoops',
+      desc: 'Removes dead spine weight while keeping full 48mm–50mm tournament edges.',
     },
     {
-      icon: <ShieldCheck className="w-4 h-4 text-emerald-500" />,
-      title: 'Carbon Shield',
-      desc: 'Mesh matrix face protects against heavy tennis ball cracks.',
+      icon: <ShieldCheck className="w-4 h-4 text-emerald-600" strokeWidth={1.75} />,
+      title: 'Carbon Matrix Face Shield',
+      desc: 'Protective face composite safeguards blade against heavy tournament tennis balls.',
     },
     {
-      icon: <Scale className="w-4 h-4 text-amber-500" />,
-      title: 'Scale Match',
-      desc: 'Every bat is weighed on shop scales. Pick 957g to 1065g.',
+      icon: <Scale className="w-4 h-4 text-amber-500" strokeWidth={1.75} />,
+      title: 'Precision Scale Calibration',
+      desc: 'Every piece is individually weighed on digital scales. Pick from 957g to 1065g.',
     },
     {
-      icon: <Flame className="w-4 h-4 text-rose-500" />,
-      title: '1-Side Aero',
-      desc: 'Asymmetric carve concentrates wood mass on leg-side hitting zone.',
+      icon: <Flame className="w-4 h-4 text-rose-500" strokeWidth={1.75} />,
+      title: 'Asymmetric 1-Side Power Scoop',
+      desc: 'Engineered mass concentration towards the leg-side hitting zone for maximum boundary leverage.',
     },
   ];
 
@@ -31,10 +31,11 @@ export const EditorialGuide: React.FC = () => {
         {/* Minimal Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-neutral-100 pb-4">
           <div>
-            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest block">
-              Engineering
-            </span>
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight">
+            <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">
+              <Compass className="w-3.5 h-3.5 text-neutral-400" strokeWidth={1.75} />
+              <span>Workshop Engineering</span>
+            </div>
+            <h2 className="text-lg sm:text-2xl font-black uppercase tracking-tight font-display mt-0.5">
               Cricket Adda Bat Architecture
             </h2>
           </div>
@@ -44,11 +45,11 @@ export const EditorialGuide: React.FC = () => {
         </div>
 
         {/* 4 Clean Minimalist Spec Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           {specs.map((s, idx) => (
             <div
               key={idx}
-              className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200/60 space-y-2 hover:border-neutral-300 transition-colors"
+              className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200/70 space-y-2 hover:border-neutral-300 transition-colors"
             >
               <div className="w-8 h-8 rounded-lg bg-white border border-neutral-200 flex items-center justify-center shadow-xs">
                 {s.icon}
@@ -60,40 +61,40 @@ export const EditorialGuide: React.FC = () => {
         </div>
 
         {/* Minimal Comparison Table */}
-        <div className="rounded-2xl border border-neutral-200/80 overflow-hidden bg-white">
+        <div className="rounded-2xl border border-neutral-200/80 overflow-hidden bg-white shadow-xs">
           <table className="w-full text-left text-xs">
             <thead>
               <tr className="bg-neutral-50 border-b border-neutral-200/80 text-[10px] font-bold uppercase tracking-wider text-neutral-400">
-                <th className="py-2.5 px-4">Model</th>
-                <th className="py-2.5 px-4">Weight</th>
-                <th className="py-2.5 px-4">Profile</th>
-                <th className="py-2.5 px-4 hidden sm:table-cell">Best For</th>
+                <th className="py-3 px-4">Model Profile</th>
+                <th className="py-3 px-4">Calibrated Weight</th>
+                <th className="py-3 px-4">Scoop Architecture</th>
+                <th className="py-3 px-4 hidden sm:table-cell">Optimal Play Style</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-neutral-100 text-neutral-700">
-              <tr>
-                <td className="py-2.5 px-4 font-bold text-neutral-900">7T7T Gold Edition</td>
-                <td className="py-2.5 px-4 font-mono text-neutral-500">1020g–1050g</td>
-                <td className="py-2.5 px-4">Dual Scoop</td>
-                <td className="py-2.5 px-4 hidden sm:table-cell text-neutral-500">Hard Tennis Tournaments</td>
+              <tr className="hover:bg-neutral-50/50 transition-colors">
+                <td className="py-3 px-4 font-bold text-neutral-900">7T7T Gold Edition</td>
+                <td className="py-3 px-4 font-mono text-neutral-600 font-semibold">1020g – 1050g</td>
+                <td className="py-3 px-4">Dual Aerodynamic Airflow</td>
+                <td className="py-3 px-4 hidden sm:table-cell text-neutral-500 font-medium">Hard Tennis Tournaments & Fast Bat Flow</td>
               </tr>
-              <tr>
-                <td className="py-2.5 px-4 font-bold text-neutral-900">Black Monster</td>
-                <td className="py-2.5 px-4 font-mono text-neutral-500">1040g–1065g</td>
-                <td className="py-2.5 px-4">Carbon Face + Channel</td>
-                <td className="py-2.5 px-4 hidden sm:table-cell text-neutral-500">Heavy Tennis Boundary Finishers</td>
+              <tr className="hover:bg-neutral-50/50 transition-colors">
+                <td className="py-3 px-4 font-bold text-neutral-900">Black Monster</td>
+                <td className="py-3 px-4 font-mono text-neutral-600 font-semibold">1040g – 1065g</td>
+                <td className="py-3 px-4">Carbon Face + Power Channel</td>
+                <td className="py-3 px-4 hidden sm:table-cell text-neutral-500 font-medium">Heavy Tennis Power Hitting ("LAGA TOH SIX")</td>
               </tr>
-              <tr>
-                <td className="py-2.5 px-4 font-bold text-neutral-900">Grey Edition</td>
-                <td className="py-2.5 px-4 font-mono text-neutral-500">950g–980g (957g)</td>
-                <td className="py-2.5 px-4">Multi-Vent Speed</td>
-                <td className="py-2.5 px-4 hidden sm:table-cell text-neutral-500">Box Cricket & Fast Reflex Cuts</td>
+              <tr className="hover:bg-neutral-50/50 transition-colors">
+                <td className="py-3 px-4 font-bold text-neutral-900">Grey Edition</td>
+                <td className="py-3 px-4 font-mono text-neutral-600 font-semibold">950g – 980g (957g Verified)</td>
+                <td className="py-3 px-4">Featherweight Multi-Vent</td>
+                <td className="py-3 px-4 hidden sm:table-cell text-neutral-500 font-medium">Box Cricket, Fast Reflex Cuts & Upper Cuts</td>
               </tr>
-              <tr>
-                <td className="py-2.5 px-4 font-bold text-neutral-900">One Side Hero</td>
-                <td className="py-2.5 px-4 font-mono text-neutral-500">1000g–1040g</td>
-                <td className="py-2.5 px-4">1-Side Asymmetric</td>
-                <td className="py-2.5 px-4 hidden sm:table-cell text-neutral-500">Power Pulls & Wristy Flick Shots</td>
+              <tr className="hover:bg-neutral-50/50 transition-colors">
+                <td className="py-3 px-4 font-bold text-neutral-900">One Side Hero</td>
+                <td className="py-3 px-4 font-mono text-neutral-600 font-semibold">1000g – 1040g</td>
+                <td className="py-3 px-4">Asymmetric 1-Side Scoop</td>
+                <td className="py-3 px-4 hidden sm:table-cell text-neutral-500 font-medium">Power Pulls, Leg-Side Flicks & Helicopter Drives</td>
               </tr>
             </tbody>
           </table>

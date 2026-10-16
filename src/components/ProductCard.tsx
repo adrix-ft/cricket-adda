@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Heart, Eye, ShoppingBag, MessageCircle, Scale, Images } from 'lucide-react';
+import { Heart, Eye, ShoppingBag, MessageCircle, Scale, Camera } from 'lucide-react';
 import { CricketBat } from '../types/bat';
 import { SELLER_INFO } from '../data/bats';
 import { CricketBatIllustration } from './CricketBatIllustration';
@@ -36,42 +36,48 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   };
 
   return (
-    <div className="group relative bg-white border border-neutral-200/80 hover:border-neutral-400 rounded-2xl transition-all duration-200 flex flex-col justify-between overflow-hidden hover:shadow-lg touch-manipulation">
+    <div className="group relative bg-white border border-neutral-200/90 hover:border-neutral-900 rounded-2xl transition-all duration-200 flex flex-col justify-between overflow-hidden hover:shadow-md touch-manipulation">
       {/* Top Floating Controls */}
       <div className="absolute top-2.5 left-2.5 right-2.5 z-20 flex items-center justify-between pointer-events-none">
-        {/* Left: Weight / Model Micro-badge */}
+        {/* Left: Weight Micro-badge with Lucide Scale */}
         <div className="flex items-center gap-1 pointer-events-auto">
           {bat.verifiedWeight && (
-            <span className="text-[9px] sm:text-[10px] font-bold tracking-tight bg-neutral-900/90 text-white px-1.5 sm:px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
-              <Scale className="w-2.5 h-2.5 text-[#f15b28]" />
-              <span className="truncate max-w-[80px] sm:max-w-none">
+            <span className="text-[9.5px] sm:text-[10px] font-semibold tracking-tight bg-neutral-950/90 text-white px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 backdrop-blur-xs">
+              <Scale className="w-3 h-3 text-[#f15b28]" strokeWidth={1.75} />
+              <span className="truncate max-w-[90px] sm:max-w-none">
                 {bat.verifiedWeight.split('(')[0].replace('Balanced Weight', '').trim()}
               </span>
             </span>
           )}
         </div>
 
-        {/* Right: Wishlist Icon Button */}
+        {/* Right: Wishlist Icon Button with Lucide Heart */}
         <button
           onClick={(e) => {
             e.stopPropagation();
             onToggleWishlist(bat);
           }}
-          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-colors pointer-events-auto cursor-pointer shadow-xs ${
+          className={`w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-colors pointer-events-auto cursor-pointer shadow-xs ${
             isWishlisted
               ? 'bg-rose-50 border-rose-200 text-rose-600'
-              : 'bg-white/90 backdrop-blur-xs border-neutral-200 text-neutral-400 hover:text-rose-500'
+              : 'bg-white/95 backdrop-blur-xs border-neutral-200 text-neutral-400 hover:text-rose-500'
           }`}
-          title={isWishlisted ? 'Saved' : 'Save'}
+          title={isWishlisted ? 'Saved in wishlist' : 'Save to wishlist'}
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         >
-          <Heart className={`w-3.5 h-3.5 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}`} />
+          <Heart
+            className={`w-3.5 h-3.5 ${
+              isWishlisted ? 'fill-rose-500 text-rose-500' : ''
+            }`}
+            strokeWidth={1.75}
+          />
         </button>
       </div>
 
       {/* Product Image Area */}
       <div
         onClick={() => onQuickView(bat)}
-        className="relative w-full aspect-[4/5] bg-neutral-100/50 p-2 sm:p-4 flex items-center justify-center cursor-pointer overflow-hidden"
+        className="relative w-full aspect-[4/5] bg-neutral-50/70 p-3 sm:p-5 flex items-center justify-center cursor-pointer overflow-hidden border-b border-neutral-100"
       >
         {!imageError ? (
           <img
@@ -85,34 +91,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <CricketBatIllustration bat={bat} />
         )}
 
-        {/* Photo Gallery Indicator */}
+        {/* Photo Gallery Indicator with Lucide Camera */}
         {bat.realImages.length > 1 && (
-          <div className="absolute bottom-2 sm:bottom-3 left-2 sm:left-3 z-20 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full bg-black/60 text-white backdrop-blur-xs flex items-center gap-1">
-            <Images className="w-2.5 h-2.5" />
+          <div className="absolute bottom-2.5 left-2.5 z-20 text-[9.5px] font-semibold px-2 py-0.5 rounded-full bg-neutral-900/80 text-white backdrop-blur-xs flex items-center gap-1">
+            <Camera className="w-3 h-3 text-white" strokeWidth={1.75} />
             <span>{bat.realImages.length} Photos</span>
           </div>
         )}
 
         {/* Desktop Quick View Overlay on Hover */}
-        <div className="hidden lg:flex absolute bottom-3 right-3 items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
+        <div className="hidden lg:flex absolute bottom-2.5 right-2.5 items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-20">
           <button
             onClick={(e) => {
               e.stopPropagation();
               onQuickView(bat);
             }}
-            className="w-8 h-8 rounded-full bg-white text-neutral-800 hover:bg-neutral-100 shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer"
+            className="w-8 h-8 rounded-full bg-white text-neutral-800 hover:bg-neutral-100 shadow-md flex items-center justify-center transition-transform hover:scale-105 cursor-pointer"
             title="Quick Preview"
+            aria-label="Quick preview"
           >
-            <Eye className="w-3.5 h-3.5" />
+            <Eye className="w-3.5 h-3.5" strokeWidth={1.75} />
           </button>
         </div>
       </div>
 
       {/* Card Information */}
-      <div className="p-2.5 sm:p-4 flex flex-col justify-between flex-grow bg-white space-y-1.5 sm:space-y-2">
+      <div className="p-3 sm:p-4 flex flex-col justify-between flex-grow bg-white space-y-2">
         <div>
           {/* Micro Model Tag */}
-          <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-neutral-400 truncate block">
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-400 truncate block">
             {bat.model}
           </span>
 
@@ -125,9 +132,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </h3>
 
           {/* Micro Specs */}
-          <div className="text-[10px] sm:text-[11px] text-neutral-500 flex items-center gap-1.5 mt-0.5 truncate">
+          <div className="text-[10.5px] sm:text-[11px] text-neutral-500 flex items-center gap-1.5 mt-0.5 truncate font-medium">
             <span>{bat.weightRange}</span>
-            <span>•</span>
+            <span className="text-neutral-300">/</span>
             <span>{bat.edgeThickness.split(' ')[0]}</span>
           </div>
         </div>
@@ -135,7 +142,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Price & Action Row */}
         <div className="pt-2 border-t border-neutral-100 flex items-center justify-between gap-1">
           <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 font-mono">
-            <span className="text-xs sm:text-base font-black text-neutral-900 leading-tight">
+            <span className="text-xs sm:text-base font-bold text-neutral-950 leading-tight">
               ₹{formatINR(bat.finalPrice)}
             </span>
             <span className="text-[10px] sm:text-xs text-neutral-400 line-through leading-none">
@@ -143,24 +150,26 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             </span>
           </div>
 
-          {/* Action Symbols */}
-          <div className="flex items-center gap-1 shrink-0">
+          {/* Action Symbols with Lucide Icons */}
+          <div className="flex items-center gap-1.5 shrink-0">
             <button
               onClick={handleWhatsAppOrder}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition-colors cursor-pointer"
+              className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/80 flex items-center justify-center transition-colors cursor-pointer"
               title="Order on WhatsApp"
+              aria-label="Order on WhatsApp"
             >
-              <MessageCircle className="w-3.5 h-3.5" />
+              <MessageCircle className="w-3.5 h-3.5" strokeWidth={1.75} />
             </button>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onAddToCart(bat);
               }}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-neutral-900 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs"
-              title="Add to Bag"
+              className="w-7.5 h-7.5 sm:w-8 sm:h-8 rounded-lg bg-neutral-900 hover:bg-black text-white flex items-center justify-center transition-colors cursor-pointer shadow-xs"
+              title="Add to Shopping Bag"
+              aria-label="Add to bag"
             >
-              <ShoppingBag className="w-3.5 h-3.5" />
+              <ShoppingBag className="w-3.5 h-3.5" strokeWidth={1.75} />
             </button>
           </div>
         </div>

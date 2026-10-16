@@ -197,7 +197,7 @@ export default function App() {
   const totalCartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-[#f8f7f7] text-[#24201e] flex flex-col font-sans">
+    <div className="min-h-screen bg-[#f9fafb] text-[#18181b] flex flex-col font-sans">
       {/* 1. Orange Top Utility Bar */}
       <TopBar
         onOpenAbout={() => setActiveInfoModal('about')}
@@ -223,15 +223,15 @@ export default function App() {
       />
 
       {/* 4. Main Store Container */}
-      <main id="catalog" className="flex-1 max-w-[1440px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 pb-24 md:pb-12">
+      <main id="catalog" className="flex-1 max-w-[1440px] w-full mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 pb-24 md:pb-12">
         {/* Mobile Filter & Grid Control Bar */}
-        <div className="lg:hidden flex items-center justify-between gap-2 pb-3.5 mb-4 border-b border-neutral-200">
+        <div className="lg:hidden flex items-center justify-between gap-2 pb-3 mb-4 border-b border-neutral-200/80">
           <button
             onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="flex items-center gap-1.5 py-1.5 px-3 bg-white border border-neutral-300 rounded-lg text-xs font-bold text-neutral-800 shadow-xs cursor-pointer touch-manipulation"
+            className="flex items-center gap-1.5 py-1.5 px-3 bg-white border border-neutral-200 rounded-lg text-xs font-semibold text-neutral-800 shadow-xs cursor-pointer touch-manipulation"
           >
-            <SlidersHorizontal className="w-3.5 h-3.5 text-[#f15b28]" />
-            <span>Filter</span>
+            <SlidersHorizontal className="w-3.5 h-3.5 text-neutral-600" strokeWidth={1.75} />
+            <span>Filters</span>
             {activeFilterCount > 0 && (
               <span className="w-4 h-4 rounded-full bg-[#f15b28] text-white text-[10px] font-bold flex items-center justify-center">
                 {activeFilterCount}
@@ -241,40 +241,40 @@ export default function App() {
 
           <div className="flex items-center gap-2">
             {/* 1-Col vs 2-Col Mobile View Toggle */}
-            <div className="flex items-center border border-neutral-300 rounded-lg bg-neutral-50 p-0.5">
+            <div className="flex items-center border border-neutral-200 rounded-lg bg-neutral-100/80 p-0.5">
               <button
                 onClick={() => setMobileGridCols(1)}
                 className={`p-1 rounded cursor-pointer transition-colors touch-manipulation ${
                   mobileGridCols === 1
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-white text-neutral-900 shadow-xs'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
                 title="Single Column (Detailed View)"
                 aria-label="Single column detailed view"
               >
-                <Square className="w-3.5 h-3.5" />
+                <Square className="w-3.5 h-3.5" strokeWidth={1.75} />
               </button>
               <button
                 onClick={() => setMobileGridCols(2)}
                 className={`p-1 rounded cursor-pointer transition-colors touch-manipulation ${
                   mobileGridCols === 2
-                    ? 'bg-neutral-900 text-white shadow-xs'
+                    ? 'bg-white text-neutral-900 shadow-xs'
                     : 'text-neutral-500 hover:text-neutral-900'
                 }`}
                 title="Two Columns (Compact View)"
                 aria-label="Two column compact view"
               >
-                <Grid2X2 className="w-3.5 h-3.5" />
+                <Grid2X2 className="w-3.5 h-3.5" strokeWidth={1.75} />
               </button>
             </div>
 
             {/* Mobile Sort Dropdown */}
             <div className="flex items-center gap-1 text-xs">
-              <ArrowUpDown className="w-3.5 h-3.5 text-neutral-400" />
+              <ArrowUpDown className="w-3.5 h-3.5 text-neutral-400" strokeWidth={1.75} />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="bg-white border border-neutral-300 rounded-lg px-2 py-1 text-xs font-semibold focus:outline-none focus:border-[#f15b28] cursor-pointer"
+                className="bg-white border border-neutral-200 rounded-lg px-2 py-1 text-xs font-semibold text-neutral-800 focus:outline-none focus:border-neutral-400 cursor-pointer"
               >
                 <option value="position">Featured</option>
                 <option value="weight-low-high">Lightest (957g)</option>
@@ -292,18 +292,19 @@ export default function App() {
               onClick={() => setMobileFilterOpen(false)}
               className="absolute inset-0 bg-black/60 backdrop-blur-xs"
             />
-            <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-white shadow-xl flex flex-col justify-between overflow-y-auto p-4">
+            <div className="fixed inset-y-0 left-0 max-w-xs w-full bg-white shadow-xl flex flex-col justify-between overflow-y-auto p-4 animate-in slide-in-from-left duration-200">
               <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
                 <span className="font-bold text-sm text-neutral-900">Filter Bats</span>
                 <button
                   onClick={() => setMobileFilterOpen(false)}
-                  className="p-1 rounded-full hover:bg-neutral-100"
+                  className="p-1 rounded-full hover:bg-neutral-100 text-neutral-500"
+                  aria-label="Close filters"
                 >
-                  <X className="w-5 h-5 text-neutral-500" />
+                  <X className="w-5 h-5" strokeWidth={1.75} />
                 </button>
               </div>
 
-              <div className="py-4">
+              <div className="py-3">
                 <FilterSidebar
                   selectedModel={selectedModel}
                   onSelectModel={(m) => {
@@ -331,7 +332,7 @@ export default function App() {
 
               <button
                 onClick={() => setMobileFilterOpen(false)}
-                className="w-full py-2.5 bg-[#f15b28] text-white text-xs font-bold rounded-lg cursor-pointer"
+                className="w-full py-2.5 bg-neutral-900 hover:bg-black text-white text-xs font-semibold rounded-xl cursor-pointer transition-colors"
               >
                 Show Results ({filteredBats.length})
               </button>
@@ -340,7 +341,7 @@ export default function App() {
         )}
 
         {/* 2-Column Desktop Grid Layout */}
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
+        <div className="flex flex-col lg:flex-row gap-7 items-start">
           {/* Left Column: Direct Tennis Bat Filters (Desktop) */}
           <div className="hidden lg:block">
             <FilterSidebar
@@ -360,25 +361,25 @@ export default function App() {
           </div>
 
           {/* Right Column: Catalog Grid & Controls */}
-          <div className="flex-1 w-full space-y-5">
+          <div className="flex-1 w-full space-y-4">
             {/* Catalog Control Header */}
             <div className="flex items-center justify-between pb-3 border-b border-neutral-200/80">
               <div className="flex items-baseline gap-2">
-                <h2 className="text-sm font-black text-neutral-900 tracking-tight uppercase">
-                  {selectedModel === 'All' ? 'Bats' : selectedModel}
+                <h2 className="text-sm font-bold text-neutral-900 tracking-tight uppercase">
+                  {selectedModel === 'All' ? 'Available Bats' : selectedModel}
                 </h2>
-                <span className="text-xs font-mono text-neutral-400 font-bold">
+                <span className="text-xs font-mono text-neutral-400 font-semibold">
                   ({filteredBats.length})
                 </span>
               </div>
 
               {/* Minimal Sort */}
               <div className="flex items-center gap-1.5 text-xs">
-                <ArrowUpDown className="w-3.5 h-3.5 text-neutral-400" />
+                <ArrowUpDown className="w-3.5 h-3.5 text-neutral-400" strokeWidth={1.75} />
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as SortOption)}
-                  className="bg-transparent text-xs font-bold text-neutral-700 focus:outline-none cursor-pointer"
+                  className="bg-transparent text-xs font-semibold text-neutral-700 focus:outline-none cursor-pointer"
                 >
                   <option value="position">Featured</option>
                   <option value="weight-low-high">Lightest (957g)</option>
@@ -390,59 +391,59 @@ export default function App() {
 
             {/* Active Filters Tag Bar */}
             {activeFilterCount > 0 && (
-              <div className="flex flex-wrap items-center gap-1.5 p-2.5 bg-neutral-100 rounded-xl text-xs">
-                <span className="text-neutral-500 font-bold px-1">Active:</span>
+              <div className="flex flex-wrap items-center gap-1.5 p-2 bg-neutral-100/80 rounded-xl text-xs">
+                <span className="text-neutral-500 font-semibold px-1">Active:</span>
 
                 {selectedModel !== 'All' && (
                   <span
                     onClick={() => setSelectedModel('All')}
-                    className="bg-white border border-neutral-300 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-[#f15b28] font-semibold text-neutral-800"
+                    className="bg-white border border-neutral-200 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-neutral-400 font-medium text-neutral-800"
                   >
-                    Model: {selectedModel} <X className="w-3.5 h-3.5 text-neutral-400" />
+                    Model: {selectedModel} <X className="w-3 h-3 text-neutral-400" strokeWidth={2} />
                   </span>
                 )}
 
                 {selectedWeightClass !== 'All' && (
                   <span
                     onClick={() => setSelectedWeightClass('All')}
-                    className="bg-white border border-neutral-300 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-[#f15b28] font-semibold text-neutral-800"
+                    className="bg-white border border-neutral-200 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-neutral-400 font-medium text-neutral-800"
                   >
-                    Weight: {selectedWeightClass} <X className="w-3.5 h-3.5 text-neutral-400" />
+                    Weight: {selectedWeightClass} <X className="w-3 h-3 text-neutral-400" strokeWidth={2} />
                   </span>
                 )}
 
                 {selectedBallType !== 'All' && (
                   <span
                     onClick={() => setSelectedBallType('All')}
-                    className="bg-white border border-neutral-300 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-[#f15b28] font-semibold text-neutral-800"
+                    className="bg-white border border-neutral-200 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-neutral-400 font-medium text-neutral-800"
                   >
-                    Ball: {selectedBallType} <X className="w-3.5 h-3.5 text-neutral-400" />
+                    Ball: {selectedBallType} <X className="w-3 h-3 text-neutral-400" strokeWidth={2} />
                   </span>
                 )}
 
                 {searchQuery && (
                   <span
                     onClick={() => setSearchQuery('')}
-                    className="bg-white border border-neutral-300 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-[#f15b28] font-semibold text-neutral-800"
+                    className="bg-white border border-neutral-200 rounded-lg px-2.5 py-1 flex items-center gap-1.5 cursor-pointer hover:border-neutral-400 font-medium text-neutral-800"
                   >
-                    Search: "{searchQuery}" <X className="w-3.5 h-3.5 text-neutral-400" />
+                    Search: "{searchQuery}" <X className="w-3 h-3 text-neutral-400" strokeWidth={2} />
                   </span>
                 )}
 
                 <button
                   onClick={handleResetFilters}
-                  className="text-[#f15b28] font-bold hover:underline px-2 cursor-pointer ml-auto text-xs"
+                  className="text-neutral-600 hover:text-neutral-900 font-semibold hover:underline px-2 cursor-pointer ml-auto text-xs"
                 >
-                  Clear All Filters
+                  Clear All
                 </button>
               </div>
             )}
 
             {/* Catalog Grid */}
             {filteredBats.length === 0 ? (
-              <div className="bg-white rounded-xl border border-neutral-200 p-12 text-center space-y-4">
-                <div className="w-16 h-16 bg-[#fdf4f1] text-[#f15b28] rounded-full flex items-center justify-center mx-auto">
-                  <SlidersHorizontal className="w-8 h-8" />
+              <div className="bg-white rounded-2xl border border-neutral-200 p-12 text-center space-y-3.5">
+                <div className="w-14 h-14 bg-neutral-100 text-neutral-500 rounded-full flex items-center justify-center mx-auto">
+                  <SlidersHorizontal className="w-6 h-6" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-base font-bold text-neutral-900">
                   No Bats Found With Selected Filters
@@ -452,7 +453,7 @@ export default function App() {
                 </p>
                 <button
                   onClick={handleResetFilters}
-                  className="px-5 py-2.5 bg-[#f15b28] text-white text-xs font-bold rounded-lg hover:bg-[#c93c0d] transition-colors cursor-pointer"
+                  className="px-5 py-2 bg-neutral-900 text-white text-xs font-semibold rounded-xl hover:bg-black transition-colors cursor-pointer"
                 >
                   Show All Bats
                 </button>
@@ -461,7 +462,7 @@ export default function App() {
               <div
                 className={`grid ${
                   mobileGridCols === 1 ? 'grid-cols-1' : 'grid-cols-2'
-                } sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6`}
+                } sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5`}
               >
                 {filteredBats.map((bat) => (
                   <ProductCard
@@ -477,25 +478,26 @@ export default function App() {
               </div>
             )}
 
-            {/* Minimal Guarantee Strip */}
-            <div className="p-4 rounded-2xl bg-neutral-900 text-white flex items-center justify-between gap-4 mt-8">
+            {/* Minimal Guarantee Strip with Lucide Icons */}
+            <div className="p-4 rounded-2xl bg-neutral-900 text-white flex items-center justify-between gap-4 mt-8 border border-neutral-800">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center shrink-0">
-                  <Video className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-neutral-800 text-emerald-400 border border-neutral-700 flex items-center justify-center shrink-0">
+                  <Video className="w-4 h-4" strokeWidth={1.75} />
                 </div>
                 <div>
                   <span className="text-xs font-bold block">Live Video Inspection</span>
-                  <span className="text-[11px] text-neutral-400">See your exact bat on scale before dispatch</span>
+                  <span className="text-[11px] text-neutral-400 font-medium">Verify your exact bat on scale before dispatch</span>
                 </div>
               </div>
               <a
                 href={`https://wa.me/${SELLER_INFO.whatsappNumber}?text=Hi,%20I%20want%20to%20see%20a%20bat%20on%20video%20call.`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center transition-colors shrink-0"
+                className="w-9 h-9 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white flex items-center justify-center transition-colors shrink-0"
                 title="WhatsApp Video Call"
+                aria-label="Request video call on WhatsApp"
               >
-                <MessageCircle className="w-4 h-4" />
+                <MessageCircle className="w-4 h-4" strokeWidth={1.75} />
               </a>
             </div>
           </div>
@@ -513,8 +515,8 @@ export default function App() {
         }}
       />
 
-      {/* 7. Mobile Sticky Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-neutral-200/90 px-3 py-1.5 flex items-center justify-around shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
+      {/* 7. Mobile Sticky Bottom Navigation Bar with Lucide Icons */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/90 backdrop-blur-md border-t border-neutral-200/80 px-3 py-1.5 flex items-center justify-around shadow-[0_-4px_16px_rgba(0,0,0,0.04)]">
         <button
           onClick={() => {
             const el = document.getElementById('catalog');
@@ -527,8 +529,8 @@ export default function App() {
           className="flex flex-col items-center gap-0.5 text-neutral-600 hover:text-neutral-900 cursor-pointer py-1 px-2 touch-manipulation"
           aria-label="Go to Bats Catalog"
         >
-          <Home className="w-5 h-5" />
-          <span className="text-[10px] font-bold">Bats</span>
+          <Home className="w-4.5 h-4.5" strokeWidth={1.75} />
+          <span className="text-[10px] font-semibold">Bats</span>
         </button>
 
         <button
@@ -537,14 +539,14 @@ export default function App() {
           aria-label="Open Filters"
         >
           <div className="relative">
-            <SlidersHorizontal className="w-5 h-5 text-neutral-700" />
+            <SlidersHorizontal className="w-4.5 h-4.5 text-neutral-600" strokeWidth={1.75} />
             {activeFilterCount > 0 && (
-              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#f15b28] text-white text-[9px] font-bold flex items-center justify-center">
+              <span className="absolute -top-1 -right-2 min-w-[14px] h-3.5 px-0.5 rounded-full bg-[#f15b28] text-white text-[9px] font-bold flex items-center justify-center">
                 {activeFilterCount}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-bold">Filter</span>
+          <span className="text-[10px] font-semibold">Filter</span>
         </button>
 
         <button
@@ -553,14 +555,14 @@ export default function App() {
           aria-label="Saved Bats"
         >
           <div className="relative">
-            <Heart className="w-5 h-5 text-neutral-700" />
+            <Heart className="w-4.5 h-4.5 text-neutral-600" strokeWidth={1.75} />
             {wishlist.length > 0 && (
-              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center">
+              <span className="absolute -top-1 -right-2 min-w-[14px] h-3.5 px-0.5 rounded-full bg-rose-500 text-white text-[9px] font-bold flex items-center justify-center">
                 {wishlist.length}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-bold">Saved</span>
+          <span className="text-[10px] font-semibold">Saved</span>
         </button>
 
         <button
@@ -569,14 +571,14 @@ export default function App() {
           aria-label="Shopping Bag"
         >
           <div className="relative">
-            <ShoppingBag className="w-5 h-5 text-neutral-700" />
+            <ShoppingBag className="w-4.5 h-4.5 text-neutral-600" strokeWidth={1.75} />
             {totalCartItems > 0 && (
-              <span className="absolute -top-1 -right-2 w-4 h-4 rounded-full bg-[#f15b28] text-white text-[9px] font-bold flex items-center justify-center">
+              <span className="absolute -top-1 -right-2 min-w-[14px] h-3.5 px-0.5 rounded-full bg-[#f15b28] text-white text-[9px] font-bold flex items-center justify-center">
                 {totalCartItems}
               </span>
             )}
           </div>
-          <span className="text-[10px] font-bold">Bag</span>
+          <span className="text-[10px] font-semibold">Bag</span>
         </button>
 
         <a
@@ -586,15 +588,15 @@ export default function App() {
           className="flex flex-col items-center gap-0.5 text-emerald-600 hover:text-emerald-700 cursor-pointer py-1 px-2 touch-manipulation"
           aria-label="WhatsApp Workshop"
         >
-          <MessageCircle className="w-5 h-5 fill-emerald-600 text-emerald-600" />
-          <span className="text-[10px] font-bold">WhatsApp</span>
+          <MessageCircle className="w-4.5 h-4.5 text-emerald-600" strokeWidth={1.75} />
+          <span className="text-[10px] font-semibold">WhatsApp</span>
         </a>
       </nav>
 
       {/* 8. WhatsApp Quick Help / Order Widget */}
       <WhatsAppWidget />
 
-      {/* 8. Quick View Modal */}
+      {/* 9. Quick View Modal */}
       <QuickViewModal
         bat={quickViewBat}
         onClose={() => setQuickViewBat(null)}
